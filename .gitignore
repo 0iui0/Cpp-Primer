@@ -35,3 +35,6 @@
 
 # vim
 *.swp
+
+cmake-build-debug/
+.idea
