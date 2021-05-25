@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.9)
+project(CPP-Primer)
+set(CMAKE_CXX_STANDARD 14)
+
+#链接库
+#aux_source_directory(include CPP-Primer)
+#add_library(cpp-primer ${CPP-Primer})
+#LINK_LIBRARIES(cpp-primer)
+
+add_executable(ex1_1 ch01/ex1_1.cpp)
+add_executable(ex1_4 ch01/ex1_4.cpp)
+add_executable(ex1_5 ch01/ex1_5.cpp)
+add_executable(ex1_9 ch01/ex1_9.cpp)
+add_executable(ex1_10 ch01/ex1_10.cpp)
+add_executable(ex1_11 ch01/ex1_11.cpp)
+add_executable(ex1_16 ch01/ex1_16.cpp)
+add_executable(ex1_20 ch01/ex1_20.cpp)
+add_executable(ex1_21 ch01/ex1_21.cpp)
+add_executable(ex1_22 ch01/ex1_22.cpp)
+add_executable(ex1_23 ch01/ex1_23.cpp)
