@@ -1,5 +1,5 @@
 //
-//@Author  @PEZY       @Yue Wang   
+//@Author  @PEZY       @Yue Wang
 //@Date    Aug. 2014   Jun. 2015
 //@Brief
 // List three ways to define a vector and give it ten elements,
@@ -10,13 +10,13 @@
 #include <vector>
 using std::vector;
 
-int main()
-{
-    vector<int> ivec1(10, 42);
-    vector<int> ivec2{ 42, 42, 42, 42, 42, 42, 42, 42, 42, 42 };
-    vector<int> ivec3;
-    for (int i = 0; i != 10; ++i) ivec3.push_back(42);
-    std::cout << "The first approach is better!" << std::endl;
+int main() {
+  vector<int> vect1(10, 42);
+  vector<int> vect2{42, 42, 42, 42, 42, 42, 42, 42, 42, 42};
+  vector<int> vect3;
+  for (auto i = 0; i <= 10; ++i)
+    vect3.push_back(42);
+  std::cout << "The first approach is better!" << std::endl;
 
-    return 0;
+  return 0;
 }
