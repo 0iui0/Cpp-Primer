@@ -26,7 +26,7 @@ while (cin >> i) /*  ...    */
 
 如果 `badbit`、`failbit`、`eofbit` 的任一个被置位，那么检测流状态的条件会失败。                            
 
-Ex8.4
+## [ex8.4](ex8_04.cpp)
 
 > 编写函数，以读模式打开一个文件，将其内容读入到一个string的vector中，将每一行作为一个独立的元素存于vector中。
 
@@ -43,7 +43,7 @@ void ReadFileToVec(const string& fileName, vector<string>& vec)
 }
 ```
 
-Ex8.5
+## [ex8.5](ex8_05.cpp)
 
 > 重写上面的程序，将每个单词作为一个独立的元素进行存储。
 
