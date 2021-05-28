@@ -1,68 +1,69 @@
-# Chapter 15. Object-Oriented Programming
+Ex15.1
 
-## Exercise 15.1:
-> What is a virtual member?
+> 什么是虚成员？
 
-A virtual member in a base class expects its derived class define its own version. In particular base classes ordinarily should define a virtual destructor, even if it does no work.
+对于某些函数，基类希望它的派生类各自定义适合自身的版本，此时基类就将这些函数声明成虚函数。
 
-## Exercise 15.2:
-> How does the protected access specifier differ from private?
+Ex15.2
 
-* **private member**: base class itself and friend can access
-* **protected members**: base class itself, friend and derived classes can access
+> protected 访问说明符与 private 有何区别？
 
-## Exercise 15.3:
-> Define your own versions of the `Quote` class and the `print_total` function.
+* protected ： 基类和和其派生类还有友元可以访问。
+* private ： 只有基类本身和友元可以访问。
+
+Ex15.3
+
+> 定义你自己的 Quote 类和 print_total 函数。
 
 [Quote](ex15.1.2.3/quote.h) | [main.cpp](ex15.1.2.3/main.cpp)
 
-## Exercise 15.4:
-> Which of the following declarations, if any, are incorrect? Explain why.
+Ex15.4
 
-> class Base { ... };
+> 下面哪条声明语句是不正确的？请解释原因。
+```cpp
+class Base { ... };
+(a) class Derived : public Derived { ... };
+(b) class Derived : private Base { ... };
+(c) class Derived : public Base;
+```
 
-> (a) class Derived : public Derived { ... };
+* (a) 不正确。类不能派生自身。
+* (b) 不正确。这是定义而非声明。
+* (c) 不正确。派生列表不能出现在这。
 
-> (b) class Derived : private Base { ... };
+## [ex15.5](ex15.4.5.6/quote.h)
 
-> (c) class Derived : public Base;
+> 定义你自己的 Bulk_quote 类。
 
- * (a): **incorrect**, derive from itself.
- * (b): **incorrect**, this is a definition not a declaration.
- * (c): **incorrect**, A derived class is declared like any other class. The declaration contains the class name but does not include its derivation list.
+## [ex15.6](ex15.4.5.6/bulk_quote.cpp)
 
-## Exercise 15.5:
-> Define your own version of the `Bulk_quote` class.
+> 将 Quote 和 Bulk_quote 的对象传给15.2.1节exercise中的 print_total 函数，检查该函数是否正确。
 
-[Bulk_quote](ex15.4.5.6/bulk_quote.h)
+## [ex15.7](ex15.7/quote.h)
 
-## Exercise 15.6:
-> Test your `print_total` function from the exercises in § 15.2.1 (p. 595) by passing both `Quote` and `Bulk_quote` objects o that function.
+> 定义一个类使其实现一种数量受限的折扣策略，具体策略是：当购买书籍的数量不超过一个给定的限量时享受折扣，如果购买量一旦超过了限量，则超出的部分将以原价销售。
 
-[main](ex15.4.5.6/main.cpp)
+Ex15.8
 
-## [Exercise 15.7](ex15.7/main.cpp)
+> 给出静态类型和动态类型的定义。
 
-## Exercise 15.8
-> Define static type and dynamic type.
+表达式的静态类型在编译时总是已知的，它是变量声明时的类型或表达式生成的类型。动态类型则是变量或表达式表示的内存中的对象的类型。动态类型直到运行时才可知。
 
-The static type of an expression is always known at compile time.
+Ex15.9
 
-The dynamic type is the type of the object in memory that the variable or expression represents. The dynamic type may not be known until run time.
+> 在什么情况下表达式的静态类型可能与动态类型不同？请给出三个静态类型与动态类型不同的例子。
 
-## Exercise 15.9:
-> When is it possible for an expression’s static type to differ from its dynamic type? Give three examples in which the static and dynamic type differ.
+基类的指针或引用的静态类型可能与其动态类型不一致。
 
-The static type of a pointer or reference to a base class may differ from its dynamic type. Anything like this can be an example.
-[Exercise 15.9](ex15.9/main.cpp)
+Ex15.10
 
-## Exercise 15.10:
-> Recalling the discussion from §8.1 (p. 311), explain how the program on page 317 that passed an `ifstream` to the `Sales_data` read function works.
+> 回忆我们在8.1节进行的讨论，解释第284页中将 ifstream 传递给 Sales_data 的read 函数的程序是如何工作的。
 
-The function takes a `std::istream` from which `std::ifstream` is derived. Hence the `ifstream` object "is a" i`stream` , which is why it works.
+`std::ifstream` 是 `std::istream` 的派生基类，因此 read 函数能够正常工作。
 
-## Exercise 15.11:
-> Add a virtual debug function to your `Quote` class hierarchy that displays the data members of the respective classes.
+Ex15.11
+
+> 为你的 Quote 类体系添加一个名为 debug 的虚函数，令其分别显示每个类的数据成员。
 
 ```cpp
 void Quote::debug() const
@@ -72,199 +73,207 @@ void Quote::debug() const
               << "price= " <<this->price<< " ";
 }
 ```
-[test](ex15.11/main.cpp)
 
-## Exercise 15.12:
-> Is it ever useful to declare a member function as both override and final? Why or why not?
+Ex15.12
 
- Sure. override means overriding the same name virtual function in base class. final means preventing any overriding this virtual function by any derived classes that are more lower at the hierarchy.
+> 有必要将一个成员函数同时声明成 override 和 final 吗？为什么？
 
-## [Exercise 15.13](ex15.12.13.14/main.cpp)
+有必要。override 的含义是重写基类中相同名称的虚函数，final 是阻止它的派生类重写当前虚函数。
 
-## [Exercise 15.14](ex15.12.13.14/main.cpp)
+Ex15.13
 
-## Exercise 15.15:
-> Define your own versions of `Disc_quote` and `Bulk_quote`.
+> 给定下面的类，解释每个 print 函数的机理：
+```cpp
+class base {
+public:
+	string name() { return basename;}
+	virtual void print(ostream &os) { os << basename; }
+private:
+	string basename;
+};
+class derived : public base {
+public:
+	void print(ostream &os) { print(os); os << " " << i; }
+private:
+	int i;
+};
+```
+在上述代码中存在问题吗？如果有，你该如何修改它？
+
+有问题。应该改为：
+```cpp
+	void print(ostream &os) override { base::print(os); os << " derived\n " << i; }
+```
+
+Ex15.14
+
+> 给定上一题中的类以及下面这些对象，说明在运行时调用哪个函数：
+```cpp
+base bobj; 		base *bp1 = &bobj; 	base &br1 = bobj;
+derived dobj; 	base *bp2 = &dobj; 	base &br2 = dobj;
+(a) bobj.print();	(b)dobj.print();	(c)bp1->name();
+(d)bp2->name();		(e)br1.print();		(f)br2.print();
+```
+
+* (a) 编译时。
+* (b) 编译时。
+* (c) 编译时。
+* (d) 编译时。
+* (e) 运行时。base::print()
+* (f) 运行时。derived::print()
+
+Ex15.15
+
+> 定义你自己的 Disc_quote 和 Bulk_quote。
 
 [Disc_quote](ex15.15.16.17/disc_quote.h) | [Bulk_quote](ex15.15.16.17/bulk_quote.h)
 
-## Exercise 15.16:
-> Rewrite the class representing a limited discount strategy, which you wrote for the exercises in § 15.2.2 (p. 601), to inherit from Disc_quote.
+Ex15.16
+
+> 改写你在15.2.2节exercise中编写的数量受限的折扣策略，令其继承 Disc_quote。
 
 [Limit_quote](ex15.15.16.17/limit_quote.h)
 
-## Exercise 15.17:
-> Try to define an object of type Disc_quote and see what errors you get from the compiler.
+Ex15.17
+
+> 尝试定义一个 Disc_quote 的对象，看看编译器给出的错误信息是什么？
 
 `error: cannot declare variable 'd' to be of abstract type 'Disc_quote': Disc_quote d;`
 
-`note: because the following virtual functions are pure within 'Disc_quote':  class Disc_quote : public Quote`
+Ex15.18
 
+> 假设给定了第543页和第544页的类，同时已知每个对象的类型如注释所示，判断下面的哪些赋值语句是合法的。解释那些不合法的语句为什么不被允许：
+```cpp
+Base *p = &d1;  //d1 的类型是 Pub_Derv
+p = &d2;		//d2 的类型是 Priv_Derv
+p = &d3;		//d3 的类型是 Prot_Derv
+p = &dd1;		//dd1 的类型是 Derived_from_Public	
+p = &dd2;		//dd2 的类型是 Derived_from_Private
+p = &dd3;		//dd3 的类型是 Derived_from_Protected
+```
 
-`note: virtual double Disc_quote::net_price(std::size_t) const: virtual double net_price(std::size_t n) const override = 0;`
+* Base *p = &d1; 合法
+* p = &d2; 不合法
+* p = &d3; 不合法
+* p = &dd1; 合法
+* p = &dd2; 不合法
+* p = &dd3; 不合法
 
-## Exercise 15.18:
-> Given the classes from page 612 and page 613, and assuming each object has the type specified in the comments, determine which of these assignments are legal. Explain why those that are illegal aren’t allowed:
+Ex15.19
 
-> Base \*p = &d1;  //  d1 has type Pub_Derv
+> 假设543页和544页的每个类都有如下形式的成员函数：
+```cpp
+void memfcn(Base &b) { b = *this; }
+```
+对于每个类，分别判断上面的函数是否合法。
 
-> p = &d2;          //  d2 has type Priv_Derv
-
-> p = &d3;        //  d3 has type Prot_Derv
-
-> p = &dd1;       //  dd1 has type Derived_from_Public
-
-> p = &dd2;       //  dd2 has type Derived_from_Private
-
-> p = &dd3;       //  dd3 has type Derived_from_Protected
-
-* Base \*p = &d1; **legal**
-* p = &d2; **illegal**
-* p = &d3; **illegal**
-* p = &dd1; **legal**
-* p = &dd2; **illegal**
-* p = &dd3; **illegal**
-
-User code may use the derived-to-base conversion only if D inherits publicly from B. User code may not use the conversion if D inherits from B using either protected or private.
-
-## Exercise 15.19:
-> Assume that each of the classes from page 612 and page 613 has a member function of the form:
-
-> `void memfcn(Base &b) { b = *this; }`
-
-> For each class, determine whether this function would be legal.
-
-Member functions and friends of D can use the conversion to B regardless of how D inherits from B. The derived-to-base conversion to a direct base class is always accessible to members and friends of a derived class.
-
-Hence, the 3 below are all legal:
-
+合法：
 * Pub_Derv
 * Priv_Derv
 * Prot_Derv
+* Derived_from_Public
+* Derived_from_Protected
+不合法：
+* Derived_from_Private
 
-Member functions and friends of classes derived from D may use the derived-to-base conversion if D inherits from B using either public or protected. Such code may not use the conversion if D inherits privately from B.Hence:
+## [ex15.20](ex15.18.19.20/main.cpp)
 
-* Derived_from_Public **legal**
-* Derived_from_Private **illegal**
-* Derived_from_Protected **legal**
+> 编写代码检验你对前面两题的回答是否正确。
 
-## [Exercise 15.20](ex15.18.19.20/main.cpp)
-> Choose one of the following general abstractions containing a family of types (or choose one of your own). Organize the types into an inheritance hierarchy:
+Ex15.21
 
-> (a) Graphical file formats (such as gif, tiff, jpeg, bmp)
+> 从下面这些一般性抽象概念中任选一个（或者选一个你自己的），将其对应的一组类型组织成一个继承体系：
+```cpp
+(a) 图形文件格式（如gif、tiff、jpeg、bmp）
+(b) 图形基元（如方格、圆、球、圆锥）
+(c) C++语言中的类型（如类、函数、成员函数）
+```
 
-> (b) Geometric primitives (such as box, circle, sphere, cone)
+Ex15.22
 
-> (c) C++ language types (such as class, function, member function)
+> 对于你在上一题中选择的类，为其添加函数的虚函数及公有成员和受保护的成员。
 
-[Here is a example of 2D shape](ex15.21.22/main.cpp)
+Ex15.23
 
-## [Exercise 15.21](ex15.21.22/main.cpp)
+> 假设第550页的 D1 类需要覆盖它继承而来的 fcn 函数，你应该如何对其进行修改？如果你修改之后 fcn 匹配了 Base 中的定义，则该节的那些调用语句将如何解析？
 
-## Exercise 15.23:
-> Assuming class D1 on page 620 had intended to override its inherited `fcn` function, how would you fix that class? Assuming you fixed the class so that `fcn` matched the definition in Base, how would the calls in that section be resolved?
+移除 int 参数。
 
-remove the parameter int.
+Ex15.24
 
-[main](ex15.23.cpp) | [Disscussion on SO](http://stackoverflow.com/questions/21320779/trying-to-understand-dynamic-binding-and-virtual-functions)
+> 哪种类需要虚析构函数？虚析构函数必须执行什么样的操作？
 
-## Exercise 15.24:
-> What kinds of classes need a virtual destructor? What operations must a virtual destructor perform?
+基类通常应该定义一个虚析构函数。
 
-Generally, a base class should define a virtual destructor.
+Ex15.25
 
-The destructor needs to be virtual to allow objects in the inheritance hierarchy to be dynamically allocated and destroyed.
+> 我们为什么为 Disc_quote 定义一个默认构造函数？如果去掉该构造函数的话会对 Bulk_quote 的行为产生什么影响？
 
-## Exercise 15.25:
-> Why did we define a default constructor for Disc_quote? What effect, if any, would removing that constructor have on the behavior of Bulk_quote?
+因为Disc_quote的默认构造函数会运行Quote的默认构造函数，而Quote默认构造函数会完成成员的初始化工作。
+如果去除掉该构造函数的话，Bulk_quote的默认构造函数而无法完成Disc_quote的初始化工作。
 
-Without it, when building the statement below, the compiler would complain that:
+Ex15.26
 
-> note: 'Bulk_quote::Bulk_quote()' is implicitly deleted because the default definition would be ill-formed.
-
-The reason is that a constructor taking 4 parameters has been defined, which prevented the compiler generate synthesized version default constructor.
-
-As a result, the default constructor of any class derived from it has been defined as deleted. Thus the default constructor must be defined explicitly so that the derived classes can call it when executing its default constructor.
-
-## Exercise 15.26:
-> Define the `Quote` and `Bulk_quote` copy-control members to do the same job as the synthesized versions. Give them and the other constructors print statements that identify which function is running. Write programs using these classes and predict what objects will be created and destroyed.
-
->Compare your predictions with the output and continue experimenting until your predictions are reliably correct.
+> 定义 Quote 和 Bulk_quote 的拷贝控制成员，令其与合成的版本行为一致。为这些成员以及其他构造函数添加打印状态的语句，使得我们能够知道正在运行哪个程序。使用这些类编写程序，预测程序将创建和销毁哪些对象。重复实验，不断比较你的预测和实际输出结果是否相同，直到预测完全准确再结束。
 
 [Quote](ex15.26/quote.h) | [Bulk_quote](ex15.26/bulk_quote.h)
 
-## Exercise 15.27:
-> Redefine your `Bulk_quote` class to inherit its constructors.
+## [ex15.27](ex15.27/quote.h)
 
-**rules:**
+> 重新定义你的 Bulk_quote 类，令其继承构造函数。
 
-1. only inherit from the direct base class.
-2. default, copy and move constructors can not inherit.
-3. any data members of its own are default initialized.
-4. the rest details are in the section section 15.7.4.
+## [ex15.28](ex15.28.29/bulk_quote.cpp)
 
-[Bulk_quote](ex15.27/bulk_quote.h)
+> 定义一个存放 Quote 对象的 vector，将 Bulk_quote 对象传入其中。计算 vector 中所有元素总的 net_price。
 
-## [Exercise 15.28](ex15.28.29/main.cpp)
+Ex15.29
 
-## Exercise 15.29:
-> Repeat your program, but this time store `shared_ptrs` to objects of type `Quote`. Explain any discrepancy in the sum generated by the this version and the previous program. If there is no discrepancy, explain why there isn’t one.
+> 再运行一次你的程序，这次传入 Quote 对象的 shared_ptr 。如果这次计算出的总额与之前的不一致，解释为什么;如果一直，也请说明原因。
 
-Since the vector from the previous exercise holds objects, there's no polymorphism happened while calling the virtual function net_price. Essentially, the objects held in it are the Quote subjects of the Bulk_quote objects being pushed back, Thus, the virtual net_price functions called are Quote::net_price. As a result, no discount was applied. The outcome was 9090.
+因为智能指针导致了多态性的产生，所以这次计算的总额不一致。
 
-The objects held for this exercise are smart pointers to the Quote objects.In this case, polymorphism happened as expected.The actual virtual functions being called are Bulk_quote::net_price that ensure discount is applied.Thus, the outcome is 6363. It can be found that 30% discount has been applied to the price calculation.
+Ex15.30
 
-## Exercise 15.30:
-> Write your own version of the `Basket` class and use it to compute prices for the same transactions as you used in the previous exercises.
+> 编写你自己的 Basket 类，用它计算上一个exercise中交易记录的总价格。
 
 [Basket h](ex15.30/basket.h) | [Basket cpp](ex15.30/basket.cpp) | [main](ex15.30/main.cpp)
 
-## Exercise 15.31:
-> Given that s1, s2, s3, and s4 are all strings, determine what objects are created in the following expressions:
+Ex15.31
 
-> (a) `Query(s1) | Query(s2) & ~ Query(s3);`
+> 已知 s1、s2、s3 和 s4 都是 string，判断下面的表达式分别创建了什么样的对象：
+```cpp
+(a) Query(s1) | Query(s2) & ~Query(s3);
+(b) Query(s1) | (Query(s2) & ~Query(s3));
+(c) (Query(s1) & (Query(s2)) | (Query(s3) & Query(s4)));
+```
 
-> (b) `Query(s1) | (Query(s2) & ~ Query(s3));`
+* (a) OrQuery, AndQuery, NotQuery, WordQuery
+* (b) OrQuery, AndQuery, NotQuery, WordQuery
+* (c) OrQuery, AndQuery, WordQuery
 
-> (c) `(Query(s1) & (Query(s2)) | (Query(s3) & Query(s4)));`
+Ex15.32
 
-* (a) `OrQuery, AndQuery, NotQuery, WordQuery`
-* (b) the same as the previous one
-* (c) `OrQuery, AndQuery, WordQuery`
+> 当一个 Query 类型的对象被拷贝、移动、赋值或销毁时，将分别发生什么？
 
-## Exercise 15.32:
-> What happens when an object of type Query is copied, moved, assigned, and destroyed?
+* **拷贝：**当被拷贝时，合成的拷贝构造函数被调用。它将拷贝两个数据成员至新的对象。而在这种情况下，数据成员是一个智能指针，当拷贝时，相应的智能指针指向相同的地址，计数器增加1.
+* **移动：**当移动时，合成的移动构造函数被调用。它将移动数据成员至新的对象。这时新对象的智能指针将会指向原对象的地址，而原对象的智能指针为 nullptr，新对象的智能指针的引用计数为 1.
+* **赋值：**合成的赋值运算符被调用，结果和拷贝的相同的。
+* **销毁：**合成的析构函数被调用。对象的智能指针的引用计数递减，当引用计数为 0 时，对象被销毁。
 
-* **copy:**
-While being copied, the synthesized copy constructor is called. It copies the data member into the new object. Since in this case, the data member is a shared pointer, while copying, the corresponding shared pointer points to the same address and the use count from the both shared pointer becomes 2.
+Ex15.33
 
-* **move:**
-while being moved, the synthesized move constructor is called. It moves the data member into the new object. In this case, the shared pointer from the newly created object will point to the address to which the original shared pointer pointed.
-After the move operation, the use count of the shared pointer in the new object is 1, whereas the pointer from the original object becomes `nullptr`.
+> 当一个 Query_base 类型的对象被拷贝、移动赋值或销毁时，将分别发生什么？
 
-* **copy assignment:**
-The synthesized copy assignment will be called. The outcome of this operation is identical with the copy operation.
+由合成的版本来控制。然而 `Query_base` 是一个抽象类，它的对象实际上是它的派生类对象。
 
-* **move assignment:**
-The synthesized move assignment will be called. The rest is the same as the move operation.
+Ex15.34
 
-* **destroy:**
-The synthesized destructor will be called. It will call the destructor of `shared_ptr` which decrements the use count. If the count becomes zero, the destructor from shared_ptr will delete the resources it point to.
-
-## Exercise 15.33:
-> What about objects of type `Query_base`?
-
-Managed by the synthesized version. Since Query_base a abstract class, the object of this type is essentially a subobject of its derived class.
-
-## Exercise 15.34:
-> For the expression built in Figure 15.3 (p. 638):
-
-> (a) List the constructors executed in processing that expression.
-
-> (b) List the calls to rep that are made from `cout << q`.
-
-> (c) List the calls to `eval` made from `q.eval()`.
-
+> 针对图15.3构建的表达式：
+```cpp
+(a) 例举出在处理表达式的过程中执行的所有构造函数。
+(b) 例举出 cout << q 所调用的 rep。
+(c) 例举出 q.eval() 所调用的 eval。
+```
 
 * **a:** Query q = Query("fiery") & Query("bird") | Query("wind");
 
@@ -298,91 +307,57 @@ for `rhs` which is a `WordQuery` : `WordQuery::rep()` where `query_word("wind")`
 2. `q->rep()`: where q is a pointer to `OrQuary`.
 3. `QueryResult eval(const TextQuery& )const override`: is called but this one has not been defined yet.
 
-## Exercise 15.35:
-> Implement the `Query` and `Query_base classes`, including a definition of rep but omitting the definition of `eval`.
+Ex15.35
 
-[Query](ex15.34.35.36.39/query.h) | [Query_base](ex15.34.35.36.38/query_base.h)
+> 实现 Query 类和 Query_base 类，其中需要定义rep 而无须定义 eval。
 
-## Exercise 15.36:
-> Put print statements in the constructors and rep members and run your code to check your answers to (a) and (b) from the first exercise.
+[Query](ex15.34.35.36.38/query.h) | [Query_base](ex15.34.35.36.38/query_base.h)
 
+Ex15.36
+
+> 在构造函数和 rep 成员中添加打印语句，运行你的代码以检验你对本节第一个exercise中(a)、(b)两小题的回答是否正确。
+
+Ex15.37
+
+> 如果在派生类中含有 shared_ptr<Query_base> 类型的成员而非 Query 类型的成员，则你的类需要做出怎样的改变？
+
+Ex15.38
+
+> 下面的声明合法吗？如果不合法，请解释原因;如果合法，请指出该声明的含义。
 ```cpp
-Query q = Query("fiery") & Query("bird") | Query("wind");
-
-WordQuery::WordQuery(wind)
-Query::Query(const std::string& s) where s=wind
-WordQuery::WordQuery(bird)
-Query::Query(const std::string& s) where s=bird
-WordQuery::WordQuery(fiery)
-Query::Query(const std::string& s) where s=fiery
-BinaryQuery::BinaryQuery()  where s=&
-AndQuery::AndQuery()
-Query::Query(std::shared_ptr<Query_base> query)
-BinaryQuery::BinaryQuery()  where s=|
-OrQuery::OrQuery
-Query::Query(std::shared_ptr<Query_base> query)
-Press <RETURN> to close this window...
+BinaryQuery a = Query("fiery") & Query("bird");
+AndQuery b = Query("fiery") & Query("bird");
+OrQuery c = Query("fiery") & Query("bird");
 ```
 
-```cpp
-std::cout << q <<std::endl;
+1. 不合法。因为 BinaryQuery 是抽象类。
+2. 不合法。& 操作返回的是一个 Query 对象。
+3. 不合法。& 操作返回的是一个 Query 对象。
 
-Query::rep()
-BinaryQuery::rep()
-Query::rep()
-WodQuery::rep()
-Query::rep()
-BinaryQuery::rep()
-Query::rep()
-WodQuery::rep()
-Query::rep()
-WodQuery::rep()
-((fiery & bird) | wind)
-Press <RETURN> to close this window...
-```
+Ex15.39
 
-## Exercise 15.37:
+> 实现 Query 类和　Query_base 类，求图15.3中表达式的值并打印相关信息，验证你的程序是否正确。
 
-## Exercise 15.38:
-> Are the following declarations legal? If not, why not? If so, explain what the declarations mean.
+Ex15.40
 
-> BinaryQuery a = Query("fiery") & Query("bird");
+> 在 OrQuery 的 eval 函数中，如果 rhs 成员返回的是空集将发生什么？
 
->AndQuery b = Query("fiery") & Query("bird");
-
-> OrQuery c = Query("fiery") & Query("bird");
-
-
-1. Illegal. Because `BinaryQuery` is an abstract class.
-2. Illegal. Because operator & returns a `Query` which can not convert to an `AndQuery` object.
-3. Illegal. Because operator & returns a `Query` which can not convert to an `OrQuery` object.
-
-## Exercise 15.39:
-> Implement the `Query` and `Query_base` classes. Test your application by evaluating and printing a query such as the one in Figure 15.3 (p. 638).
-
-[Query](ex15.39.40/query.h) | [Query_base](ex15.39.40/query_base.h) | [main](ex15.39.40/main.cpp)
-
-## Exercise 15.40:
-> In the `OrQuery` eval function what would happen if its `rhs` member returned an empty set? What if its `lhs` member did so? What if both `rhs` and `lhs` returned empty sets?
-
-Nothing special will happen.  The codes as following:
-
+不会发生什么。代码如下：
 ```cpp
 std::shared_ptr<std::set<line_no>> ret_lines =
        std::make_shared<std::set<line_no>>(left.begin(), left.end());
 ```
+如果 rhs 成员返回的是空集，在 set 当中不会添加什么。
 
-Since `std::make_shared` will allocate dynamically a new `std::set`, nothing will be added into this `std::set` if any set is empty.The codes in main function proves this.
+Ex15.41
 
-## Exercise 15.41:
+> 重新实现你的类，这次使用指向 Query_base 的内置指针而非 shared_ptr。请注意，做出上述改动后你的类将不能再使用合成的拷贝控制成员。
 
-## Exercise 15.42:
->  Design and implement one of the following enhancements:
+Ex15.42
 
-> **(a)** Print words only once per sentence rather than once per line.
-
-> **(b)** Introduce a history system in which the user can refer to a previous query by number, possibly adding to it or combining it with another.
-
-> **(c)** Allow the user to limit the results so that only matches in a given range of lines are displayed.
-
-Here are solutions for [(b)](ex15.42_b/main.cpp) and [(c)](ex15.42_c/main.cpp).
+> 从下面的几种改进中选择一种，设计并实现它:
+```cpp
+(a) 按句子查询并打印单词，而不再是按行打印。
+(b) 引入一个历史系统，用户可以按编号查阅之前的某个查询，并可以在其中添加内容或者将其余其他查询组合。
+(c) 允许用户对结果做出限制，比如从给定范围的行中跳出匹配的进行显示。
+```

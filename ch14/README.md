@@ -1,303 +1,290 @@
-# Chapter 14. Overloaded Operations and Conversions
+Ex14.1
 
-## Exercise 14.1:
->In what ways does an overloaded operator differ from a built-in operator? In what ways are overloaded operators the same as the built-in operators?
+> 在什么情况下重载的运算符与内置运算符有所区别？在什么情况下重载的运算符又与内置运算符一样？
 
-**Differ**
-1. We can call an overloaded operator function directly.
-2. An overloaded operator function must either be a member of a class or have at least one parameter of class type.
-3. A few operators guarantee the order in which operands are evaluated. These overloaded versions of these operators do not preserve order of evaluation and/or short-circuit evaluation, it is usually a bad idea to overload them.
-> In particular, the operand-evaluation guarantees of the logical `AND`, logical `OR`, and comma operators are not preserved, Moreover, overloaded versions of `&&` or `||` operators do not preserve short-circuit evaluation properties of the built-in operators. Both operands are always evaluated.
+我们可以直接调用重载运算符函数。重置运算符与内置运算符有一样的优先级与结合性。
 
-**Same**
+Ex14.2 ： [hpp](ex14_02.h) | [cpp](ex14_02.cpp)
 
-- An overloaded operator has the same precedence and associativity as the corresponding built-in operator.
+> 为 Sales_data 编写重载的输入、输出、加法和复合赋值运算符。
 
-## Exercise 14.2:
->Write declarations for the overloaded input, output, addition, and compound-assignment operators for `Sales_data`.
+Ex14.3
 
-[hpp](ex14_02.h) | [cpp](ex14_02.cpp)
+> string 和 vector 都定义了重载的==以比较各自的对象，假设 svec1 和 svec2 是存放 string 的 vector，确定在下面的表达式中分别使用了哪个版本的==？
+```cpp
+(a) "cobble" == "stone"
+(b) svec1[0] == svec2[0]
+(c) svec1 == svec2
+(d) "svec1[0] == "stone"
+``` 
 
-## Exercise 14.3:
->Both `string` and `vector` define an overloaded == that can be used to compare objects of those types. Assuming `svec1` and `svec2 `are `vectors` that hold `strings`, identify which version of == is applied in each of the following expressions:
-- (a) `"cobble" == "stone"`
-- (b) `svec1[0] == svec2[0]`
-- (c) `svec1 == svec2`
-- (d) `"svec1[0] == "stone"`
+* (a) 都不是。
+* (b) string 
+* (c) vector 
+* (d) string
 
-(a) neither. (b) `string` (c) `vector` (d) `string`
+Ex14.4
 
------
+> 如何确定下列运算符是否应该是类的成员？
+```cpp
+(a) %
+(b) %=
+(c) ++
+(d) ->
+(e) <<
+(f) &&
+(g) ==
+(h) ()
+```
 
-**Reference**
-- [Why does the following not invoke the overloaded operator== (const String &, const String &)? “cobble” == “stone”](http://stackoverflow.com/questions/2690737/why-does-the-following-not-invoke-the-overloaded-operator-const-string-con)
+* (a) 不需要是成员。
+* (b) 是成员。
+* (c) 是成员。
+* (d) 必须是成员。
+* (e) 不需要是成员。
+* (f) 不需要是成员。
+* (g) 不需要是成员。
+* (h) 必须是成员。
 
-## Exercise 14.4:
->Explain how to decide whether the following should be class members:
-- (a) %
-- (b) %=
-- (c) ++
-- (d) ->
-- (e) <<
-- (f) &&
-- (g) ==
-- (h) ()
+Ex14.5
 
-(a) symmetric operator. Hence, non-member
+> 在7.5.1节中的exercise7.40中，编写了下列类中某一个的框架，请问在这个类中应该定义重载的运算符吗？如果是，请写出来。
+```cpp
+(a) Book
+(b) Date
+(c) Employee
+(d) Vehicle
+(e) Object
+(f) Tree
+``` 	
 
-(b) changing state of objects. Hence, member
+`Book`
 
-(c) changing state of objects. Hence, member
+[hpp](ex14_5.h) | [cpp](ex14_5.cpp) | [test](ex14_5_main.cpp)
 
-(d) = () [] -> must be member
+Ex14.6
 
-(e) non-member
+> 为你的 Sales_data 类定义输出运算符。
 
-(f) symetric , non-member
+Ex14.7
 
-(g) symetric , non-member
+> 你在13.5节的exercise中曾经编写了一个String类，为它定义一个输出运算符。
 
-(h) = () [] -> must be member
+[hpp](ex14_7.h) | [cpp](ex14_7.cpp) | [test](ex14_7_main.cpp)
 
-## Exercise 14.5:
->In exercise 7.40 from 7.5.1 (p. 291) you wrote a sketch of one of the following classes. Decide what, if any, overloaded operators your class should provide.
+Ex14.8
 
-Such as `Book`
+> 你在7.5.1节中的exercise中曾经选择并编写了一个类，为它定义一个输出运算符。
 
-[hpp](ex14_05.h) | [cpp](ex14_05.cpp) | [test](ex14_05_TEST.cpp)
+Ex14.9
 
-## Exercise 14.6:
->Define an output operator for your `Sales_data` class.
+> 为你的 Sales_data 类定义输入运算符。
 
-see [Exercise 14.2](#exercise-142).
+Ex14.10
 
-## Exercise 14.7:
->Define an output operator for you `String` class you wrote for the exercises in 13.5 (p. 531).
+> 对于 Sales_data 的输入运算符来说如果给定了下面的输入将发生什么情况？
+```cpp
+(a) 0-201-99999-9 10 24.95
+(b) 10 24.95 0-210-99999-9
+```
 
-[hpp](ex14_07.h) | [cpp](ex14_07.cpp) | [Test](ex14_07_TEST.cpp)
+* (a) 格式正确。
+* (b) 不合法的输入。因为程序试图将 `0-210-99999-9` 转换为 `float`。
 
-## Exercise 14.8:
->Define an output operator for the class you chose in exercise 7.40 from 7.5.1 (p. 291).
+Ex14.11
 
-see [Exercise 14.5](#exercise-145)
-
-## Exercise 14.9:
->Define an input operator for your Sales_data class.
-
-see [Exercise 14.2](#exercise-142).
-
-## Exercise 14.10:
->Describe the behaviour of the Sales_data input operator if given the following input:
-- (a) 0-201-99999-9 10 24.95
-- (b) 10 24.95 0-210-99999-9
-
-- (a) correct format.
-- (b) ilegal input. But `.95` will be converted to a float stored in this object. As a result, the data inside will be a wrong one.
-Output: `10 24 22.8 0.95`
-
-check [Test](ex14_02_TEST.cpp)
-
-## Exercise 14.11:
->What, if anything, is wrong with the following Sales_data input operator? What would happen if we gave this operator the data in the previous exercise?
+> 下面的 Sales_data 输入运算符存在错误吗？如果有，请指出来。对于这个输入运算符如果仍然给定上个exercise的输入将会发生什么情况？
 ```cpp
 istream& operator>>(istream& in, Sales_data& s)
 {
-    double price;
-    in >> s.bookNo >> s.units_sold >> price;
-    s.revenue = s.units_sold * price;
-    return in;
+	double price;
+	in >> s.bookNo >> s.units_sold >> price;
+	s.revence = s.units_sold >> price;
+	return in;
 }
 ```
 
-no input check. nothing happend.
+没有输入检查，什么也不会发生。
 
-## Exercise 14.12:
->Define an input operator for the class you used in exercise 7.40 from 7.5.1 (p. 291). Be sure the operator handles input errors.
+Ex14.12
 
-see [Exercise 14.5](#exercise-145)
+> 你在7.5.1节的exercise中曾经选择并编写了一个类，为它定义一个输入运算符并确保该运算符可以处理输入错误。
 
-## Exercise 14.13:
->Which other arithmetic operators (Table 4.1 (p. 139)), if any, do you think Sales_data ought to support? Define any you think the class should include.
+Ex14.13
 
-Substraction, in order to be able to revert a previously addition.
-[hpp](ex14_13.h) | [cpp](ex14_13.cpp) | [Test](ex14_13_TEST.cpp)
+> 你认为 Sales_data 类还应该支持哪些其他算术运算符？如果有的话，请给出它们的定义。
 
-## Exercise 14.14:
->Why do you think it is more efficient to define `operator+` to call `operator+=` rather than the other way around?
+没有其他了。
 
-Discussing on [SO](http://stackoverflow.com/questions/21071167/why-is-it-more-efficient-to-define-operator-to-call-operator-rather-than-the).
+Ex14.14
 
-## Exercise 14.15:
->Should the class you chose for exercise 7.40 from 7.5.1 (p. 291) define any of the arithmetic operators? If so, implement them. If not, explain why not.
+> 你觉得为什么调用 operator+= 来定义operator+ 比其他方法更有效？
 
-[hpp](ex14_15.h) | [cpp](ex14_15.cpp) | [Test](ex14_15_TEST.cpp)
+因为用 `operator+=` 会避免使用一个临时对象，而使得更有效。
 
-## Exercise 14.16:
->Define equality and inequality operators for your `StrBlob` (12.1.1, p. 456), `StrBlobPtr` (12.1.6, p. 474), `StrVec` (13.5, p.526), and `String` (13.5, p. 531) classes.
+Ex14.15
 
-- `StrBlob` & `StrBlobPtr`: [hpp](ex14_16_StrBlob.h) | [cpp](ex14_16_StrBlob.cpp) | [Test](ex14_16_StrBlobTest.cpp)
-- `StrVec`: [hpp](ex14_16_StrVec.h) | [cpp](ex14_16_StrVec.cpp) | [Test](ex14_16_StrVecMain.cpp)
-- `String`: [hpp](ex14_16_String.h) | [cpp](ex14_16_String.cpp) | [Test](ex14_16_StringMain.cpp)
+> 你在7.5.1节的exercise7.40中曾经选择并编写了一个类，你认为它应该含有其他算术运算符吗？如果是，请实现它们；如果不是，解释原因。
 
-## Exercise 14.17:
->Should the class you chose for exercise 7.40 from 7.5.1(p. 291) define the equality operators? If so, implement them. If not, explain why not.
+[hpp](ex14_15.h) | [cpp](ex14_15.cpp) | [test](ex14_15_main.cpp)
 
-yes.see [Exercise 14.15](#exercise-1415)
+Ex14.16
 
-## Exercise 14.18:
->Define relational operators for your `StrBlob`, `StrBlobPtr`, `StrVec`, and `String` classes.
+> 为你的 StrBlob 类、StrBlobPtr 类、StrVec 类和 String 类分别定义相等运算符和不相等运算符。
 
-- `StrBlob` & `StrBlobPtr`: [hpp](ex14_18_StrBlob.h) | [cpp](ex14_18_StrBlob.cpp) | [Test](ex14_18_StrBlobTest.cpp)
-- `StrVec`: [hpp](ex14_18_StrVec.h) | [cpp](ex14_18_StrVec.cpp) | [Test](ex14_18_StrVecMain.cpp)
-- `String`: [hpp](ex14_18_String.h) | [cpp](ex14_18_String.cpp) | [Test](ex14_18_StringMain.cpp)
+Ex14.17
 
-## Exercise 14.19:
->Should the class you chose for exercise 7.40 from 7.5.1 (p. 291) define the relational operators? If so, implement them. If not, explain why not.
+> 你在7.5.1节中的exercise7.40中曾经选择并编写了一个类，你认为它应该含有相等运算符吗？如果是，请实现它；如果不是，解释原因。
 
-yes.see [Exercise 14.15](#exercise-1415)
+Ex14.18
 
-## Exercise 14.20:
->Define the addition and compound-assignment operators for your `Sales_data` class.
+> 为你的 StrBlob 类、StrBlobPtr 类、StrVec 类和 String 类分别定义关系运算符。
 
-see [Exercise 14.2](#exercise-142).
+Ex14.19
 
-## Exercise 14.21:
->Write the `Sales_data` operators so that `+` does the actual addition and `+=` calls `+`. Discuss the disadvantages of this approach compared to the way these operators were defined in 14.3 (p. 560) and 14.4 (p.564).
+> 你在7.5.1节的exercise7.40中曾经选择并编写了一个类，你认为它应该含有关系运算符吗？如果是，请实现它；如果不是，解释原因。
+
+Ex14.20
+
+> 为你的 Sales_data 类定义加法和复合赋值运算符。
+
+Ex14.21
+
+> 编写 Sales_data 类的+ 和+= 运算符，使得 + 执行实际的加法操作而 += 调用+。相比14.3节和14.4节对这两个运算符的定义，本题的定义有何缺点？试讨论之。
+
+缺点：使用了一个 `Sales_data` 的临时对象，但它并不是必须的。
+
+Ex14.22
+
+> 定义赋值运算符的一个新版本，使得我们能把一个表示 ISBN 的 string 赋给一个 Sales_data 对象。
+
+[hpp](ex14_22.h) | [cpp](ex14_22.cpp) | [test](ex14_22_main.cpp)
+
+Ex14.23
+
+> 为你的StrVec 类定义一个 initializer_list 赋值运算符。
+
+[hpp](ex14_23.h) | [cpp](ex14_23.cpp) | [test](ex14_23_main.cpp)
+
+Ex14.24
+
+> 你在7.5.1节的exercise7.40中曾经选择并编写了一个类，你认为它应该含有拷贝赋值和移动赋值运算符吗？如果是，请实现它们。
+
+[hpp](ex14_24.h) | [cpp](ex14_24.cpp) | [test](ex14_24_main.cpp)
+
+Ex14.25
+
+> 上题的这个类还需要定义其他赋值运算符吗？如果是，请实现它们；同时说明运算对象应该是什么类型并解释原因。
+
+是。如上题。
+
+Ex14.26
+
+> 为你的 StrBlob 类、StrBlobPtr 类、StrVec 类和 String 类定义下标运算符。
+
+Ex14.27
+
+> 为你的 StrBlobPtr 类添加递增和递减运算符。
+
+Ex14.28
+
+> 为你的 StrBlobPtr 类添加加法和减法运算符，使其可以实现指针的算术运算。
+
+Ex14.29
+
+> 为什么不定义const 版本的递增和递减运算符？
+
+因为递增和递减会改变对象本身，所以定义 const 版本的毫无意义。
+
+Ex14.30
+
+> 为你的 StrBlobPtr 类和在12.1.6节exercise12.22中定义的 ConstStrBlobPtr 的类分别添加解引用运算符和箭头运算符。注意：因为 ConstStrBlobPtr 的数据成员指向const vector，所以ConstStrBlobPtr 中的运算符必须返回常量引用。
+
+Ex14.31
+
+> 我们的 StrBlobPtr 类没有定义拷贝构造函数、赋值运算符以及析构函数，为什么？
+
+因为使用合成的足够了。
+
+Ex14.32
+
+> 定义一个类令其含有指向 StrBlobPtr 对象的指针，为这个类定义重载的箭头运算符。
 
 ```cpp
-Sales_data& Sales_data::operator+=(const Sales_data &rhs)
-{
-    Sales_data old_data = *this;
-    *this = old_data + rhs;
-    return *this;
-}
+class StrBlobPtr;
 
-Sales_data operator+(const Sales_data &lhs, const Sales_data &rhs)
+class StrBlobPtr_pointer
 {
-    Sales_data sum;
-    sum.units_sold = lhs.units_sold + rhs.units_sold;
-    sum.revenue = lhs.revenue + rhs.revenue;
-    return sum;
-}
+public:
+    StrBlobPtr_pointer() = default;
+    StrBlobPtr_pointer(StrBlobPtr* p) : pointer(p) { }
+
+    StrBlobPtr& operator *();
+    StrBlobPtr* operator->();
+
+private:
+    StrBlobPtr* pointer = nullptr;
+};
 ```
 
-**Disadvantages**: Both `+` and `+=`, uses an temporary object of `Sales_data`. But it is no need for that.
+Ex14.33
 
-## Exercise 14.22:
->Define a version of the assignment operator that can assign a `string` representing an ISBN to a `Sales_data`.
+> 一个重载的函数调用运算符应该接受几个运算对象？
 
-[hpp](ex14_22.h) | [cpp](ex14_22.cpp) | [Test](ex14_22_TEST.cpp)
+一个重载的函数调用运算符接受的运算对象应该和该运算符拥有的操作数一样多。
 
-## Exercise 14.23:
->Define an initializer_list assignment operator for your version of the `StrVec` class.
+Ex14.34
 
-[hpp](ex14_23.h) | [cpp](ex14_23.cpp) | [Test](ex14_23_TEST.cpp)
-
-## Exercise 14.24:
->Decide whether the class you used in exercise 7.40 from 7.5.1 (p. 291) needs a copy- and move-assignment operator. If so, define those operators.
-
-[hpp](ex14_24.h) | [cpp](ex14_24.cpp) | [Test](ex14_24_TEST.cpp)
-
-## Exercise 14.25:
->Implement any other assignment operators your class should define. Explain which types should be used as operands and why.
-
-see [Exercise 14.24](#exercise-1424)
-
-## Exercise 14.26:
->Define subscript operators for your `StrVec`, `String`, `StrBlob`, and `StrBlobPtr` classes.
-
-- `StrBlob` & `StrBlobPtr`: [hpp](ex14_26_StrBlob.h) | [cpp](ex14_26_StrBlob.cpp) | [Test](ex14_26_StrBlobTest.cpp)
-- `StrVec`: [hpp](ex14_26_StrVec.h) | [cpp](ex14_26_StrVec.cpp) | [Test](ex14_26_StrVecMain.cpp)
-- `String`: [hpp](ex14_26_String.h) | [cpp](ex14_26_String.cpp) | [Test](ex14_26_StringMain.cpp)
-
-## Exercise 14.27:
-> Add increment and decrement operators to your `StrBlobPtr` class.
-
-[hpp](ex14_27_28_StrBlob.h) | [cpp](ex14_27_28_StrBlob.cpp) | [Test](ex14_27_28_StrBlobTest.cpp)
-
-## Exercise 14.28:
-> Define addition and subtraction for `StrBlobPtr` so that these operators implement pointer arithmetic (3.5.3, p. 119).
-
-see [Exercise 14.27](#exercise-1427)
-
-## Exercise 14.29:
-> We did not define a `const` version of the increment and decrement operators. Why not?
-
-Because `++` and `--` change the state of the object. Hence , it's meaningless to do so.
-
-## Exercise 14.30:
-> Add dereference and arrow operators to your `StrBlobPtr` class and to the `ConstStrBlobPtr` class that you defined in exercise 12.22 from 12.1.6 (p. 476). Note that the operators in `constStrBlobPtr` must return `const` references because the `data` member in `constStrBlobPtr` points to a `const vector`.
-
-[hpp](ex14_30_StrBlob.h) | [cpp](ex14_30_StrBlob.cpp) | [Test](ex14_30_StrBlobTest.cpp)
-
-## Exercise 14.31:
-> Our StrBlobPtr class does not define the copy constructor, assignment operator, or a destructor. Why is that okay?
-
-Applying the Rule of 3/5:
-There is no dynamic allocation to deal with, so the synthesized destructor is enough. Moreover, no unique is needed. Hence, the synthesized ones can handle all the corresponding operations.
-
-## Exercise 14.32:
-> Define a class that holds a pointer to a `StrBlobPtr`. Define the overloaded arrow operator for that class.
-
-[hpp](ex14_32.h) | [cpp](ex14_32.cpp)
-
-## Exercise 14.33:
-> How many operands may an overloaded function-call operator take?
-
-An overloaded operator function has the same number of parameters as the operator has operands. Hence the maximum value should be around 256.
-([question on SO](http://stackoverflow.com/questions/21211889/how-many-operands-may-an-overloaded-function-call-operator-take))
-
-## Exercise 14.34:
-> Define a function-object class to perform an if-then-else operation: The call operator for this class should take three parameters. It should test its first parameter and if that test succeeds, it should return its second parameter; otherwise, it should return its third parameter.
+> 定义一个函数对象类，令其执行if-then-else 的操作：该类的调用运算符接受三个形参，它首先检查第一个形参，如果成功返回第二个形参值；如果不成功返回第三个形参的值。
 
 ```cpp
-struct Test {
-    int operator()(bool b, int iA, int iB) {
+struct Test 
+{
+    int operator()(bool b, int iA, int iB) 
+    {
         return b ? iA : iB;
     }
 };
 ```
 
-## Exercise 14.35:
-> Write a class like `PrintString` that reads a line of input from an `istream` and returns a `string` representing what was read. If the read fails, return the empty `string`.
+## [ex14.35](ex14_35.cpp)
 
-[Test](ex14_35.cpp)
+> 编写一个类似于 PrintString 的类，令其从 istream 中读取一行输入，然后返回一个表示我们所读内容的string。如果读取失败，返回空string。
 
-## Exercise 14.36:
-> Use the class from the previous exercise to read the standard input, storing each line as an element in a vector.
+## [ex14.36](ex14_36.cpp)
 
-[Test](ex14_36.cpp)
+> 使用前一个exercise定义的类读取标准输入，将每一行保存为 vector 的一个元素。
 
-## Exercise 14.37:
-> Write a class that tests whether two values are equal. Use that object and the library algorithms to write a program to replace all instances of a given value in a sequence.
+## [ex14.37](ex14_37.cpp)
 
-[Test](ex14_37.cpp)
+> 编写一个类令其检查两个值是否相等。使用该对象及标准库算法编写程序，令其替换某个序列中具有给定值的所有实例。
 
-## Exercise 14.38:
-> Write a class that tests whether the length of a given `string` matches a given bound. Use that object to write a program to report how many words in an input file are of sizes 1 through 10 inclusive.
+## [ex14.38](ex14_38.cpp)
 
-[BoundTest](ex14_38_39.cpp)
+> 编写一个类令其检查某个给定的 string 对象的长度是否与一个阈值相等。使用该对象编写程序，统计并报告在输入的文件中长度为1的单词有多少个，长度为2的单词有多少个、......、长度为10的单词有多少个。
 
-## Exercise 14.39:
-> Revise the previous program to report the count of words that are sizes 1 through 9 and 10 or more.
+## [ex14.39](ex14_38.cpp)
 
-see [Exercise 14.38](#exercise-1438)
+> 修改上一题的程序令其报告长度在1到9之间的单词有多少个、长度在10以上的单词有多少个。
 
-## Exercise 14.40:
-> Rewrite the `biggies` function from 10.3.2 (p. 391) to use function-object classes in place of lambdas.
+## [ex14.40](ex14_40.cpp)
 
-[Test](ex14_40.cpp)
+> 重新编写10.3.2节的biggies 函数，使用函数对象替换其中的 lambda 表达式。
 
-## Exercise 14.41:
-> Why do you suppose the new standard added lambdas? Explain when you would use a lambda and when you would write a class instead.
+Ex14.41
 
-IMO, lambda is quite handy to use. Lambda can be used when the functor is not used frequently nor complicated, whereas functor is supposed to call more times than lambda or quite complicated to implement as a lambda.
+> 你认为 C++ 11 标准为什么要增加 lambda？对于你自己来说，什么情况下会使用 lambda，什么情况下会使用类？
 
-## Exercise 14.42:
-> Using library function objects and adaptors, define an expression to
-- (a) Count the number of values that are greater than 1024
-- (b) Find the first string that is not equal to `pooh`
-- (c) Multiply all values by 2
+使用 lambda 是非常方便的，当需要使用一个函数，而这个函数不常使用并且简单时，使用lambda 是比较方便的选择。
+
+Ex14.42
+
+> 使用标准库函数对象及适配器定义一条表达式，令其
+```
+(a) 统计大于1024的值有多少个。 
+(b) 找到第一个不等于pooh的字符串。
+(c)将所有的值乘以2。
+```
 
 ```cpp
 std::count_if(ivec.cbegin(), ivec.cend(), std::bind(std::greater<int>(), _1, 1024));
@@ -305,106 +292,115 @@ std::find_if(svec.cbegin(), svec.cend(), std::bind(std::not_equal_to<std::string
 std::transform(ivec.begin(), ivec.end(), ivec.begin(), std::bind(std::multiplies<int>(), _1, 2));
 ```
 
-[Test](ex14_42.cpp)
+## [ex14.43](ex14_43.cpp)
 
-## Exercise 14.43:
-> Using library function objects, determine whether a given `int` value is divisible by any element in a container of `int`s.
+> 使用标准库函数对象判断一个给定的int值是否能被 int 容器中的所有元素整除。
 
-[ex14_43.cpp](ex14_43.cpp)
+## [ex14.44](ex14_44.cpp)
 
-## Exercise 14.44:
-> Write your own version of a simple desk calculator that can handle binary operations.
+> 编写一个简单的桌面计算器使其能处理二元运算。
 
-[ex14_44.cpp](ex14_44.cpp)
+Ex14.45
 
-## Exercise 14.45:
-> Write conversion operators to convert a `Sales_data` to `string` and to `double`. What values do you think these operators should return?
+> 编写类型转换运算符将一个 Sales_data 对象分别转换成 string 和 double，你认为这些运算符的返回值应该是什么？
 
-[hpp](ex14_45.h) | [cpp](ex14_45.cpp) | [Test](ex14_45_TEST.cpp)
+[hpp](ex14_45.h) | [cpp](ex14_45.cpp) | [test](ex14_45_main.cpp)
 
-## Exercise 14.46:
-> Explain whether defining these Sales_data conversion operators is a good idea and whether they should be explicit.
+Ex14.46
 
-It's a bad idea to do so, because these conversion is misleading.`explicit` should be added to prevent implicit conversion.
+> 你认为应该为 Sales_data 类定义上面两种类型转换运算符吗？应该把它们声明成 explicit 的吗？为什么？
 
-## Exercise 14.47:
-> Explain the difference between these two conversion operators:
+上面的两种类型转换有歧义，应该声明成 explicit 的。
+
+Ex14.47
+
+> 说明下面这两个类型转换运算符的区别。
 ```cpp
 struct Integral {
-    operator const int();   // meaningless, it will be ignored by compiler.
-    operator int() const;   // promising that this operator will not change the state of the obj
-};
+	operator const int();
+	operator int() const;
+}
 ```
 
-## Exercise 14.48:
-> Determine whether the class you used in exercise 7.40 from 7.5.1 (p. 291) should have a conversion to `bool`. If so, explain why, and explain whether the operator should be `explicit`. If not, explain why not.
+第一个无意义，会被编译器忽略。第二个合法。
 
-A conversion to bool can be useful for the class Date. But it must be an explicit one to prevent any automatic conversion.
+Ex14.48 
 
-## Exercise 14.49:
-> Regardless of whether it is a good idea to do so, define a conversion to bool for the class from the previous exercise.
+> 你在7.5.1节的exercise7.40中曾经选择并编写了一个类，你认为它应该含有向 bool 的类型转换运算符吗？如果是，解释原因并说明该运算符是否应该是 explicit的；如果不是，也请解释原因。
 
-[hpp](ex14_49.h) | [cpp](ex14_49.cpp) | [Test](ex14_49_TEST.cpp)
+Date 类应该含有向 bool 的类型转换运算符，并且应该声明为 explicit 的。
 
-## Exercise 14.50:
-> Show the possible class-type conversion sequences for the initializations of ex1 and ex2. Explain whether the initializations are legal or not.
+Ex14.49
+
+> 为上一题提到的类定义一个转换目标是 bool 的类型转换运算符，先不用在意这么做是否应该。
+
+```cpp
+ explicit operator bool() { return (year<4000) ? true : false; }
+```
+
+Ex14.50
+
+> 在初始化 ex1 和 ex2 的过程中，可能用到哪些类类型的转换序列呢？说明初始化是否正确并解释原因。
 ```cpp
 struct LongDouble {
-    LongDouble(double = 0.0);
-    operator double();
-    operator float();
+	LongDouble(double = 0.0);
+	operator double();
+	operator float();
 };
 LongDouble ldObj;
-int ex1 = ldObj;    // error ambiguous: double or float?
-float ex2 = ldObj;  // legal
+int ex1 = ldObj;
+float ex2 = ldObj;
 ```
 
-## Exercise 14.51:
-> Show the conversion sequences (if any) needed to call each version of `calc` and explain why the best viable function is selected.
+ex1 转换不合法，没有定义从 `LongDouble` 到 `int` 的转换。ex2 合法。
+
+Ex14.51
+
+> 在调用 calc 的过程中，可能用到哪些类型转换序列呢？说明最佳可行函数是如何被选出来的。
 ```cpp
 void calc(int);
 void calc(LongDouble);
 double dval;
-calc(dval); // which calc?
+calc(dval);  //哪个calc？
 ```
 
-best viable function: `void calc(int)`. cause class-type conversion is the lowest ranked.
+最佳可行函数是 `void calc(int)`。
 
-review the order:
+转换的优先级如下：
 
-1. exact match
-2. const conversion
-3. promotion
-4. arithmetic or pointer conversion
-5. class-type conversion
+1. 精确匹配
+2. const 转换。
+3. 类型提升
+4. 算术转换
+5. 类类型转换
 
-## Exercise 14.52:
-> Which `operator+`, if any, is selected for each of the addition expressions? List the candidate functions, the viable functions, and the type conversions on the arguments for each viable function:
+Ex14.52
+
+> 在下面的加法表达式中分别选用了哪个operator+？列出候选函数、可行函数及为每个可行函数的实参执行的类型转换：
 ```cpp
-struct LongDouble {
-    // member operator+ for illustration purposes; + is usually a nonmember LongDouble operator+(const SmallInt&); // 1
-    // other members as in 14.9.2 (p. 587)
+struct Longdouble {
+	//用于演示的成员operator+;在通常情况下是个非成员
+	LongDouble operator+(const SmallInt&);
+	//其他成员与14.9.2节一致
 };
-LongDouble operator+(LongDouble&, double); // 2
+LongDouble operator+(LongDouble&, double);
 SmallInt si;
 LongDouble ld;
 ld = si + ld;
 ld = ld + si;
 ```
 
-`ld = si + ld;` is ambiguous. `ld = ld + si` can use both 1 and 2, but 1 is more exactly. (in the 2, SmallInt need to convert to `double`)
+`ld = si + ld;` 不合法。`ld = ld + si` 两个都可以调用，但是第一个调用更精确一些。
 
+Ex14.53
 
-## Exercise 14.53:
-> Given the definition of SmallInt on page 588, determine whether the following addition expression is legal. If so, what addition operator is used? If not, how might you change the code to make it legal?
+> 假设我们已经定义了如第522页所示的SmallInt，判断下面的加法表达式是否合法。如果合法，使用了哪个加法运算符？如果不合法，应该怎样修改代码才能使其合法？
 ```cpp
-SmallInt s1;
-double d = s1 + 3.14;
+SmallInt si;
+double d = si + 3.14;
 ```
 
-ambiguous.
-
-**Fixed**:
+不合法。应该该为：
 ```cpp
 SmallInt s1;
 double d = s1 + SmallInt(3.14);

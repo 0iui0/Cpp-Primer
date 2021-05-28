@@ -1,158 +1,160 @@
-## Exercise 1.1
+Ex1.1
 
-> Review the documentation for your compiler and determine what file naming convention it uses. Compile and run the main program from page 2.
+> 查阅你使用的编译器文档，确定它所使用的文件命名约定。编译并运行第2页的main程序。
 
- * [GCC and File Extensions](http://labor-liber.org/en/gnu-linux/development/index.php?diapo=extensions) 
- * [File Types Created for Visual C++ Projects](https://msdn.microsoft.com/en-us/library/3awe4781.aspx)
+* [为 Visual C++ 项目创建的文件类型](https://msdn.microsoft.com/zh-cn/library/3awe4781(v=vs.120).aspx)
 
-## Exercise 1.2
+Ex1.2
 
-> Exercise 1.2: Change the program to return -1. A return value of -1 is often treated as an indicator that the program failed. Recompile and rerun your program to see how your system treats a failure indicator from main.
+> 改写程序，让它返回-1。返回值-1通常被当作程序错误的标识。重新编译并运行你的程序，观察你的系统如何处理main返回的错误标识。
 
-### Windows
+![windows](https://github.com/huangmingchuan/Cpp_Primer_Answers/raw/master/data/exercise1_2.png)
 
-![windows](https://db.tt/DIJd9eZb)
+Ex1.3
 
-### Linux
+> 编写程序，在标准输出上打印 Hello, World。
 
-![linux](https://db.tt/lhzXhpCt)
-
-**255**? why? please look at [this](http://www.tldp.org/LDP/abs/html/exitcodes.html)
-
-## Exercise 1.3
-> Write a program to print Hello, World on the standard output.
-
-```cpp
+``` c++
 #include <iostream>
 
 int main()
 {
-    std::cout << "Hello, World" << std::endl;
-    return 0;
+	std::cout << "Hello, World" << std::endl;
+	return 0;
 }
+
 ```
 
-## Exercise 1.4
-> Our program used the addition operator, +, to add two numbers. Write a program that uses the multiplication operator, *, to print the product instead.
+Ex1.4
 
-```cpp
+> 我们的程序使用加法运算符+来将两个数相加。编写程序使用乘法运算符*，来打印两个数的积。
+
+``` c++
 #include <iostream>
 
 int main()
 {
-    std::cout << "Enter two numbers:" << std::endl;
-    int v1 = 0, v2 = 0;
-    std::cin >> v1 >> v2;
-    std::cout << "The product is " << v1 * v2 << std::endl;
-
-    return 0;
+	std::cout << "Enter two numbers:" << std::endl;
+	int v1 = 0, v2 = 0;
+	std::cin >> v1 >> v2;
+	std::cout << "The product of " << v1 << " and " << v2
+				<< " is " << v1 * v2 << std::endl;
+	return 0;
 }
+
 ```
 
-## Exercise 1.5
+Ex1.5
 
-> We wrote the output in one large statement. Rewrite the program to use a separate statement to print each operand.
+> 我们将所有输出操作放在一条很长的语句中。重写程序，将每个运算对象的打印操作放在一条独立的语句中。
 
-```cpp
+``` c++
 #include <iostream>
 
 int main()
 {
-    std::cout << "Enter two numbers:" << std::endl;
-    int v1 = 0, v2 = 0;
-    std::cin >> v1 >> v2;
-    std::cout << "The product of ";
-    std::cout << v1;
-    std::cout << " and ";
-    std::cout << v2;
-    std::cout << " is ";
-    std::cout << v1 * v2;
-    std::cout << std::endl;
-    return 0;
+	std::cout << "Enter two numbers:" << std::endl;
+	int v1 = 0, v2 = 0;
+	std::cin >> v1 >> v2;
+	std::cout << "The product of ";
+	std::cout << v1;
+	std::cout << " and ";
+	std::cout << v2;
+	std::cout << " is ";
+	std::cout << v1 * v2;
+	std::cout << std::endl;
+	return 0;
 }
+
 ```
 
-## Exercise 1.6
-> Explain whether the following program fragment is legal.
+Ex1.6
 
-It's illegal.
+> 解释下面程序片段是否合法。
+```
+std::cout << "The sum of " << v1;
+		  << " and " << v2;
+		  << " is " << v1 + v2 << std::endl;
+```
+如果程序是合法的，它的输出是什么？如果程序不合法，原因何在？应该如何修正？
 
-**[Error] expected primary-expression before '<<' token**
-
-Fixed it: remove the spare semicolons.
-
-```cpp
-std::cout << "The sum of " << v1 << " and " << v2 << " is " << v1 + v2 << std::endl;
+不合法。
+**错误 error C2143: 语法错误 : 缺少“;”(在“<<”的前面)**
+修正：移除掉多余的分号。
+```c++
+std::cout << "The sum of " << v1
+		  << " and " << v2
+		  << " is " << v1 + v2 << std::endl;
 ```
 
-## Exercise 1.7
+Ex1.7
 
-> Compile a program that has incorrectly nested comments.
+> 编译一个包含不正确的嵌套注释的程序，观察编译器返回的错误信息。
 
-Example:
-```cpp
+```c++
 /*
-* comment pairs /* */ cannot nest.
-* ''cannot nest'' is considered source code,
-* as is the rest of the program
+*   注释在这里嵌套
+*	/* 这里的嵌套是错的 */
+*
 */
+
 int main()
 {
-    return 0;
+	return 0;
 }
 ```
+编译器错误信息：
 
-Compiled result(g++):
+![编译器错误信息](https://github.com/huangmingchuan/Cpp_Primer_Answers/raw/master/data/exercise1_7.png)
 
-![result](https://db.tt/CqQKu8GQ)
+Ex1.8
 
-## Exercise 1.8
-
-> Indicate which, if any, of the following output statements are legal:
-```cpp
+> 指出下列哪些输出语句是合法的(如果有的话)：
+```c++
 std::cout << "/*";
 std::cout << "*/";
 std::cout << /* "*/" */;
 std::cout << /* "*/" /* "/*" */;
 ```
-> After you’ve predicted what will happen, test your answers by compiling a
-program with each of these statements. Correct any errors you encounter.
+预测编译这些语句会产生什么样的结果，实际编译这些语句来验证你的答案(编写一个小程序，每次将上述一条语句作为其主体)，改正每个编译错误。
 
-Compiled result(g++):
-
-![result](https://db.tt/mrL9hDCS)
-
-Corrected? just added a quote:
-```cpp
-std::cout << "/*";
-std::cout << "*/";
+第三行编译出错，改正方法是增加一个引号。
+```c++
 std::cout << /* "*/" */";
-std::cout << /* "*/" /* "/*" */;
+```
+输出：
+```
+/**/ */ /*
 ```
 
-Output:
+## [ex1.9](ex1_9.cpp)
 
-    /**/ */ /* 
+> 编写程序，使用while循环将50到100的整数相加。
 
-## [Exercise 1.9](ex1_9.cpp)
-## [Exercise 1.10](ex1_10.cpp)
-## [Exercise 1.11](ex1_11.cpp)
+## [ex1.10](ex1_10.cpp)
 
-## Exercise 1.12
-> What does the following for loop do? What is the final value
-of sum?
-```cpp
+> 除了++运算符将运算对象的值增加1之外，还有一个递减运算符（--）实现将值减少1。编写程序，使用递减运算符在循环中按递减顺序打印出10到0之间的整数。
+
+## [ex1.11](ex1_11.cpp)
+
+> 编写程序，提示用户输入两个整数，打印出这两个整数所指定的范围内的所有整数。
+
+Ex1.12
+
+> 下面的for循环完成了什么功能？sum的终值是多少？
+```
 int sum = 0;
 for (int i = -100; i <= 100; ++i)
-    sum += i;
+	sum += i;
 ```
 
-the loop sums the numbers from -100 to 100. the final value of sum is zero.
+从 -100 加到 100 ，sum 的终值为 0。
 
-## Exercise 1.13
-> Rewrite the exercises from § 1.4.1 (p. 13) using for loops.
+Ex1.13
 
-Ex1.9:
+> 使用for循环重做1.4.1节中的所有exercise（第11页）。
+
+exercise1.9:
 ```cpp
 #include <iostream>
 
@@ -166,7 +168,7 @@ int main()
 }
 ```
 
-Ex1.10:
+exercise1.10:
 ```cpp
 #include <iostream>
 
@@ -178,149 +180,87 @@ int main()
 }
 ```
 
-Ex1.11:
+exercise1.11:
 ```cpp
 #include <iostream>
 
+void  print_range(int lo, int hi)
+{
+	if (lo > hi)
+	{
+		print_range(hi, lo);
+		return;
+	}
+	for (int i = lo; i <= hi; ++i)
+	{
+		std::cout << i << std::endl;
+	}
+}
+
 int main()
 {
-    std::cout << "please input two integers:\n";
-    int small = 0, big = 0;
-    std::cin >> small >> big;
+	int low, high;
+	std::cout << "please input two numbers : " << std::endl;
+	std::cin >> low >> high;
 
-    if (small > big)
-    {
-        int tmp = small;
-        small = big;
-        big = tmp;
-    }
-
-    for (int i = small; i != big; ++i)
-        std::cout << i << std::endl;
-
-    return 0;
+	print_range(low, high);
+	return 0;
 }
 ```
 
-## Exercise 1.14
-> Compare and contrast the loops that used a for with those
-using a while. Are there advantages or disadvantages to using either form?
+Ex1.14
 
-[A similar question on Stack Overflow](http://stackoverflow.com/questions/2950931/for-vs-while-in-c-programming)
+> 对比for循环和while循环，两种形式的优缺点各是什么？
 
-## Exercise 1.15
-> Write programs that contain the common errors discussed in
-the box on page 16. Familiarize yourself with the messages the compiler
-generates.
+[在Stack Overflow上面有与这个相似的问题](http://stackoverflow.com/questions/2950931/for-vs-while-in-c-programming)
 
-**Syntax Errors**:
-```c++
-int main(){
-    std::cout << "Hello World!" << std::endl // semicolon missed 
-    return 0;
-}
-```
+Ex1.15
 
-**Type errors**:
-```c++
-int main(){
-    char s = "Hello World!"; // Here char should be std::string
-    std::cout << s << endl;
-    return 0;
-}
-```
+> 编写程序，包含第14页“再探编译”中讨论的常见错误。熟悉编译器生成的错误信息。
 
-**Declaration errors**:
-```c++
-int main(){
-    int k = 0;
-    std::cout << K << std::endl; // use of undeclared identifier 'K'
-    return 0;
-}
-```
+常见的错误有语法错误、类型错误、声明错误，这些都是编译器可以检查出的错误。
+
+## [ex1.16](ex1_16.cpp)
+
+> 编写程序，从cin读取一组数，输出其和。
+
+Ex1.17
+
+> 如果输入的所有值都是相等的，本节的程序会输出什么？如果没有重复值，输出又会是怎样的？
+
+![ex1.17](https://github.com/huangmingchuan/Cpp_Primer_Answers/raw/master/data/exercise1_17.png)
+
+## [ex1.18](ex1_18.cpp)
+
+> 编译并运行本节的程序，给它输入全都相等的值。再次运行程序，输入没有重复的值。
+
+Ex1.19
+
+> 修改你为1.4.1节exercise1.11（第11页）所编写的程序（打印一个范围内的数），使其能处理用户输入的第一个数比第二个数小的情况。
+
+[见代码](ex1_11.cpp)
 
 
-## Exercise 1.16
+## [ex1.20](ex1_20.cpp)
 
-```cpp
-#include <iostream>
-int main()
-{
-    int sum = 0;
-    for (int val; std::cin >> val; sum += val);
-    std::cout << sum << std::endl;
+> 在网站http://www.informit.com/title/032174113 上，第1章的代码目录包含了头文件 Sales_item.h。将它拷贝到你自己的工作目录中。用它编写一个程序，读取一组书籍销售记录，将每条记录打印到标准输出上。
 
-    return 0;
-}
-```
+## [ex1.21](ex1_21.cpp)
 
-## Exercise 1.17
+> 编写程序，读取两个 ISBN 相同的 Sales_item 对象，输出他们的和。
 
-> What happens in the program presented in this section if the input values are all equal? What if there are no duplicated values?
+## [ex1.22](ex1_22.cpp)
 
-If the input values are all equal, it will print a line which shows the count of the number you input.
+> 编写程序，读取多个具有相同 ISBN 的销售记录，输出所有记录的和。
 
-If there are no duplicated values, when different values input, a new line will be printed if you click `Enter`.
+## [ex1.23](ex1_23.cpp)
 
-## Exercise 1.18
+> 编写程序，读取多条销售记录，并统计每个 ISBN（每本书）有几条销售记录。
 
-> Compile and run the program from this section giving it only equal values as input. Run it again giving it values in which no number is repeated.
+Ex1.24
 
-![run](https://db.tt/F38zExnq)
+> 输入表示多个 ISBN 的多条销售记录来测试上一个程序，每个 ISBN 的记录应该聚在一起。
 
-## Exercise 1.19
+`data/books.txt`是输入数据文件
 
-> Revise the program you wrote for the exercises in § 1.4.1 (p. 13) that printed a range of numbers so that it handles input in which the first number is smaller than the second.
-
-[code](https://github.com/pezy/Cpp-Primer/blob/master/ch01/ex1_11.cpp)
-
-## Exercise 1.20
-
-> http://www.informit.com/title/032174113 contains a copy of Sales_item.h in the Chapter 1 code directory. Copy that file to your working directory. Use it to write a program that reads a set of book sales transactions, writing each transaction to the standard output.
-
-[Here](ex1_20.cpp) is the code.
-
-Note : C++11 flag need to enable.
-For GCC and Clang, this can be done with the `-std=c++11`
-
-## Exercise 1.21
-> Write a program that reads two Sales_item objects that have the same ISBN and produces their sum.
-
-The program should check whether the objects have the same ISBN.
-
-[Code](ex1_21.cpp)
-
-## Exercise 1.22
-
-> Write a program that reads several transactions for the same ISBN. Write the sum of all the transactions that were read.
-
-Tips: this program will appear in the section 1.6.
-
-[Here](ex1_22.cpp) is the code.
-
-![run](https://db.tt/UlkuvpAS)
-
-## Exercise 1.23
-> Write a program that reads several transactions and counts
-how many transactions occur for each ISBN.
-
-Tip: please review the `1.4.4`.
-
-[Here](ex1_23.cpp) is the code.
-
-## Exercise 1.24
-> Test the previous program by giving multiple transactions
-representing multiple ISBNs. The records for each ISBN should be grouped
-together.
-
-`data/book.txt` may be used as the records.
-
-![run](https://db.tt/EeDI7lvN)
-
-## Exercise 1.25
-> Using the Sales_item.h header from the Web site,
-compile and execute the bookstore program presented in this section.
-
-It is the same as Exercise 1.22.
-
-![run](https://db.tt/C6OOPuzA)
+![ex1.24](https://github.com/huangmingchuan/Cpp_Primer_Answers/raw/master/data/exercise1_24.png)

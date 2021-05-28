@@ -1,57 +1,28 @@
-﻿### Exercise 2.1
-> What are the differences between int, long, long long,
-and short? Between an unsigned and a signed type? Between a float and
-a double?
+Ex2.1
 
-C++ guarantees `short` and `int` is **at least** 16 bits, `long` **at least** 32 bits, `long long` **at least** 64 bits.
+> 类型 int、long、long long 和 short 的区别是什么？无符号类型和带符号类型的区别是什么？float 和 double的区别是什么？
 
-The `signed` can represent positive numbers, negative numbers and zero, while `unsigned` can only represent numbers no less than zero.
+C++ 规定 `short` 和 `int` 至少16位，`long` 至少32位，`long long` 至少64位。
+带符号类型能够表示正数、负数和 0 ，而无符号类型只能够表示 0 和正整数。
 
-The C and C++ standards do not specify the representation of float, double and long double.
-It is possible that all three implemented as IEEE double-precision.
-Nevertheless, for most architectures (gcc, MSVC; x86, x64, ARM) float is indeed a IEEE **single-precision** floating point number (binary32),
-and double is a IEEE **double-precision** floating point number (binary64).
+用法：
+* 一般使用 `int` 做整数运算，`short` 因为太小在实际中用的少，`long` 通常和 `int` 有着相同的大小。如果数据非常大，可以使用 `long long` 。
+* 如果你确认数据是非负的，那么就使用 `unsigned` 无符号类型。
+* 执行浮点运算时用 `double` ，因为 `float` 通常精度不够而且双精度浮点数和单精度浮点数的计算代价相差无几。
 
-Usage:
+参考：
+* [What are the criteria for choosing between short / int / long data types?](http://www.parashift.com/c++-faq/choosing-int-size.html)
+* [Difference between float and double](http://stackoverflow.com/questions/2386772/difference-between-float-and-double)
 
-- Use `int` for integer arithmetic. `short` is usually too small and, in practice,
-`long` often has the same size as `int`. If your data values are larger than
-the minimum guaranteed size of an `int`, then use `long long`.
-(In a word: short < **int** < long < long long)
+Ex2.2
 
-- Use an unsigned type when you know that the values cannot be negative.
-(In a word: no negative, unsigned.)
+> 计算按揭贷款时，对于利率、本金和付款分别应选择何种数据类型？说明你的理由。
 
-- Use double for floating-point computations; float usually does not have
-enough precision, and the cost of double-precision calculations versus
-single-precision is negligible. In fact, on some machines, double-precision
-operations are faster than single. The precision offered by long double
-usually is unnecessary and often entails considerable run-time cost.
-(In a word: float < **double** < long double)
+使用 `double` 或 `float` 。
 
-Reference:
+Ex2.3
 
-- [What are the criteria for choosing between short / int / long data types?](https://isocpp.org/wiki/faq/newbie#choosing-int-size)
-- [Difference between float and double](http://stackoverflow.com/questions/2386772/difference-between-float-and-double)
-- Advice: Deciding which Type to Use(This book.)
-
-## Exercise 2.2
->To calculate a mortgage payment, what types would you use
-for the rate, principal, and payment? Explain why you selected each type.
-
-use `double`, or also `float`.
-
-The rate most like that: 4.50 % per year.
-The principal most like that: $854.36
-The payment most like that: $1, 142.36
-
-Reference:
-
-- [mortgage-calculator](http://www.bankrate.com/calculators/mortgages/mortgage-calculator.aspx)
-- [What's in a Mortgage Payment?](https://thelawdictionary.org/mortgage-payment/)
-
-## Exercise 2.3
-> What output will the following code produce?
+> 读程序写结果。
 ```cpp
 unsigned u = 10, u2 = 42;
 std::cout << u2 - u << std::endl;
@@ -63,8 +34,7 @@ std::cout << i - u << std::endl;
 std::cout << u - i << std::endl;
 ```
 
-Output(g++ 4.8):
-
+输出：
 ```
 32
 4294967264
@@ -74,67 +44,59 @@ Output(g++ 4.8):
 0
 ```
 
-## Exercise 2.4
-> Write a program to check whether your predictions were
-correct. If not, study this section until you understand what the problem is.
+## [ex2.4](ex2_4.cpp)
 
-[Here](ex2_4.cpp) is the code, please test it in your computer.
+> 编写程序检查你的估计是否正确，如果不正确，请仔细研读本节直到弄明白问题所在。
 
-## Exercise 2.5
-> Determine the type of each of the following literals. Explain
-the differences among the literals in each of the four examples:
+Ex2.5
+
+> 指出下述字面值的数据类型并说明每一组内几种字面值的区别：
 - (a) 'a', L'a', "a", L"a"
 - (b) 10, 10u, 10L, 10uL, 012, 0xC
 - (c) 3.14, 3.14f, 3.14L
 - (d) 10, 10u, 10., 10e-2
 
-(a): character literal, wide character literal, string literal, string wide character literal.
+(a): 字符字面值，宽字符字面值，字符串字面值，宽字符串字面值。
 
-(b): decimal, unsigned decimal, long decimal, unsigned long decimal, octal, hexadecimal.
+(b): 十进制整型，十进制无符号整型，十进制长整型，十进制无符号长整型，八进制整型，十六进制整型。
 
-(c): double, float, long double.
+(c): double, float, long double
 
-(d): decimal, unsigned decimal, double, double.
+(d): 十进制整型，十进制无符号整型，double, double
 
-## Exercise 2.6
-> What, if any, are the differences between the following
-definitions:
+Ex2.6
+
+> 下面两组定义是否有区别，如果有，请叙述之：
 ```cpp
 int month = 9, day = 7;
 int month = 09, day = 07;
 ```
 
-The first line's integer is decimal.
+第一行定义的是十进制整型。
+第二行定义的是八进制整型，但是 month 变量无效，因为八进制没有 9 。
 
-The second line:
+Ex2.7
 
-1. `int month = 09` is invalid, cause octal don't have digit `9`.
-2. `day` is octal.
-
-## Exercise 2.7
-> What values do these literals represent? What type does each
-have?
+> 下述字面值表示何种含义？它们各自的数据类型是什么？
 - (a) "Who goes with F\145rgus?\012"
 - (b) 3.14e1L
 - (c) 1024f
 - (d) 3.14L
 
-(a): Who goes with Fergus?(new line) "string"
+(a): Who goes with Fergus?(换行)，string 类型
 
-(b): 31.4 "long double"
+(b): long double
 
-(c): ERROR: The suffix f is valid only with floating point literals
+(c): 无效，因为后缀 f 只能用于浮点字面量，而 1024 是整型。
 
-(d): 3.14 "long double"
+(d): long double
 
-Reference:
+参考：
+* [ASCII Table](http://www.asciitable.com/)
 
-- [ASCII Table](http://www.asciitable.com/)
+Ex2.8
 
-## Exercise 2.8
-> Using escape sequences, write a program to print 2M followed
-by a newline. Modify the program to print 2, then a tab, then an M, followed
-by a newline.
+> 请利用转义序列编写一段程序，要求先输出 2M，然后转到新一行。修改程序使其先输出 2，然后输出制表符，再输出 M，最后转到新一行。
 
 ```cpp
 #include <iostream>
@@ -147,43 +109,39 @@ int main()
 }
 ```
 
-## Exercise 2.9
->Explain the following definitions. For those that are illegal,
-explain what’s wrong and how to correct it.
+Ex2.9
+
+> 解释下列定义的含义，对于非法的定义，请说明错在何处并将其改正。
 - (a) std::cin >> int input_value;
 - (b) int i = { 3.14 };
 - (c) double salary = wage = 9999.99;
 - (d) int i = 3.14;
 
-(a): error: expected '(' for function-style cast or type construction.
+(a): 应该先定义再使用。
 ```cpp
 int input_value = 0;
 std::cin >> input_value;
 ```
 
-(b):---when you compile the code without the argument "-std=c++11", you will get the warning below:
-    warning: implicit conversion from 'double' to 'int' changes value from 3.14 to 3.
----when you compile the code using "-std=c+11", you will get a error below:
-    error: type 'double' cannot be narrowed to 'int' in initializer list
----conclusion: Obviously, list initialization becomes strict in c++11.
+(b): 用列表初始化内置类型的变量时，如果存在丢失信息的风险，则编译器将报错。
 ```cpp
 double i = { 3.14 };
 ```
 
-(c): --if you declared 'wage' before, it's right. Otherwise, you'll get a error:
-    error: use of undeclared identifier 'wage'
+(c): 在这里 wage 是未定义的，应该在此之前将其定义。
 ```cpp
 double wage;
 double salary = wage = 9999.99;
 ```
 
-(d): ok: but value will be truncated.
+(d): 不报错，但是小数部分会被截断。
 ```cpp
 double i = 3.14;
 ```
 
-## Exercise 2.10
->What are the initial values, if any, of each of the following variables?
+Ex2.10
+
+> 下列变量的初值分别是什么？
 ```cpp
 std::string global_str;
 int global_int;
@@ -194,36 +152,37 @@ int main()
 }
 ```
 
-`global_str` is global variable, so the value is empty string.
-`global_int` is global variable, so the value is zero.
-`local_int` is a local variable which is uninitialized, so it has a undefined value.
-`local_str` is also a local variable which is uninitialized, but it has a value that is defined by the class. So it is empty string.
-PS: please read P44 in the English version, P40 in Chinese version to get more.
-The note: Uninitialized objects of built-in type defined inside a function body have a undefined value. Objects of class type that we do not explicitly inititalize have a value that is defined by class.
+`global_int` 是全局变量，所以初值为 0 。
+`local_int` 是局部变量并且没有初始化，它的初值是未定义的。
+`global_str` 和 `local_str` 是 string 类的对象，该对象定义了默认的初始化方式，即初始化为空字符串。 
 
-## Exercise 2.11
-> Explain whether each of the following is a declaration or a
-definition:
+Ex2.11
+
+> 指出下面的语句是声明还是定义：
 - (a) extern int ix = 1024;
 - (b) int iy;
 - (c) extern int iz;
 
-    (a): definition.
-    (b): definition.
-    (c): declaration.
+```
+(a): 定义
+(b): 定义
+(c): 声明
+```
 
-## Exercise 2.12
->Which, if any, of the following names are invalid?
+Ex2.12
+
+> 请指出下面的名字中哪些是非法的？
 - (a) int double = 3.14;
 - (b) int _;
 - (c) int catch-22;
 - (d) int 1_or_2 = 1;
 - (e) double Double = 3.14;
 
-`a`, `c`, `d` are invalid.
+`(a)`, `(c)`, `(d)` 非法。
 
-## Exercise 2.13
->What is the value of j in the following program?
+Ex2.13
+
+> 下面程序中 j 的值是多少？
 ```cpp
 int i = 42;
 int main()
@@ -233,10 +192,11 @@ int main()
 }
 ```
 
-`100`, since the global `i` was hidden by the local `i`.
+`j` 的值是 `100` ，局部变量 `i` 覆盖了全局变量 `i` 。
 
-## Exercise 2.14
->Is the following program legal? If so, what values are printed?
+Ex2.14
+
+> 下面的程序合法吗？如果合法，它将输出什么？
 ```cpp
     int i = 100, sum = 0;
     for (int i = 0; i != 10; ++i)
@@ -244,55 +204,53 @@ int main()
     std::cout << i << " " << sum << std::endl;
 ```
 
-Legal. Output:
+合法。输出是 ` 100 45 ` 。
 
-```100 45```
+Ex2.15
 
-Note: Such naming is considered as bad practise. 
-
-## Exercise 2.15
->Which of the following definitions, if any, are invalid? Why?
+> 下面的哪个定义是不合法的？为什么？
 - (a) int ival = 1.01;
 - (b) int &rval1 = 1.01;
 - (c) int &rval2 = ival;
 - (d) int &rval3;
 
-```
-(a): valid.
-(b): invalid. initializer must be an object.
-(c): valid.
-(d): invalid. a reference must be initialized.
-```
+`(b)` 和 `(d)` 不合法，`(b)` 引用必须绑定在对象上，`(d)` 引用必须初始化。
 
-## Exercise 2.16
->Which, if any, of the following assignments are invalid? If they are valid, explain what they do.
+Ex2.16
 
-    int i = 0, &r1 = i; double d = 0, &r2 = d;
+> 考察下面的所有赋值然后回答：哪些赋值是不合法的？为什么？哪些赋值是合法的？它们执行了哪些操作？
+```
+int i = 0, &r1 = i; double d = 0, &r2 = d;
 - (a) r2 = 3.14159;
 - (b) r2 = r1;
 - (c) i = r2;
 - (d) r1 = d;
-
-```
-(a): valid. let d equal 3.14159.
-(b): valid. automatic convert will happen.
-(c): valid. but value will be truncated.
-(d): valid. but value will be truncated.
 ```
 
-## Exercise 2.17
->What does the following code print?
+```
+(a): 合法。给 d 赋值为 3.14159。
+(b): 合法。会执行自动转换（int->double）。
+(c): 合法。会发生小数截取。
+(d): 合法。会发生小数截取。
+```
+
+Ex2.17
+
+> 执行下面的代码段将输出什么结果？
 ```cpp
 int i, &ri = i;
 i = 5; ri = 10;
 std::cout << i << " " << ri << std::endl;
 ```
 
-`10 10`
+输出：
+```
+10, 10
+```
 
-## Exercise 2.18
->Write code to change the value of a pointer. Write code to
-change the value to which the pointer points.
+Ex2.18
+
+> 编写代码分别改变指针的值以及指针所指对象的值。
 
 ```cpp
 int a = 0, b = 1;
@@ -302,229 +260,195 @@ int *p1 = &a, *p2 = p1;
 p1 = &b;
 // change the value to which the pointer points
 *p2 = b;
-
 ```
 
-## Exercise 2.19
->Explain the key differences between pointers and references.
+Ex2.19
 
-#### definition:
+> 说明指针和引用的主要区别
 
-the pointer is "points to" any other type.
+1. 引用是另一个对象的别名，而指针本身就是一个对象。
+2. 引用必须初始化，并且一旦定义了引用就无法再绑定到其他对象。而指针无须在定义时赋初值，也可以重新赋值让其指向其他对象。
 
-the reference is "another name" of an **object**.
+Ex2.20
 
-#### key difference:
-
-1. a reference is another name of an **already existing** object.
-a pointer is an object in its **own right**.
-2. Once initialized, a reference remains **bound to** its initial object.
-There is **no way** to rebind a reference to refer to a different object.
-a pointer can be **assigned** and **copied**.
-3. a reference always get the object to which the reference was initially bound.
-a single pointer can point to **several different objects** over its lifetime.
-4. a reference must be initialized.
-a pointer need **not be** initialized at the time it is defined.
-
-## Exercise 2.20
->What does the following program do?
+> 请叙述下面这段代码的作用。
 ```cpp
 int i = 42;
-int *p1 = &i; *p1 = *p1 * *p1;
+int *p1 = &i; 
+*p1 = *p1 * *p1;
 ```
 
-`p1` pointer to `i`, `i`'s value changed to 1764(42*42)
+让指针 `pi` 指向 `i`，然后将 `i` 的值重新赋值为 42 * 42 (1764)。
 
-## Exercise 2.21
->Explain each of the following definitions. Indicate whether any are illegal and, if so, why.
+Ex2.21
 
-    int i = 0;
-
-- (a) double* dp = &i;
-- (b) int *ip = i;
-- (c) int *p = &i;
-
+> 请解释下述定义。在这些定义中有非法的吗？如果有，为什么？
 ```
-(a): illegal, cannot initialize a variable of type 'double *' with an
-      rvalue of type 'int *'
-(b): illegal, cannot initialize a variable of type 'int *' with an lvalue
-      of type 'int'
-(c): legal.
+int i = 0;
+(a) double* dp = &i;
+(b) int *ip = i;
+(c) int *p = &i;
 ```
 
-## Exercise 2.22
-Assuming p is a pointer to int, explain the following code:
+```
+(a): 非法。不能将一个指向 `double` 的指针指向 `int` 。
+(b): 非法。不能将 `int` 变量赋给指针。
+(c): 合法。
+```
+
+Ex2.22
+
+> 假设 p 是一个 int 型指针，请说明下述代码的含义。
 ```cpp
 if (p) // ...
 if (*p) // ...
 ```
+`if (p) // ...`  判断 p 是不是一个空指针, 
+`if (*p) // ...` 判断 p 所指向的对象的值是不是为 0
 
-if (p) // whether p is nullptr?
+Ex2.23
 
-if (*p) // whether the value pointed by p is zero?
+> 给定指针 p，你能知道它是否指向了一个合法的对象吗？如果能，叙述判断的思路；如果不能，也请说明原因。
 
-## Exercise 2.23
->Given a pointer p, can you determine whether p points to a valid object? If so, how? If not, why not?
+不能，因为首先要确定这个指针是不是合法的，才能判断它所指向的对象是不是合法的。
 
-No. Because more information needed to determine whether the pointer is valid or not.
+Ex2.24
 
-
-## Exercise 2.24
->Why is the initialization of p legal but that of lp illegal?
-
+> 在下面这段代码中为什么 p 合法而 lp 非法？
 ```cpp
 int i = 42;
 void *p = &i;
 long *lp = &i;
 ```
 
-Inherited from C, `void*` is a special pointer that may point to any type, hence the second line is legal.
-For type safety, C++ forbids implicit conversions like `long *lp = &i;`, thus such code is illegal.
+`void *` 是从 C语言那里继承过来的，可以指向任何类型的对象。而其他指针类型必须要与所指对象严格匹配。
 
-## Exercise 2.25
->Determine the types and values of each of the following
-variables.
+Ex2.25
+
+> 说明下列变量的类型和值。
 - (a) int* ip, i, &r = i;
 - (b) int i, *ip = 0;
 - (c) int* ip, ip2;
 
 ```
-(a): ip is a pointer to int, i is an int, r is a reference to int i.
-(b): ip is a valid, null pointer, and i is an int.
-(c): ip is a pointer to int, and ip2 is an int.
+(a): ip 是一个指向 int 的指针, i 是一个 int, r 是 i 的引用。
+(b): i 是 int , ip 是一个空指针。
+(c): ip 是一个指向 int 的指针, ip2 是一个 int。
 ```
 
-## Exercise 2.26
->Which of the following are legal? For those that are illegal,
-explain why.
+Ex2.26
 
+> 下面哪些语句是合法的？如果不合法，请说明为什么？
 ```cpp
-const int buf;      // illegal, buf is uninitialized const.
-int cnt = 0;        // legal.
-const int sz = cnt; // legal.
-++cnt;              // legal.
-++sz;               // illegal, attempt to write to const object(sz).
+const int buf;      // 不合法, const 对象必须初始化
+int cnt = 0;        // 合法
+const int sz = cnt; // 合法
+++cnt; ++sz;        // 不合法, const 对象不能被改变
 ```
 
-## Exercise 2.27
-> Which of the following initializations are legal? Explain why.
+Ex2.27
 
+> 下面的哪些初始化是合法的？请说明原因。
 ```cpp
-int i = -1, &r = 0;         // illegal, r must refer to an object.
-int *const p2 = &i2;        // legal.
-const int i = -1, &r = 0;   // legal.
-const int *const p3 = &i2;  // legal.
-const int *p1 = &i2;        // legal
-const int &const r2;        // illegal, r2 is a reference that cannot be const.
-const int i2 = i, &r = i;   // legal.
+int i = -1, &r = 0;         // 不合法, r 必须引用一个对象
+int *const p2 = &i2;        // 合法
+const int i = -1, &r = 0;   // 合法
+const int *const p3 = &i2;  // 合法
+const int *p1 = &i2;        // 合法
+const int &const r2;        // 不合法, r2 是引用，引用没有顶层 const
+const int i2 = i, &r = i;   // 合法
 ```
 
-## Exercise 2.28
->Explain the following definitions. Identify any that are illegal.
+Ex2.28
 
+> 说明下面的这些定义是什么意思，挑出其中不合法的。
 ```cpp
-int i, *const cp;       // illegal, cp must initialize.
-int *p1, *const p2;     // illegal, p2 must initialize.
-const int ic, &r = ic;  // illegal, ic must initialize.
-const int *const p3;    // illegal, p3 must initialize.
-const int *p;           // legal. a pointer to const int.
+int i, *const cp;       // 不合法, const 指针必须初始化
+int *p1, *const p2;     // 不合法, const 指针必须初始化
+const int ic, &r = ic;  // 不合法, const int 必须初始化
+const int *const p3;    // 不合法, const 指针必须初始化
+const int *p;           // 合法. 一个指针，指向 const int
 ```
 
-## Exercise 2.29
->Uing the variables in the previous exercise, which of the
-following assignments are legal? Explain why.
+Ex2.29
 
+> 假设已有上一个exercise中定义的那些变量，则下面的哪些语句是合法的？请说明原因。
 ```cpp
-i = ic;     // legal.
-p1 = p3;    // illegal. p3 is a const pointer to const int.
-p1 = &ic;   // illegal. ic is a const int.
-p3 = &ic;   // illegal. p3 is a const pointer.
-p2 = p1;    // illegal. p2 is a const pointer.
-ic = *p3;   // illegal. ic is a const int.
+i = ic;     // 合法, 常量赋值给普通变量
+p1 = p3;    // 不合法, p3 是const指针不能赋值给普通指针
+p1 = &ic;   // 不合法, 普通指针不能指向常量
+p3 = &ic;   // 合法, p3 是常量指针且指向常量
+p2 = p1;    // 合法, 可以将普通指针赋值给常量指针
+ic = *p3;   // 合法, 对 p3 取值后是一个 int 然后赋值给 ic
 ```
 
-## Exercise 2.30
->For each of the following declarations indicate whether the
-object being declared has top-level or low-level const.
+Ex2.30
+
+> 对于下面的这些语句，请说明对象被声明成了顶层const还是底层const？
 ```cpp
 const int v2 = 0; int v1 = v2;
 int *p1 = &v1, &r1 = v1;
 const int *p2 = &v2, *const p3 = &i, &r2 = v2;
 ```
 
-v2 is top-level const.
-p2 is low-level const.
-p3 is both low-level and top-level const.
-r2 is low-level const.
+v2 是顶层const，p2 是底层const，p3 既是顶层const又是底层const，r2 是底层const。
 
+Ex2.31
 
-## Exercise 2.31
->Given the declarations in the previous exercise determine
-whether the following assignments are legal. Explain how the top-level or
-low-level const applies in each case.
-
+> 假设已有上一个exercise中所做的那些声明，则下面的哪些语句是合法的？请说明顶层const和底层const在每个例子中有何体现。
 ```cpp
-r1 = v2; // legal, top-level const in v2 is ignored.
-p1 = p2; // illegal, p2 has a low-level const but p1 doesn't.
-p2 = p1; // legal, we can convert int* to const int*.
-p1 = p3; // illegal, p3 has a low-level const but p1 doesn't.
-p2 = p3; // legal, p2 has the same low-level const qualification as p3.
+r1 = v2; // 合法, 顶层const在拷贝时不受影响
+p1 = p2; // 不合法, p2 是底层const，如果要拷贝必须要求 p1 也是底层const
+p2 = p1; // 合法, int* 可以转换成const int*
+p1 = p3; // 不合法, p3 是一个底层const，p1 不是
+p2 = p3; // 合法, p2 和 p3 都是底层const，拷贝时忽略掉顶层const
 ```
 
-## Exercise 2.32
->Is the following code legal or not? If not, how might you
-make it legal?
+Ex2.32
 
-    int null = 0, *p = null;
-
-illegal.
-```cpp
-int null = 0, *p = &null;
-int null = 0, *p = nullptr;
+> 下面的代码是否合法？如果非法，请设法将其修改正确。
+```
+int null = 0, *p = null;
+```
+非法.  
+把int变量直接赋给指针是错误的操作,即使int变量的值恰好等于0也不行.
+```
+int null = 0, *p = 0;
 ```
 
-## Exercise 2.33
->Using the variable definitions from this section, determine
-what happens in each of these assignments:
+Ex2.33
+
+> 利用本节定义的变量，判断下列语句的运行结果。
 ```cpp
-a=42; // set 42 to int a.
-b=42; // set 42 to int b.
-c=42; // set 42 to int c.
-d=42; // ERROR, d is an int *. correct: *d = 42;
-e=42; // ERROR, e is an const int *. correct: e = &c;
-g=42; // ERROR, g is a const int& that is bound to ci.
+a=42; // a 是 int
+b=42; // b 是一个 int,(ci的顶层const在拷贝时被忽略掉了)
+c=42; // c 也是一个int
+d=42; // d 是一个 int *,所以语句非法
+e=42; // e 是一个 const int *, 所以语句非法
+g=42; // g 是一个 const int 的引用，引用都是底层const，所以不能被赋值
 ```
 
-## Exercise 2.34
->Write a program containing the variables and assignments from the
-previous exercise.
-Print the variables before and after the assignments to check
-whether your predictions in the previous exercise were correct.
-If not, study the examples until you can convince yourself you know
-￼￼what led you to the wrong conclusion.
+## [ex2.34](ex2_34.cpp)
 
-[Here](ex2_34.cpp) is the code.
+> 基于上一个exercise中的变量和语句编写一段程序，输出赋值前后变量的内容，你刚才的推断正确吗？如果不对，请反复研读本节的示例直到你明白错在何处为止。
 
-## Exercise 2.35
->Determine the types deduced in each of the following definitions.
-Once you’ve figured out the types,
-write a program to see whether you were correct.
+Ex2.35
+
+> 判断下列定义推断出的类型是什么，然后编写程序进行验证。
 ```cpp
 const int i = 42;
-auto j = i; const auto &k = i; auto *p = &i; const auto j2 = i, &k2 = i;
+auto j = i; const auto &k = i; auto *p = &i; 
+const auto j2 = i, &k2 = i;
 ```
 
-j is int.
-k is const int&.
-p is const int *.
-j2 is const int.
-k2 is const int&.
+j 是 int，k 是 const int的引用，p 是const int *，j2 是const int，k2 是 const int 的引用。
 
-[Here](ex2_35.cpp) is the code.
+至于验证，鼠标移到变量上就出来了......
 
-## Exercise 2.36
->In the following code, determine the type of each variable
-and the value each variable has when the code finishes:
+
+Ex2.36
+
+> 关于下面的代码，请指出每一个变量的类型以及程序结束时它们各自的值。
 ```cpp
 int a = 3, b = 4;
 decltype(a) c = a;
@@ -533,56 +457,53 @@ decltype((b)) d = a;
 ++d;
 ```
 
-`c` is an int, `d` is a reference of `a`.
-all their value are `4`.
+c 是 int 类型，值为 4。d 是 int & 类型，绑定到 a，a 的值为 4 。
 
-## Exercise 2.37
->Assignment is an example of an expression that yields a reference type. The type is a reference to the type of the left-hand operand. That is, if i is an int, then the type of the expression i = x is int&. Using that knowledge, determine the type and value of each variable in this code:
+Ex2.37
+
+> 赋值是会产生引用的一类典型表达式，引用的类型就是左值的类型。也就是说，如果 i 是 int，则表达式 i=x 的类型是 int&。根据这一特点，请指出下面的代码中每一个变量的类型和值。
 ```cpp
 int a = 3, b = 4;
 decltype(a) c = a;
 decltype(a = b) d = a;
 ```
 
-`c` is an int, `d` is a reference of int.
-the value: a=3, b=4, c=3, d=3
+c 是 int 类型，值为 3。d 是 int& 类型，绑定到 a。
 
-## Exercise 2.38
->Describe the differences in type deduction between decltype and auto. Give an example of an expression where auto and decltype will deduce the same type and an example where they will deduce differing types.
+Ex2.38
 
-The way `decltype` handles top-level const and references differs **subtly** from the way `auto` does.
-Another important difference between `decltype` and `auto` is that the deduction done by decltype depends on the **form** of its given expression.
+> 说明由decltype 指定类型和由auto指定类型有何区别。请举一个例子，decltype指定的类型与auto指定的类型一样；再举一个例子，decltype指定的类型与auto指定的类型不一样。
 
-so the key of difference is **subtly** and **form**.
-
+decltype 处理顶层const和引用的方式与 auto不同，decltype会将顶层const和引用保留起来。
 ```cpp
 int i = 0, &r = i;
-// same
+//相同
 auto a = i;
 decltype(i) b = i;
-// different "c" will be int "d" will be int&
+
+//不同 d 是一个 int&
 auto c = r;
 decltype(r) d = r;
 ```
 
-More? Look at [here](http://stackoverflow.com/questions/21369113/what-is-the-difference-between-auto-and-decltypeauto-when-returning-from-a-fun) and [here](http://stackoverflow.com/questions/12084040/decltype-vs-auto)
+[这里](http://stackoverflow.com/questions/21369113/what-is-the-difference-between-auto-and-decltypeauto-when-returning-from-a-fun)和[这里](http://stackoverflow.com/questions/12084040/decltype-vs-auto)还有更多的讨论。
 
-## Exercise 2.39
->Compile the following program to see what happens when
-you forget the semicolon after a class definition. Remember the message for
-future reference.
+Ex2.39
+
+> 编译下面的程序观察其运行结果，注意，如果忘记写类定义体后面的分号会发生什么情况？记录下相关的信息，以后可能会有用。
 ```cpp
-struct Foo { /* empty  */ } // Note: no semicolon
+struct Foo { /* 此处为空  */ } // 注意：没有分号
 int main()
 {
     return 0;
 }
 ```
 
-Error message: [Error] expected ';' after struct definition
+提示应输入分号。
 
-## Exercise 2.40
->Write your own version of the Sales_data class.
+Ex2.40
+
+> 根据自己的理解写出 Sales_data 类，最好与书中的例子有所区别。
 
 ```cpp
 struct Sale_data
@@ -596,10 +517,9 @@ struct Sale_data
 }
 ```
 
-## Exercise 2.41
->Use your Sales_data class to rewrite the exercises in §
-1.5.1(p. 22), § 1.5.2(p. 24), and § 1.6(p. 25). For now, you should define
-your Sales_data class in the same file as your main function.
+Ex2.41
+
+> 使用你自己的Sale_data类重写1.5.1节（第20页）、1.5.2节（第21页）和1.6节（第22页）的exercise。眼下先把Sales_data类的定义和main函数放在一个文件里。
 
 ####1.5.1
 
@@ -729,10 +649,12 @@ int main()
 }
 ```
 
-## Exercise 2.42
->Write your own version of the Sales_data.h header and use it to rewrite the exercise from § 2.6.2(p. 76)
+Ex2.42
+
+> 根据你自己的理解重写一个Sales_data.h头文件，并以此为基础重做2.6.2节（第67页）的exercise。
 
 
-- 1.5.1. [Code](ex2_42_1.cpp)
-- 1.5.2. [Code](ex2_42_2.cpp)
-- 1.6. [Code](ex2_42_3.cpp)
+- [1.5.1](ex2_42_1.cpp)
+- [1.5.2](ex2_42_2.cpp)
+- [1.6](ex2_42_3.cpp)
+

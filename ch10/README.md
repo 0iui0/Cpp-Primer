@@ -1,115 +1,234 @@
-# Chapter 10. Generic Algorithms
+## [ex10.1](ex10_01_02.cpp)
 
-## [Exercise 10.1 and 10.2](ex10_01_02.cpp)
+> 头文件 algorithm 中定义了一个名为 count 的函数，它类似 find， 接受一对迭代器和一个值作为参数。 count 返回给定值在序列中出现的次数。编写程序，读取 int 序列存入vector中，打印有多少个元素的值等于给定值。
 
-## [Exercise 10.3 and 10.4](ex10_03_04.cpp)
+## [ex10.2](ex10_01_02.cpp)
 
-## Exercise 10.5:
->In the call to equal on rosters, what would happen if both rosters held C-style strings, rather than library strings?
+> 重做上一题，但读取 string 序列存入 list 中。
 
-For such case, std::equal is going to compare the address value rather than the string value. 
-So the result is not the same as std::string. Try to avoid coding this way. Check [#227](https://github.com/Mooophy/Cpp-Primer/issues/227) for more detail.
+## [ex10.3](ex10_03_04.cpp)
 
-## [Exercise 10.6](ex10_06.cpp)
+> 用 accumulate求一个 vector<int> 中元素之和。
 
-## [Exercise 10.7](ex10_07.cpp)
+## [ex10.4](ex10_03_04.cpp)
 
-## Exercise 10.8:
->We said that algorithms do not change the size of the containers over which they operate. Why doesn’t the use of back_inserter invalidate this claim?
+> 假定 v 是一个vector<double>，那么调用 accumulate(v.cbegin(),v.cend(),0) 有何错误（如果存在的话）？
 
-Inserters like `back_inserter` is part of `<iterator>` rather than `<algorithm>`. 
+结果会是 int 类型。
 
-## [Exercise 10.9](ex10_09.cpp)
+Ex10.5
 
-## Exercise 10.10:
->Why do you think the algorithms don’t change the size of containers?
+> 在本节对名册（roster）调用equal 的例子中，如果两个名册中保存的都是C风格字符串而不是string，会发生什么？
 
-@Mooophy:
-The aim of this design is to separate the algorithms and the operation provided by member function.
+C风格字符串是用指向字符的指针表示的，因此会比较两个指针的值（地址），而不会比较这两个字符串的内容。
 
-@pezy:
-Cause the library algorithms operate on **iterators**, **not containers**. Thus, an algorithm **cannot (directly)** add or remove elements.
+## [ex10.6](ex10_06.cpp)
 
-## [Exercise 10.11](ex10_11.cpp)
-## [Exercise 10.12](ex10_12.cpp)
-## [Exercise 10.13](ex10_13.cpp)
+> 编写程序，使用 fill_n 将一个序列中的 int 值都设置为 0。
 
-## Exercise 10.14:
->Write a lambda that takes two ints and returns their sum.
+## [ex10.7](ex10_07.cpp)
 
+
+> 下面程序是否有错误？如果有，请改正：
 ```cpp
-auto add = [](int lhs, int rhs){ return lhs + rhs; };
+(a) vector<int> vec; list<int> lst; int i;
+	while (cin >> i)
+		lst.push_back(i);
+	copy(lst.cbegin(), lst.cend(), vec.begin());
+(b) vector<int> vec;
+	vec.reserve(10);
+	fill_n(vec.begin(), 10, 0);
 ```
 
-## Exercise 10.15:
->Write a lambda that captures an int from its enclosing function and takes an int parameter.
-The lambda should return the sum of the captured int and the int parameter.
+* (a) 应该加一条语句 `vec.resize(lst.size())` 。copy 时必须保证目标目的序列至少要包含与输入序列一样多的元素。
+* (b) 从语句上来说没错误，这段代码没有任何结果。但是从逻辑上来说，应该将 `vec.reserve(10)` 改为 `vec.resize(10)` 。
+
+Ex10.8
+
+> 本节提到过，标准库算法不会改变它们所操作的容器的大小。为什么使用 back_inserter 不会使这一断言失效？
+
+`back_inserter` 是插入迭代器，在 `iterator.h` 头文件中，不是标准库的算法。
+
+## [ex10.9](ex10_09.cpp)
+
+> 实现你自己的 elimDups。分别在读取输入后、调用 unique后以及调用erase后打印vector的内容。
+
+##　exercise10.10
+
+> 你认为算法不改变容器大小的原因是什么？
+
+算法的接口是迭代器，而迭代器用来改变容器。这样的设计使得算法具有通用性。
+
+## [ex10.11](ex10_11.cpp)
+
+> 编写程序，使用 stable_sort 和 isShorter 将传递给你的 elimDups 版本的 vector 排序。打印 vector的内容，验证你的程序的正确性。
+
+## [ex10.12](ex10_12.cpp)
+
+> 编写名为 compareIsbn 的函数，比较两个 Sales_data 对象的isbn() 成员。使用这个函数排序一个保存 Sales_data 对象的 vector。
+
+## [ex10.13](ex10_13.cpp)
+
+> 标准库定义了名为 partition 的算法，它接受一个谓词，对容器内容进行划分，使得谓词为true 的值会排在容器的前半部分，而使得谓词为 false 的值会排在后半部分。算法返回一个迭代器，指向最后一个使谓词为 true 的元素之后的位置。编写函数，接受一个 string，返回一个 bool 值，指出 string 是否有5个或更多字符。使用此函数划分 words。打印出长度大于等于5的元素。
+
+Ex10.14
+
+> 编写一个 lambda ，接受两个int，返回它们的和。
 
 ```cpp
-int i = 42;
-auto add = [i](int num){ return i + num; };
+auto f = [](int i, int j) { return i + j; };
 ```
 
-## [Exercise 10.16](ex10_16.cpp)
-## [Exercise 10.17](ex10_17.cpp)
-## [Exercise 10.18 and 10.19](ex10_18_19.cpp)
-## [Exercise 10.20 and 10.21](ex10_20_21.cpp)
-## [Exercise 10.22](ex10_22.cpp)
+Ex10.15
 
-## Exercise 10.23:
->How many arguments does bind take?
+> 编写一个 lambda ，捕获它所在函数的 int，并接受一个 int参数。lambda 应该返回捕获的 int 和 int 参数的和。
 
-Assuming the function to be bound have `n` parameters, bind take `n + 1` parameters.
-The additional one is for the function to be bound itself.
-
-## [Exercise 10.24](ex10_24.cpp)
-## [Exercise 10.25](ex10_25.cpp)
-
-## Exercise 10.26:
->Explain the differences among the three kinds of insert iterators.
-
-- `back_inserter` uses `push_back`.
-- `front_inserter` uses `push_front`.
-- `insert` uses `insert`
->This function takes a second argument, which must be an iterator into the given container. Elements are inserted ahead of the element denoted by the given iterator.
-
-## [Exercise 10.27](ex10_27.cpp)
-## [Exercise 10.28](ex10_28.cpp)
-## [Exercise 10.29](ex10_29.cpp)
-## [Exercise 10.30](ex10_30.cpp)
-## [Exercise 10.31](ex10_31.cpp)
-## [Exercise 10.32](ex10_32.cpp)
-## [Exercise 10.33](ex10_33.cpp)
-## [Exercise 10.34 ~ 10.37](ex10_34_35_36_37.cpp)
-
-## Exercise 10.38:
->List the five iterator categories and the operations that each supports.
-
-- Input iterators : `==`, `!=`, `++`, `*`, `->`
-- Output iterators : `++`, `*`
-- Forward iterators : `==`, `!=`, `++`, `*`, `->`
-- Bidirectional iterators : `==`, `!=`, `++`, `--`, `*`, `->`
-- Random-access iterators : `==`, `!=`, `<`, `<=`, `>`, `>=`, `++`, `--`, `+`, `+=`, `-`, `-=`, `-`(two iterators), `*`, `->`, `iter[n]` == `* (iter + n)`
-
-## Exercise 10.39:
->What kind of iterator does a list have? What about a vector?
-
-`list` have the **Bidirectional iterators**.  `vector` have the **Random-access iterators**.
-
-## Exercise 10.40:
->What kinds of iterators do you think copy requires? What about reverse or unique?
-
-- `copy` : first and second are Input iterators, last is Output iterators.
-- `reverse` : Bidirectional iterators.
-- `unique` : Forward iterators.
-
-## Exercise 10.41:
->Based only on the algorithm and argument names, describe the operation that the each of the following library algorithms performs:
 ```cpp
-replace(beg, end, old_val, new_val); // replace the old_elements in the input range as new_elements.
-replace_if(beg, end, pred, new_val); // replace the elements in the input range which pred is true as new_elements.
-replace_copy(beg, end, dest, old_val, new_val); // copy the new_elements which is old_elements in the input range into dest.
-replace_copy_if(beg, end, dest, pred, new_val); // copy the new_elements which pred is true in the input range into dest.
+int x = 10;
+auto f = [x](int i) { i + x; };
 ```
 
-## [Exercise 10.42](ex10_42.cpp)
+## [ex10.16](ex10_16.cpp)
+
+> 使用 lambda 编写你自己版本的 biggies。
+
+## [ex10.17](ex10_17.cpp)
+
+> 重写10.3.1节exercise10.12的程序，在对sort的调用中使用 lambda 来代替函数 compareIsbn。
+
+## [ex10.18](ex10_18.cpp)
+
+> 重写 biggies，用 partition 代替 find_if。我们在10.3.1节exercise10.13中介绍了 partition 算法。
+
+## [ex10.19](ex10_19.cpp)
+
+> 用 stable_partition 重写前一题的程序，与 stable_sort 类似，在划分后的序列中维持原有元素的顺序。
+
+## [ex10.20](ex10_20.cpp)
+
+> 标准库定义了一个名为 count_if 的算法。类似 find_if，此函数接受一对迭代器，表示一个输入范围，还接受一个谓词，会对输入范围中每个元素执行。count_if返回一个计数值，表示谓词有多少次为真。使用count_if重写我们程序中统计有多少单词长度超过6的部分。
+
+Ex10.21
+
+> 编写一个 lambda，捕获一个局部 int 变量，并递减变量值，直至它变为0。一旦变量变为0，再调用lambda应该不再递减变量。lambda应该返回一个bool值，指出捕获的变量是否为0。
+
+```cpp
+	int i = 10;
+	auto f = [&i]() -> bool { return (i == 0 ? true : !(i--)); };
+	while (!f()) cout << i << endl;
+```
+
+## [ex10.22](ex10_22.cpp)
+
+> 重写统计长度小于等于6的单词数量的程序，使用函数代替 lambda。
+
+Ex10.23
+
+> bind 接受几个参数？
+
+假设被绑定的函数接受 n 个参数，那么bind 接受 n + 1 个参数。
+
+## [ex10.24](ex10_24.cpp)
+
+> 给定一个string，使用 bind 和 check_size 在一个 int 的vector 中查找第一个大于string长度的值。
+
+## [ex10.25](ex10_25.cpp)
+
+> 在10.3.2节的exercise中，编写了一个使用partition 的biggies版本。使用 check_size 和 bind 重写此函数。
+
+Ex10.26
+
+> 解释三种迭代器的不同之处。
+
+* `back_inserter` 使用 `push_back` 。
+* `front_inserter` 使用 `push_front` 。
+* `inserter` 使用 `insert`，此函数接受第二个参数，这个参数必须是一个指向给定容器的迭代器。元素将被插入到给定迭代器所表示的元素之前。
+
+## [ex10.27](ex10_27.cpp)
+
+> 除了 unique 之外，标准库还定义了名为 unique_copy 的函数，它接受第三个迭代器，表示拷贝不重复元素的目的位置。编写一个程序，使用 unique_copy将一个vector中不重复的元素拷贝到一个初始化为空的list中。
+
+## [ex10.28](ex10_28.cpp)
+
+> 一个vector 中保存 1 到 9，将其拷贝到三个其他容器中。分别使用inserter、back_inserter 和 front_inserter 将元素添加到三个容器中。对每种 inserter，估计输出序列是怎样的，运行程序验证你的估计是否正确。
+
+## [ex10.29](ex10_29.cpp)
+
+> 编写程序，使用流迭代器读取一个文本文件，存入一个vector中的string里。
+
+## [ex10.30](ex10_30.cpp)
+
+> 使用流迭代器、sort 和 copy 从标准输入读取一个整数序列，将其排序，并将结果写到标准输出。
+
+## [ex10.31](ex10_31.cpp)
+
+> 修改前一题的程序，使其只打印不重复的元素。你的程序应该使用 unique_copy。
+
+## [ex10.32](ex10_32.cpp)
+
+> 重写1.6节中的书店程序，使用一个vector保存交易记录，使用不同算法完成处理。使用 sort 和10.3.1节中的 compareIsbn 函数来排序交易记录，然后使用 find 和 accumulate 求和。
+
+## [ex10.33](ex10_33.cpp)
+
+> 编写程序，接受三个参数：一个输入文件和两个输出文件的文件名。输入文件保存的应该是整数。使用 istream_iterator 读取输入文件。使用 ostream_iterator 将奇数写入第一个输入文件，每个值后面都跟一个空格。将偶数写入第二个输出文件，每个值都独占一行。
+
+## [ex10.34](ex10_34.cpp)
+
+> 使用 reverse_iterator 逆序打印一个vector。
+
+## [ex10.35](ex10_35.cpp)
+
+> 使用普通迭代器逆序打印一个vector。
+
+## [ex10.36](ex10_36.cpp)
+
+> 使用 find 在一个 int 的list 中查找最后一个值为0的元素。
+
+## [ex10.37](ex10_37.cpp)
+
+> 给定一个包含10 个元素的vector，将位置3到7之间的元素按逆序拷贝到一个list中。
+
+Ex10.38
+
+> 列出5个迭代器类别，以及每类迭代器所支持的操作。
+
+* 输入迭代器 : `==`,`!=`,`++`,`*`,`->`
+* 输出迭代器 : `++`,`*`
+* 前向迭代器 : `==`,`!=`,`++`,`*`,`->`
+* 双向迭代器 : `==`,`!=`,`++`,`--`,`*`,`->`
+* 随机访问迭代器 : `==`,`!=`,`<`,`<=`,`>`,`>=`,`++`,`--`,`+`,`+=`,`-`,`-=`,`*`,`->`,`iter[n]`==`*(iter[n])`
+
+Ex10.39
+
+> list 上的迭代器属于哪类？vector呢？
+
+* list 上的迭代器是 **双向迭代器**
+* vector 上的迭代器是 **随机访问迭代器**
+
+Ex10.40
+
+> 你认为 copy 要求哪类迭代器？reverse 和 unique 呢？
+
+* copy 需要两个**输入迭代器**，一个**输出迭代器**
+* reverse 需要**双向迭代器**
+* unique需要**随机访问迭代器**
+
+Ex10.41
+
+> 仅根据算法和参数的名字，描述下面每个标准库算法执行什么操作：
+```cpp
+replace(beg, end, old_val, new_val);
+replace_if(beg, end, pred, new_val);
+replace_copy(beg, end, dest, old_val, new_val);
+replace_copy_if(beg, end, dest, pred, new_val);
+```
+
+* `replace` 在两个迭代器范围内用新值替换所有原来的旧值。
+* `replace_if` 在两个迭代器范围内，满足谓词条件的元素用新值替换。
+* `replace_copy` 复制两个迭代器范围内的元素到目标迭代器位置，如果元素等于某个旧值，则用新值替换
+* `replace_copy_if` 复制两个迭代器范围内的元素到目标迭代器位置，满足谓词条件的元素用新值替换
+
+## [ex10.42](ex10_42.cpp)
+
+> 使用 list 代替 vector 重新实现10.2.3节中的去除重复单词的程序。
+

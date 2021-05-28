@@ -1,39 +1,38 @@
-## Exercise 4.1
->What is the value returned by 5 + 10 * 20/2?
+Ex4.1
 
-105
+> 表达式 5 + 10 * 20 / 2 的求值结果是多少？
 
-## Exercise 4.2
->Using Table 4.12 (p. 166), parenthesize the following expressions to
-indicate the order in which the operands are grouped:
-```cpp
-* vec.begin() //=> *(vec.begin())
-* vec.begin() + 1 //=> (*(vec.begin())) + 1
+105。
+
+Ex4.2
+
+> 根据4.12节中的表，在下述表达式的合理位置添加括号，使得添加括号后运算对象的组合顺序与添加括号前一致。
+* (a) *vec.begin()
+* (b) *vec.begin() + 1
+
 ```
+*(vec.begin())
+(*(vec.begin())) + 1
+``` 
 
-## Exercise 4.3
->Order of evaluation for most of the binary operators is left
-undefined to give the compiler opportunities for optimization.
-This strategy presents a trade-off between efficient code generation
-and potential pitfalls in the use of the language by the programmer.
-Do you consider that an acceptable trade-off? Why or why not?
+Ex4.3
 
-No. IMHO, such design cannot improve performance siginificantly, but it can make bugs very tricky to handle.
+> C++语言没有明确规定大多数二元运算符的求值顺序，给编译器优化留下了余地。这种策略实际上是在代码生成效率和程序潜在缺陷之间进行了权衡，你认为这可以接受吗？请说出你的理由。
 
-## Exercise 4.4
->Parenthesize the following expression to show how it is evaluated.
-Test your answer by compiling the expression (without parentheses)
-and printing its result.
+可以接受。C++的设计思想是尽可能地“相信”程序员，将效率最大化。然而这种思想却有着潜在的危害，就是无法控制程序员自身引发的错误。因此 Java 的诞生也是必然，Java的思想就是尽可能地“不相信”程序员。
+
+Ex4.4
+
+> 在下面的表达式中添加括号，说明其求值过程及最终结果。编写程序编译该（不加括号的）表达式并输出结果验证之前的推断。
 ```cpp
 12 / 3 * 4 + 5 * 15 + 24 % 4 / 2
-// parenthesize
-((12/3)*4) + (5*15) + ((24%4)/2)
-// 16 + 75 + 0 = 91
-// print: 91
 ```
 
-## Exercise 4.5
->Determine the result of the following expressions.
+((12/3)*4) + (5*15) + ((24%4)/2)
+
+Ex4.5
+
+> 写出下列表达式的求值结果。
 ```cpp
 -30 * 3 + 21 / 5  // -90+4 = -86
 -30 + 3 * 21 / 5  // -30+63/5 = -30+12 = -18
@@ -41,333 +40,347 @@ and printing its result.
 -30 / 3 * 21 % 4  // -10*21%4 = -210%4 = -2
 ```
 
-## Exercise 4.6
->Write an expression to determine whether an int value is even or odd.
+Ex4.6
+
+> 写出一条表达式用于确定一个整数是奇数还是偶数。
 
 ```cpp
- i & 0x1 
+if (i % 2 == 0) /* ... */
 ```
 
-## Exercise 4.7
->What does overflow mean? Show three expressions that will overflow.
+Ex4.7
 
-from the book:
->Some arithmetic expressions yield undefined results. Some of these undefined espressions are due to the nature of mathematics-for example, division by zero. Others are undefined due to the nature of computers-for example, due to overflow. Overflow happens when a value is computed that is outside the range of values that the type can represent.
+> 溢出是何含义？写出三条将导致溢出的表达式。
 
+当计算的结果超出该类型所能表示的范围时就会产生溢出。
 ```cpp
 short svalue = 32767; ++svalue; // -32768
 unsigned uivalue = 0; --uivalue;  // 4294967295
 unsigned short usvalue = 65535; ++usvalue;  // 0
 ```
 
-## Exercise 4.8
->Explain when operands are evaluated in the logical `AND`, logical `OR`, and equality operators.
+Ex4.8
 
-from the book:
-> The logical `AND` and `OR` operators always evaluate their left operand before the right. Moreover, the right operand is evaluated if and only if the left operand does not determine the result. This strategy is known as **short-circuit evaluation**.
+> 说明在逻辑与、逻辑或及相等性运算符中运算对象的求值顺序。
 
-- logical `AND` : the second operand is evaluated if and only if the left side is `true`.
-- logical `OR`  : the second operand is evaluated if and only if the left side is `false`
-- equality operators `==` : undefined.
+* 逻辑与运算符和逻辑或运算符都是先求左侧运算对象的值再求右侧运算对象的值，当且仅当左侧运算对象无法确定表达式的结果时才会计算右侧运算对象的值。这种策略称为 **短路求值**。
+* 相等性运算符未定义求值顺序。
 
-## Exercise 4.9
->Explain the behavior of the condition in the following if:
+Ex4.9
+
+> 解释在下面的if语句中条件部分的判断过程。
 ```cpp
 const char *cp = "Hello World";
 if (cp && *cp)
 ```
 
-cp is a pointer to `const char *`, and it's not a nullptr. true.
+首先判断 `cp` ，`cp` 不是一个空指针，因此 `cp` 为真。然后判断 `*cp`，`*cp` 的值是字符 'H'，非0。因此最后的结果为真。
 
-`*cp` is a const char: 'H', and it is explicit a nonzero value. true.
+Ex4.10
 
-true && true -> true.
-
-## Exercise 4.10
->Write the condition for a while loop that would read ints from
-the standard input and stop when the value read is equal to 42.
+> 为while 循环写一个条件，使其从标准输入中读取整数，遇到 42 时停止。
 
 ```cpp
-int i = 0;
+int i;
 while(cin >> i && i != 42)
 ```
 
-## Exercise 4.11
->Write an expression that tests four values, a, b, c, and d,
-and ensures that a is greater than b, which is greater than c,
-which is greater than d.
+Ex4.11
+
+> 书写一条表达式用于测试4个值a、b、c、d的关系，确保a大于b、b大于c、c大于d。
 
 ```cpp
 a>b && b>c && c>d
 ```
 
-## Exercise 4.12
->Assuming `i`, `j`, and `k` are all ints, explain what `i != j < k` means.
+Ex4.12
 
-`i != j < k` is equivalent to `i != (j < k)`.
+> 假设i、j 和k 是三个整数，说明表达式 i != j < k 的含义。
 
+这个表达式等于 `i != (j < k)`。首先得到 j < k 的结果为 true 或 false，转换为整数值是 1 和 0，然后判断 i 不等于 1 和 0 ，最终的结果为 bool 值。
 
-## Exercise 4.13
->What are the values of i and d after each assignment?
+Ex4.13
+
+> 在下述语句中，当赋值完成后 i 和 d 的值分别是多少？
 ```cpp
 int i;   double d;
 d = i = 3.5; // i = 3, d = 3.0
 i = d = 3.5; // d = 3.5, i = 3
 ```
 
-## Exercise 4.14
->Explain what happens in each of the if tests:
+Ex4.14
+
+> 执行下述 if 语句后将发生什么情况？
 ```cpp
-if (42 = i)   // complie error: expression is not assignable
+if (42 = i)   // 编译错误。赋值运算符左侧必须是一个可修改的左值。而字面值是右值。
 if (i = 42)   // true.
 ```
 
-## Exercise 4.15
->The following assignment is illegal. Why? How would you correct it?
+Ex4.15
+
+> 下面的赋值是非法的，为什么？应该如何修改？
 ```cpp
 double dval; int ival; int *pi;
 dval = ival = pi = 0;
-// pi is a pointer to int.
-// can not assign to 'int' from type 'int *'
-// correct it:
+```
+
+p 是指针，不能赋值给 int ，应该改为：
+```cpp
 dval = ival = 0;
 pi = 0;
 ```
 
-## Exercise 4.16
->Although the following are legal,
-they probably do not behave as the programmer expects. Why?
-Rewrite the expressions as you think they should be.
+Ex4.16
+
+> 尽管下面的语句合法，但它们实际执行的行为可能和预期并不一样，为什么？应该如何修改？
 ```cpp
 if (p = getPtr() != 0)
 if (i = 1024)
-// why? always true. use an assigment as a condition.
-// correct it
+```
+
+条件判断总是为 true， 应该改为：
+```cpp
 if ((p=getPtr()) != 0)
 if (i == 1024)
 ```
 
-## Exercise 4.17
->Explain the difference between prefix and postfix increment.
+Ex4.17
 
-See: [What is the difference between ++i and i++](http://stackoverflow.com/questions/24853/what-is-the-difference-between-i-and-i)
+> 说明前置递增运算符和后置递增运算符的区别。
 
-## Exercise 4.18
->What would happen if the while loop on page 148 that prints
-the elements from a vector used the prefix increment operator?
+前置递增运算符将对象本身作为左值返回，而后置递增运算符将对象原始值的副本作为右值返回。
 
-It will print from the second element and dereference `v.end()` at last, which is a **UB**.
+Ex4.18
 
-## Exercise 4.19
->Given that ptr points to an int, that vec is a vector<int>,
-and that ival is an int, explain the behavior of each of these expressions.
-Which, if any, are likely to be incorrect? Why? How might each be corrected?
+> 如果132页那个输出vector对象元素的while循环使用前置递增运算符，将得到什么结果？
 
+将会从第二个元素开始取值，并且最后对 v.end() 进行取值，结果是未定义的。
+
+Ex4.19
+
+> 假设 ptr 的类型是指向 int 的指针、vec 的类型是vector<int>、ival 的类型是int，说明下面的表达式是何含义？如果有表达式不正确，为什么？应该如何修改？
 ```cpp
-ptr != 0 && *ptr++  // check ptr is not a nullptr, and then check the pointer value.
-ival++ && ival // check ival, and then check ival+1 whether equal zero.
-vec[ival++] <= vec[ival] // incorrect. It is an **undefined behavior.**
-// correct:
-vec[ival] <= vec[ival+1]
+(a) ptr != 0 && *ptr++  
+(b) ival++ && ival
+(c) vec[ival++] <= vec[ival] 
 ```
 
-See [order of evaluation](http://en.cppreference.com/w/cpp/language/eval_order).
+* (a) 判断ptr 不是一个空指针，并且ptr 当前指向的元素的值也为真，然后将ptr指向下一个元素
+* (b) 判断 ival 的值为真，并且 (ival + 1) 的值也为真
+* (c) 表达式有误。C++并没有规定 `<=` 运算符两边的求值顺序，应该改为 `vec[ival] <= vec[ival+1]`
 
-## Exercise 4.20
->Assuming that iter is a vector<string>::iterator,
-indicate which, if any, of the following expressions are legal.
-Explain the behavior of the legal expressions and
-why those that aren’t legal are in error.
+Ex4.20
+
+> 假设 iter 的类型是 vector<string>::iterator, 说明下面的表达式是否合法。如果合法，表达式的含义是什么？如果不合法，错在何处？
 ```cpp
-*iter++;  // return *iter, then ++iter.
-(*iter)++;  // illegal, *iter is a string, cannot increment value.
-*iter.empty() // illegal, iter should use '->' to indicate whether empty.
-iter->empty();  // indicate the iter' value whether empty.
-++*iter;        // illegal, string have not increment.
-iter++->empty();  // return iter->empty(), then ++iter.
+(a) *iter++;
+(b) (*iter)++;
+(c) *iter.empty();
+(d) iter->empty();
+(e) ++*iter;
+(f) iter++->empty();
 ```
 
-## [Exercise 4.21](ex4_21.cpp)
-## [Exercise 4.22](ex4_22.cpp)
-## Exercise 4.23
->The following expression fails to compile due to operator precedence.
-Using Table 4.12 (p. 166), explain why it fails. How would you fix it?
+* (a)合法。返回迭代器所指向的元素，然后迭代器递增。
+* (b)不合法。因为vector元素类型是 string，没有 ++ 操作。
+* (c)不合法。这里应该加括号。
+* (d)合法。判断迭代器当前的元素是否为空。
+* (e)不合法。string 类型没有 ++ 操作。
+* (f)合法。判断迭代器当前元素是否为空，然后迭代器递增。
+
+## [ex4.21](ex4_21.cpp)
+
+> 编写一段程序，使用条件运算符从 vector<int> 中找到哪些元素的值是奇数，然后将这些奇数值翻倍。
+
+## [ex4.22](ex4_22.cpp)
+
+> 本节的示例程序将成绩划分为high pass、pass 和 fial 三种，扩展该程序使其进一步将 60 分到 75 分之间的成绩设定为 low pass。要求程序包含两个版本：一个版本只使用条件运算符；另一个版本使用1个或多个if语句。哪个版本的程序更容易理解呢？为什么？
+
+第二个版本容易理解。当条件运算符嵌套层数变多之后，代码的可读性急剧下降。而if else 的逻辑很清晰。
+
+Ex4.23
+
+> 因为运算符的优先级问题，下面这条表达式无法通过编译。根据4.12节中的表指出它的问题在哪里？应该如何修改？
 ```cpp
 string s = "word";
 string pl = s + s[s.size() - 1] == 's' ? "" : "s" ;
 ```
 
-Operator Precedence: `?:` < `+`
-Fix it:
+加法运算符的优先级高于条件运算符。因此要改为：
 ```cpp
 string pl = s + (s[s.size() - 1] == 's' ? "" : "s") ;
 ```
 
-## Exercise 4.24
->Our program that distinguished between high pass, pass,
-and fail depended on the fact that
-the conditional operator is right associative.
-Describe how that operator would be evaluated
-if the operator were left associative.
+Ex4.24
 
-if the operator were left associative.
+> 本节的示例程序将成绩划分为 high pass、pass、和fail三种，它的依据是条件运算符满足右结合律。假如条件运算符满足的是左结合律，求值的过程将是怎样的？
+
+如果条件运算符满足的是左结合律。那么
 ```cpp
 finalgrade = (grade > 90) ? "high pass" : (grade < 60) ? "fail" : "pass";
 ```
-would same as :
+等同于
 ```cpp
 finalgrade = ((grade > 90) ? "high pass" : (grade < 60)) ? "fail" : "pass";
 ```
-if `grade > 90`, first conditional operator's result is `high pass`. so the finalgrade is always fail.
-It's contradictory obviously.
+假如此时 grade > 90 ，第一个条件表达式的结果是 "high pass" ，而字符串字面值的类型是 const char *，非空所以为真。因此第二个条件表达式的结果是 "fail"。这样就出现了自相矛盾的逻辑。
 
-## Exercise 4.25
->What is the value of ~'q' << 6 on a machine with 32-bit ints and 8 bit chars, that uses Latin-1 character set in which 'q' has the bit pattern 01110001?
+Ex4.25
 
-The final value in decimal is `-7296`.  
+> 如果一台机器上 int 占 32 位、char 占8位，用的是 Latin-1 字符集，其中字符'q' 的二进制形式是 01110001，那么表达式'q' << 6的值是什么？
 
-## Exercise 4.26
->In our grading example in this section, what would happen if we used unsigned int as the type for quiz1?
+首先将char类型提升为int 类型，等同于 00000000 00000000 00000000 01110001 << 6，结果是 00000000 00000000 00011100 01000000，转换是十进制是7232。
 
-The C++ standard does not specify the size of integral types in bytes, but it specifies minimum ranges they must be able to hold. The minimum range of `unsigned int` is 0 to 65535. Since some implementations use only the minimum 16 bits for `unsigned int`, this could cause undefined behavior.
+Ex4.26
 
+> 在本节关于测验成绩的例子中，如果使用unsigned int 作为quiz1 的类型会发生什么情况？
 
-## Exercise 4.27
->What is the result of each of these expressions?
+在有的机器上，unsigned int 类型可能只有 16 位，因此结果是未定义的。
+
+Ex4.27
+
+> 下列表达式的结果是什么？
 ```cpp
 unsigned long ul1 = 3, ul2 = 7;
-ul1 & ul2 // == 3
-ul1 | ul2 // == 7
-ul1 && ul2 // == true
-ul1 || ul2 // == true
+(a) ul1 & ul2 
+(b) ul1 | ul2 
+(c) ul1 && ul2
+(d) ul1 || ul2 
 ```
 
-## [Exercise 4.28](ex4_28.cpp)
-## Exercise 4.29
->Predict the output of the following code and explain your reasoning. Now run the program. Is the output what you expected? If not, figure out why.
+* (a) 3
+* (b) 7
+* (c) true
+* (d) ture
+
+## [ex4.28](ex4_28.cpp)
+
+> 编写一段程序，输出每一种内置类型所占空间的大小。
+
+Ex4.29
+
+> 推断下面代码的输出结果并说明理由。实际运行这段程序，结果和你想象的一样吗？如不一样，为什么？
 ```cpp
 int x[10];   int *p = x;
 cout << sizeof(x)/sizeof(*x) << endl;
 cout << sizeof(p)/sizeof(*p) << endl;
 ```
 
- * The first is 10. It returns the number of elements in x. 
- * The second result is undefined.
+第一个输出结果是 10。第二个结果是未定义。
 
------
-reference: [Why the size of a pointer is 4bytes in C++](http://stackoverflow.com/a/2428809)
+Ex4.30
 
-## Exercise 4.30
->Using Table 4.12 (p. 166), parenthesize the following expressions to match the default evaluation:
+> 根据4.12节中的表，在下述表达式的适当位置加上括号，使得加上括号之后的表达式的含义与原来的含义相同。
 ```cpp
-sizeof x + y      // (sizeof x)+y . "sizeof" has higher precedence than binary `+`.
-sizeof p->mem[i]  // sizeof(p->mem[i])
-sizeof a < b      // sizeof(a) < b
-sizeof f()        //If `f()` returns `void`, this statement is undefined, otherwise it returns the size of return type.
+(a) sizeof x + y      
+(b) sizeof p->mem[i]  
+(c) sizeof a < b     
+(d) sizeof f()  
 ```
 
------
-reference: [sizeof operator](http://en.cppreference.com/w/cpp/language/sizeof)
+* (a) (sizeof x) + y
+* (b) sizeof(p->mem[i])
+* (c) sizeof(a) < b
+* (d) sizeof(f())
 
-## Exercise 4.31
->The program in this section used the prefix increment and decrement operators. Explain why we used prefix and not postfix. What changes would have to be made to use the postfix versions? Rewrite the program using postfix operators.
+Ex4.31
 
-~~postfix will copy itself as return, then increment or decrement. prefix will increment or decrement first, and return itself. so prefix is more effective in this program.(reduce one copy space.)~~
+> 本节的程序使用了前置版本的递增运算符和递减运算符，解释为什么要用前置版本而不用后置版本。要想使用后置版本的递增递减运算符需要做哪些改动？使用后置版本重写本节的程序。
 
-We use prefix and not postfix, just because of the `Advice: Use Postfix Operators only When Necessary` on `§4.5. Increment and Decrement Operators`.
+在4.5节（132页）已经说过了，**除非必须，否则不用递增递减运算符的后置版本**。在这里要使用后者版本的递增递减运算符不需要任何改动。
 
->**Advice: Use Postfix Operators only When Necessary**
+Ex4.32
 
->Readers from a C background might be surprised that we use the prefix increment in the programs we've written. The reason is simple: The prefix version avoids unnecessary work. It increments the value and returns the incremented version.The postfix operator must store the original value so that it can return the unincremented value as its result. If we don’t need the unincremented value, there’s no need for the extra work done by the postfix operator.
-
->For ints and pointers, the compiler can optimize away this extra work. For more complicated iterator types, this extra work potentially might be more costly. By habitually using the prefix versions, we do not have to worry about whether the performance difference matters. Moreover—and perhaps more importantly—we can express the intent of our programs more directly.
-
-So, it's just a good habits. And there are no changes if we have to be made to use the postfix versions. Rewrite:
-```cpp
-for(vector<int>::size_type ix = 0; ix != ivec.size(); ix++, cnt--)  
-    ivec[ix] = cnt;
-```
-
-This is not an appropriate example to discuss the difference of prefix and postfix. Look at the section `Built-in comma operator` on [this page](http://en.cppreference.com/w/cpp/language/operator_other).
-
------
-reference: [Usage of the Built-in Comma Operator](http://stackoverflow.com/questions/22591387/usage-of-the-built-in-comma-operator)
-
-## Exercise 4.32
->Explain the following loop.
+> 解释下面这个循环的含义。
 ```cpp
 constexpr int size = 5;
 int ia[size] = { 1, 2, 3, 4, 5 };
 for (int *ptr = ia, ix = 0;
     ix != size && ptr != ia+size;
     ++ix, ++ptr) { /* ... */ }
-```
+```  
 
-`ptr` and `ix` have the same function. The former use a pointer, and the latter use the index of array. we use the loop to through the array.(just choose one from `ptr` and `ix`)
+这个循环在遍历数组 ia，指针 ptr 和 整型 ix 都是起到一个循环计数的功能。
 
-## Exercise 4.33
->Using Table 4.12 (p. 166) explain what the following expression does:
+Ex4.33
+
+> 根据4.12节中的表说明下面这条表达式的含义。
 ```cpp
 someValue ? ++x, ++y : --x, --y
 ```
 
-Because of the most lowest precedence of the comma operator, the expression is same as:
+逗号表达式的优先级是最低的。因此这条表达式也等于：
 ```cpp
 (someValue ? ++x, ++y : --x), --y
 ```
-If someValue is true, then `++x`, and the result is `y`, if someValue is false, then `--x`, and the result is `--y`. so it is also same as:
-```cpp
-someValue ? (++x, y) : (--x, --y);
-```
-Even though the result has nothing to do with `x`, the evaluation of `someValue` does effect the operation on `x`.
+如果 someValue的值为真，x 和 y 的值都自增并返回 y 值，然后丢弃 y 值，y递减并返回 y 值。如果 someValue的值为假，x 递减并返回 x 值，然后丢弃 x 值，y递减并返回 y 值。
 
-## Exercise 4.34
->Given the variable definitions in this section, explain what conversions take place in the following expressions:
+Ex4.34
+
+> 根据本节给出的变量定义，说明在下面的表达式中奖发生什么样的类型转换：
+```cpp
 (a) if (fval)
 (b) dval = fval + ival;
 (c) dval + ival * cval;
-Remember that you may need to consider the associativity of the operators.
+```
+需要注意每种运算符遵循的是左结合律还是右结合律。
 
+* (a) fval 转换为 bool 类型
+* (b) ival 转换为 float ，相加的结果转换为 double
+* (c) cval 转换为 int，然后相乘的结果转换为 double
+
+Ex4.35
+
+> 假设有如下的定义：
 ```cpp
-if (fval) // fval converted to bool
-dval = fval + ival; // ival converted to fval, then the result of fval add ival converted to double.
-dval + ival * cval; // cval converted to int, then that int and ival converted to double.
+char cval;
+int ival;
+unsigned int ui;
+float fval;
+double dval;
+```
+请回答在下面的表达式中发生了隐式类型转换吗？如果有，指出来。
+```cpp
+(a) cval = 'a' + 3;
+(b) fval = ui - ival * 1.0;
+(c) dval = ui * fval;
+(d) cval = ival + fval + dval;
 ```
 
-## Exercise 4.35
->Given the following definitions,
-```cpp
-char cval; int ival; unsigned int ui; float fval; double dval;
-```
-identify the implicit type conversions, if any, taking place:
-```cpp
-cval = 'a' + 3; // 'a' promoted to int, then the result of ('a' + 3)(int) converted to char.
-fval = ui - ival * 1.0; // ival converted to double , ui also converted to double. then that double converted(by truncation) to float.
-dval = ui * fval; // ui promoted to float. then that float converted to double.
-cval = ival + fval + dval;  // ival converted to float, then that float and fval converted to double. At last, that double converted to char(by truncation).
-```
+* (a) 'a' 转换为 int ，然后与 3 相加的结果转换为 char
+* (b) ival 转换为 double，ui 转换为 double，结果转换为 float
+* (c) ui 转换为 float，结果转换为 double
+* (d) ival 转换为 float，与fval相加后的结果转换为 double，最后的结果转换为char
 
-## Exercise 4.36
->Assuming i is an int and d is a double write the expression i *= d so that it does integral, rather than floating-point, multiplication.
+Ex4.36
+
+> 假设 i 是int类型，d 是double类型，书写表达式 i*=d 使其执行整数类型的乘法而非浮点类型的乘法。
 
 ```cpp
 i *= static_cast<int>(d);
 ```
 
-## Exercise 4.37
->Rewrite each of the following old-style casts to use a named cast:
+Ex4.37
+
+> 用命名的强制类型转换改写下列旧式的转换语句。
 ```cpp
 int i; double d; const string *ps; char *pc; void *pv;
-pv = (void*)ps; // pv = const_cast<string*>(ps); or pv = static_cast<void*>(const_cast<string*>(ps));
-i = int(*pc);   // i = static_cast<int>(*pc);
-pv = &d;        // pv = static_cast<void*>(&d);
-pc = (char*)pv; // pc = static_cast<char*>(pv);
+(a) pv = (void*)ps;
+(b) i = int(*pc);
+(c) pv = &d;
+(d) pc = (char*)pv;
 ```
 
-## Exercise 4.38
->Explain the following expression:
+* (a) pv = static_cast<void*>(const_cast<string*>(ps));
+* (b) i = static_cast<int>(*pc);
+* (c) pv = static_cast<void*>(&d);
+* (d) pc = static_cast<char*>(pv);
+
+Ex4.38
+
+> 说明下面这条表达式的含义。
 ```cpp
 double slope = static_cast<double>(j/i);
 ```
 
-j/i is an int(by truncation), then converted to double and assigned to slope.
+将 `j/i` 的结果值转换为 double，然后赋值给slope。 
