@@ -7,7 +7,7 @@
 //  Revised by @Yue Wang Jun 2015:
 //
 //  1. add public access modifier for the function members
-//  2. use trailing return type 
+//  2. use trailing return type
 //  3. change return type from string to string const&, for better performance.
 //
 
@@ -16,13 +16,13 @@
 
 #include <string>
 
-class Person 
-{
-    std::string name;
-    std::string address;
+class Person {
+  std::string name;
+  std::string address;
+
 public:
-    auto get_name() const -> std::string const& { return name; }
-    auto get_addr() const -> std::string const& { return address; }
+  auto get_name() const -> std::string const & { return name; }
+  auto get_addr() const -> std::string const & { return address; }
 };
 
 #endif

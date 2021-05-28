@@ -5,24 +5,26 @@
 //  Created by pezy on 11/20/14.
 //
 
-#include <vector> 
+#include <vector>
 
 class NoDefault {
 public:
-    NoDefault(int i) { }
+  NoDefault(int i) : inter(i) {}
+
+private:
+  int inter;
 };
 
 class C {
 public:
-    C() : def(0) { } // define the constructor of C.
+  C() : def(0) {} // define the constructor of C.
 private:
-    NoDefault def;
+  NoDefault def;
 };
 
-int main()
-{
-    C c;
-    
-    std::vector<C> vec(10); 
-    return 0;
+int main() {
+  C c;
+
+  std::vector<C> vec(10, c);
+  return 0;
 }
