@@ -71,7 +71,7 @@ public:
         return *this;
     }
 
-    //move assignment
+    //move assignment &&符号move
     MyString &operator=(MyString &&str) noexcept {
         ++MAsgn;
         if (this != &str) {
