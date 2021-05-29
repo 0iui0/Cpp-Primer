@@ -24,5 +24,7 @@ int main() {
         }
     }
     cout << "milli-seconds: " << clock() - start << endl;
+    cout << "milli-seconds: " << clock() - start << endl;
+    c.pop();
     cout << "c.size()" << c.size() << endl;
 }
