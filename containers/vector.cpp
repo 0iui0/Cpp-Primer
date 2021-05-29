@@ -7,7 +7,7 @@
 #include "ctime"
 
 using namespace std;
-
+//｜ ｜ ｜ ｜ ｜ ｜--> 扩容，移动元素
 int main() {
     long n = 12;
     char buf[10];
