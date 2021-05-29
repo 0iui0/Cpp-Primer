@@ -1,9 +1,47 @@
 //
 // Created by iouoi on 2021/5/29.
 //
-// sequence containers
-#include "istream"
+// associative containers
+#include "iostream"
+#include "set"
 using namespace std;
-int main(){
+
+string get_a_target_string() {
+    long target = 0;
+    char buf[10];
+
+    cout << "target (0~" << RAND_MAX << "): ";
+    cin >> target;
+    snprintf(buf, 10, "%d", target);
+    return string(buf);
+}
+
+
+int main() {
+    long n = 10000;
+    char buf[10];
+    multiset<string> c;
+    auto start = clock();
+    for (long i = 0; i < n; ++i) {
+        try {
+            snprintf(buf, 10, "%d", rand());
+            c.insert(string(buf));
+        } catch (exception &p) {
+            cout << "i=" << i << " " << p.what() << endl;
+            abort();
+        }
+    }
+    cout << "milli-seconds: " << clock() - start << endl;
+    cout << "c.size()" << c.size() << endl;
+    cout << "c.max_size()" << c.max_size() << endl;
+    string target = get_a_target_string();
+    auto timeStart = clock();
+    auto pItem = c.find(target);        //比 std::find(...) 快很多
+    cout << "c.find(), milli-seconds : " << (clock() - timeStart) << endl;
+    if (pItem != c.end())
+        cout << "found, " << *pItem << endl;
+    else
+        cout << "not found! " << endl;
 
 }
+
