@@ -66,10 +66,12 @@ void test_moveable(M c1, NM c2, long &value) {
     output_static_data(*(c2.begin()));
 
     timeStart = clock();
+    //深拷贝；调用拷贝构造，元素拷贝
     NM c21(c2);
     cout << "copy, milli-seconds : " << (clock() - timeStart) << endl;
 
     timeStart = clock();
+    //浅拷贝；只swap三个指针
     NM c22(std::move(c2));
     cout << "move copy, milli-seconds : " << (clock() - timeStart) << endl;
 
