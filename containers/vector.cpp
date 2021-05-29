@@ -5,7 +5,8 @@
 #include "iostream"
 #include "vector"
 #include "ctime"
-
+#include "mystring.h"
+#include "moveable.h"
 using namespace std;
 //｜ ｜ ｜ ｜ ｜ ｜--> 扩容，移动元素
 int main() {
@@ -30,5 +31,6 @@ int main() {
     cout << "v.data()" << v.data() << endl;
     cout << "v.capacity()" << v.capacity() << endl;
 
-
+    v.clear();
+    test_moveable(vector<MyString>(), vector<MyStrNoMove>(), n);
 }
