@@ -3,3 +3,8 @@
 //
 
 #include "A.h"
+
+int main() {
+    auto a= A::GetInstance();
+    auto b= A::GetInstance();
+}
