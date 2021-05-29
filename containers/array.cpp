@@ -6,7 +6,7 @@
 #include "array"
 
 using namespace std;
-
+//fix size | | | | | | | | | | | |
 int compareLongs(const void *a, const void *b) {
     return (*(long *) a - *(long *) b);
 }
