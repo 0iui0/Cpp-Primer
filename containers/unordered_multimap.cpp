@@ -19,7 +19,7 @@ long get_a_target_long() {
 int main() {
     long n = 10000;
     char buf[10];
-    unordered_map<long, string> c;
+    unordered_multimap<long, string> c;
     auto start = clock();
     for (long i = 0; i < n; ++i) {
         try {
