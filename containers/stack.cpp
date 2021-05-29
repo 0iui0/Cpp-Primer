@@ -8,7 +8,7 @@
 using namespace std;
 //  | | | | | | | | |->
 //  map--> 每一段八个元素，分段连续（让使用者感觉连续）；段和段直接怎么联系
-
+// 由于它其实没有自己的元素，借用了dequeue，故称为adapter
 int main() {
     long n = 10000000;
     char buf[10];
