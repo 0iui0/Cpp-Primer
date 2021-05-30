@@ -14,20 +14,15 @@ regex r(pattern);
 string s;
 
 
-int main()
-{
-    while(getline(cin,s))
-    {
+int main() {
+    while (getline(cin, s)) {
         smatch result;
-        regex_search(s,result, r);
+        regex_search(s, result, r);
 
-        if(!result.empty())
-        {
-            cout<<result.format(fmt)<<endl;
-        }
-        else
-        {
-            cout<<"Sorry, No match."<<endl;
+        if (!result.empty()) {
+            cout << result.format(fmt) << endl;
+        } else {
+            cout << "Sorry, No match." << endl;
         }
 
     }

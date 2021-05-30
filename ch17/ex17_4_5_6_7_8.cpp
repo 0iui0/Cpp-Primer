@@ -43,38 +43,38 @@
 // maches has 3 members:
 // an index of a store and iterators into that store's vector
 typedef std::tuple<std::vector<Sales_data>::size_type,
-                   std::vector<Sales_data>::const_iterator,
-                   std::vector<Sales_data>::const_iterator>
-                                                            matches;
+        std::vector<Sales_data>::const_iterator,
+        std::vector<Sales_data>::const_iterator>
+        matches;
 
 // for ex17.5
 // return a pair that holds an index and a pair of iterators.
 typedef std::pair<std::vector<Sales_data>::size_type,
-                  std::pair<std::vector<Sales_data>::const_iterator,
-                            std::vector<Sales_data>::const_iterator>>
-                                                                      matches_pair;
+        std::pair<std::vector<Sales_data>::const_iterator,
+                std::vector<Sales_data>::const_iterator>>
+        matches_pair;
 
 // for ex17.6
 // return a struct that holds an index of a store and iterators into that store's vector
-struct matches_struct
-{
+struct matches_struct {
     std::vector<Sales_data>::size_type st;
     std::vector<Sales_data>::const_iterator first;
     std::vector<Sales_data>::const_iterator last;
+
     matches_struct(std::vector<Sales_data>::size_type s,
                    std::vector<Sales_data>::const_iterator f,
-                   std::vector<Sales_data>::const_iterator l) : st(s), first(f), last(l) { }
-} ;
+                   std::vector<Sales_data>::const_iterator l) : st(s), first(f), last(l) {}
+};
 
 // for ex17.4
 // return a vector with an entry for each store that sold the given book.
 std::vector<matches>
-findBook(const std::vector<std::vector<Sales_data>>& files,
-         const std::string& book);
+findBook(const std::vector<std::vector<Sales_data>> &files,
+         const std::string &book);
 
 // print the result using the given iostream
-void reportResults(std::istream& in, std::ostream os,
-                   const std::vector<std::vector<Sales_data>>& files);
+void reportResults(std::istream &in, std::ostream os,
+                   const std::vector<std::vector<Sales_data>> &files);
 
 // for ex17.5
 // return a vector with an entry for each store that sold the given book.
@@ -88,25 +88,22 @@ std::vector<matches_struct>
 findBook_struct(const std::vector<std::vector<Sales_data> > &files,
                 const std::string &book);
 
-int main()
-{
+int main() {
     return 0;
 }
 
 // for ex17.4
 // return a vector with an entry for each store that sold the given book.
 std::vector<matches>
-findBook(const std::vector<std::vector<Sales_data>>& files,
-         const std::string& book)
-{
+findBook(const std::vector<std::vector<Sales_data>> &files,
+         const std::string &book) {
     std::vector<matches> ret;
 
     // for each strore find the range of matching books, if any
-    for (auto it = files.cbegin(); it != files.cend(); ++it)
-    {
+    for (auto it = files.cbegin(); it != files.cend(); ++it) {
         // find the range of Sales_data tat have the same ISBN
         auto found = std::equal_range(it->cbegin(), it->cend(), book, compareIsbn);
-        if(found.first != found.second)
+        if (found.first != found.second)
             ret.push_back(std::make_tuple(it - files.cbegin(),
                                           found.first, found.second));
     }
@@ -115,23 +112,21 @@ findBook(const std::vector<std::vector<Sales_data>>& files,
 
 // for ex17.4
 // print the result using the given iostream
-void reportResults(std::istream& in, std::ostream os,
-                   const std::vector<std::vector<Sales_data>>& files)
-{
+void reportResults(std::istream &in, std::ostream os,
+                   const std::vector<std::vector<Sales_data>> &files) {
     std::string s;
-    while(in >> s)
-    {
+    while (in >> s) {
         auto trans = findBook(files, s);
-        if(trans.empty()){
+        if (trans.empty()) {
             std::cout << s << "not found in any stores" << std::endl;
             continue;
         }
 
-        for(const auto& store :trans)
+        for (const auto &store :trans)
             os << "store " << std::get<0>(store) << " sales: "
                << std::accumulate(std::get<1>(store), std::get<2>(store),
                                   Sales_data(s))
-                  << std::endl;
+               << std::endl;
     }
 }
 
@@ -139,13 +134,11 @@ void reportResults(std::istream& in, std::ostream os,
 // return a vector with an entry for each store that sold the given book
 std::vector<matches_pair>
 findBook_pair(const std::vector<std::vector<Sales_data> > &files,
-              const std::string &book)
-{
+              const std::string &book) {
     std::vector<matches_pair> ret;
-    for(auto it = files.cbegin(); it != files.cend(); ++it)
-    {
+    for (auto it = files.cbegin(); it != files.cend(); ++it) {
         auto found = std::equal_range(it->cbegin(), it->cend(), book, compareIsbn);
-        if(found.first != found.second)
+        if (found.first != found.second)
             ret.push_back(std::make_pair(it - files.cbegin(),
                                          std::make_pair(found.first, found.second)));
     }
@@ -156,13 +149,11 @@ findBook_pair(const std::vector<std::vector<Sales_data> > &files,
 // return a vector with an entry for each store that sold the given book.
 std::vector<matches_struct>
 findBook_struct(const std::vector<std::vector<Sales_data> > &files,
-                const std::string &book)
-{
+                const std::string &book) {
     std::vector<matches_struct> ret;
-    for(auto it = files.cbegin(); it != files.cend(); ++it)
-    {
+    for (auto it = files.cbegin(); it != files.cend(); ++it) {
         auto found = std::equal_range(it->cbegin(), it->cend(), book, compareIsbn);
-        if(found.first != found.second)
+        if (found.first != found.second)
             ret.push_back(matches_struct(it - files.cbegin(), found.first, found.second));
     }
     return ret;

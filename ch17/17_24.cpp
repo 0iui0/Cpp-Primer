@@ -14,11 +14,9 @@ string format = "$2.$5.$7";
 regex r(pattern);
 string s;
 
-int main()
-{
-    while(getline(cin,s))
-    {
-        cout<<regex_replace(s,r,format)<<endl;
+int main() {
+    while (getline(cin, s)) {
+        cout << regex_replace(s, r, format) << endl;
     }
 
     return 0;

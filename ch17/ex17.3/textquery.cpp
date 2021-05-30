@@ -12,12 +12,10 @@
 #include <sstream>
 
 // Constructor
-TextQuery::TextQuery(std::ifstream & is) : file(new std::vector<std::string>)
-{
+TextQuery::TextQuery(std::ifstream &is) : file(new std::vector<std::string>) {
     // each line
     std::string line;
-    while(std::getline(is, line))
-    {
+    while (std::getline(is, line)) {
         file->push_back(line);
         // current line index
         int index = file->size() - 1;
@@ -25,13 +23,12 @@ TextQuery::TextQuery(std::ifstream & is) : file(new std::vector<std::string>)
         // for each word
         std::stringstream lineSteam(line);
         std::string word;
-        while(lineSteam >> word)
-        {
+        while (lineSteam >> word) {
             // fetch the smart pointer which is null when the word first time seen
-            std::shared_ptr<std::set<index_Tp>>& sp_lineIndex = wm[word];
+            std::shared_ptr<std::set<index_Tp>> &sp_lineIndex = wm[word];
 
             // if null, allcate a new set to contain line indices
-            if(!sp_lineIndex)
+            if (!sp_lineIndex)
                 sp_lineIndex.reset(new std::set<index_Tp>);
 
             // insert
@@ -44,15 +41,14 @@ TextQuery::TextQuery(std::ifstream & is) : file(new std::vector<std::string>)
  * @brief do a query opertion and return QueryResult object.
  */
 QueryResult
-TextQuery::query(const std::string &sought) const
-{
+TextQuery::query(const std::string &sought) const {
     // dynamicaly allocated set used for the word does not appear.
     static std::shared_ptr<std::set<index_Tp>> noData(new std::set<index_Tp>);
 
     // fetch the iterator to the matching element in the map<word, lines>.
     //std::map<std::string, std::shared_ptr<std::set<index_Tp>>>::const_iterator
     auto iter = wm.find(sought);
-    if(iter == wm.end())
+    if (iter == wm.end())
         return QueryResult(sought, noData, file);
     else
         return QueryResult(sought, iter->second, file);
@@ -61,14 +57,13 @@ TextQuery::query(const std::string &sought) const
 /**
  * @brief do a query opertion and return tuple.
  */
-result_tuple TextQuery::query_return_tuple(const std::string &sought)
-{
+result_tuple TextQuery::query_return_tuple(const std::string &sought) {
     // dynamicaly allocated set used for the word does not appear.
     static std::shared_ptr<std::set<index_Tp>> noData(new std::set<index_Tp>);
 
     // fetch the iterator to the matching element in the map<word, lines>.
     auto iter = wm.find(sought);
-    if(iter == wm.end())
+    if (iter == wm.end())
         return result_tuple(sought, noData, file);
     else
         return result_tuple(sought, iter->second, file);

@@ -18,11 +18,10 @@
 #include <string>
 #include <vector>
 
-int main()
-{
+int main() {
     auto three_ints = std::make_tuple(10, 20, 30);
-    
-    using SomeTuple = std::tuple < std::string, std::vector<std::string>, std::pair<std::string, int> > ;
+
+    using SomeTuple = std::tuple<std::string, std::vector<std::string>, std::pair<std::string, int> >;
     SomeTuple some_tuple;
 
     return 0;

@@ -12,19 +12,14 @@ string fmt = "$2.$5.$7";
 regex r(pattern);
 string s;
 
-int main()
-{
-    while(getline(cin,s))
-    {
+int main() {
+    while (getline(cin, s)) {
         smatch result;
-        regex_search(s,result,r);
-        if(!result.empty())
-        {
-        cout<<result.prefix()<<result.format(fmt)<<endl;
-        }
-        else
-        {
-            cout<<"Sorry, No match."<<endl;
+        regex_search(s, result, r);
+        if (!result.empty()) {
+            cout << result.prefix() << result.format(fmt) << endl;
+        } else {
+            cout << "Sorry, No match." << endl;
         }
     }
 

@@ -44,9 +44,8 @@ using namespace std;
 //}
 
 
-int main()
-{
-	std::cout << "Standard Output!\n";
-	std::cerr << "Standard Error!\n";
-	std::clog << "Standard Log??\n";
+int main() {
+    std::cout << "Standard Output!\n";
+    std::cerr << "Standard Error!\n";
+    std::clog << "Standard Log??\n";
 }
