@@ -24,10 +24,10 @@
 #include <string>
 #include <typeinfo>
 
-int main()
-{
+int main() {
     // ex11.26
-    std::map<int, std::string> m = { { 1,"ss" },{ 2,"sz" } };
+    std::map<int, std::string> m = {{1, "ss"},
+                                    {2, "sz"}};
     using KeyType = std::map<int, std::string>::key_type;
 
     std::cout << "type to subscript: " << typeid(KeyType).name() << std::endl;
