@@ -13,8 +13,7 @@
 #include <algorithm>
 #include <iterator>
 
-int main()
-{
+int main() {
     std::istream_iterator<int> in_iter(std::cin), eof;
     std::vector<int> vec;
     while (in_iter != eof)

@@ -14,15 +14,13 @@
 using std::vector; using std::cout; using std::endl; using std::list; using std::cin; using std::fill_n;
 
 template<typename Sequence>
-void print(Sequence const& seq)
-{
-    for (const auto& i : seq)
+void print(Sequence const &seq) {
+    for (const auto &i : seq)
         cout << i << " ";
     cout << endl;
 }
 
-int main()
-{
+int main() {
     // (a)
     vector<int> vec;
     list<int> lst;
@@ -33,7 +31,7 @@ int main()
     copy(lst.cbegin(), lst.cend(), back_inserter(vec));
     // Fixed: the vec.begin() was replaced by a back_inserter iterator, capable of
     // insert new elements automatically at the end of the container.
-    
+
     // (b)
     vector<int> v;
     v.reserve(10);
@@ -41,7 +39,7 @@ int main()
     // ^ (b)No error, but not any sense. v.size() still equal zero.
     // Fixed: 1. use `v.resize(10);`
     //    or  2. use `fill_n(std::back_inserter(v), 10, 0)`
-    
+
     print(v);
     print(vec);
 }
