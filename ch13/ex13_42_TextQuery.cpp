@@ -4,8 +4,7 @@
 
 using std::string;
 
-TextQuery::TextQuery(std::ifstream &ifs) : input(new StrVec)
-{
+TextQuery::TextQuery(std::ifstream &ifs) : input(new StrVec) {
     size_t lineNo = 0;
     for (string line; std::getline(ifs, line); ++lineNo) {
         input->push_back(line);
@@ -21,8 +20,7 @@ TextQuery::TextQuery(std::ifstream &ifs) : input(new StrVec)
     }
 }
 
-QueryResult TextQuery::query(const string& str) const
-{
+QueryResult TextQuery::query(const string &str) const {
     // use static just allocate once.
     static std::shared_ptr<std::set<size_t>> nodate(new std::set<size_t>);
     auto found = result.find(str);
@@ -30,10 +28,9 @@ QueryResult TextQuery::query(const string& str) const
     else return QueryResult(str, found->second, input);
 }
 
-std::ostream& print(std::ostream &out, const QueryResult& qr)
-{
+std::ostream &print(std::ostream &out, const QueryResult &qr) {
     out << qr.word << " occurs " << qr.nos->size() << (qr.nos->size() > 1 ? " times" : " time") << std::endl;
     for (auto i : *qr.nos)
-        out << "\t(line " << i+1 << ") " << qr.input->at(i) << std::endl;
+        out << "\t(line " << i + 1 << ") " << qr.input->at(i) << std::endl;
     return out;
 }

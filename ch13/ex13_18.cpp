@@ -23,8 +23,7 @@ Employee::Employee(const string &name) {
     name_ = name;
 }
 
-int main()
-{
-	
-	return 0;
+int main() {
+
+    return 0;
 }

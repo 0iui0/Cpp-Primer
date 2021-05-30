@@ -8,8 +8,7 @@
 
 #include "ex13_28.h"
 
-TreeNode& TreeNode::operator=(const TreeNode &rhs)
-{
+TreeNode &TreeNode::operator=(const TreeNode &rhs) {
     ++*rhs.count;
     if (--*count == 0) {
         delete left;
@@ -23,15 +22,13 @@ TreeNode& TreeNode::operator=(const TreeNode &rhs)
     return *this;
 }
 
-BinStrTree& BinStrTree::operator=(const BinStrTree &bst)
-{
+BinStrTree &BinStrTree::operator=(const BinStrTree &bst) {
     TreeNode *new_root = new TreeNode(*bst.root);
     delete root;
     root = new_root;
     return *this;
 }
 
-int main()
-{
+int main() {
     return 0;
 }

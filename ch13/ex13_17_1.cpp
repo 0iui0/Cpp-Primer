@@ -28,8 +28,7 @@ void f(numbered s) {
     std::cout << s.mysn << std::endl;
 }
 
-int main()
-{
+int main() {
     numbered a, b = a, c = b;
     f(a);
     f(b);

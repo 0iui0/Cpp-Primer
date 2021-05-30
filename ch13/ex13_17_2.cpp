@@ -18,7 +18,7 @@ public:
         mysn = unique++;
     }
 
-    numbered(const numbered& n) {
+    numbered(const numbered &n) {
         mysn = unique++;
     }
 
@@ -32,8 +32,7 @@ void f(numbered s) {
     std::cout << s.mysn << std::endl;
 }
 
-int main()
-{
+int main() {
     numbered a, b = a, c = b;
     f(a);
     f(b);
