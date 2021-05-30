@@ -29,23 +29,22 @@ class QueryResult;
 /**
  * @brief The TextQuery class using StrBlob
  */
-class TextQuery
-{
+class TextQuery {
 public:
     typedef StrBlob::size_type line_no;
 
     // constructor
-    TextQuery(std::ifstream& fin);
+    TextQuery(std::ifstream &fin);
 
     // query operation
-    QueryResult query(const std::string&) const;
+    QueryResult query(const std::string &) const;
 
 private:
     // data members
     StrBlob file;
 
     std::map<std::string,
-             std::shared_ptr<std::set<line_no>>> wordMap;
+            std::shared_ptr<std::set<line_no>>> wordMap;
 
 };
 

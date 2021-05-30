@@ -12,8 +12,8 @@
 //      (a) class Derived : public Derived { ... }; //incorrect, deirve from itself
 //      (b) class Derived : private Base { ... };   //incorrect, this is a definition not a declaration
 //      (c) class Derived : public Base;            //incorrect, A derived class is declared like any other class. The declaration
-                                                    //contains the class name but does not include its derivation list.
-                                                    //@ reported by lafener, check #154 for detail.
+//contains the class name but does not include its derivation list.
+//@ reported by lafener, check #154 for detail.
 // Exercise 15.5:
 // Define your own version of the Bulk_quote class.
 //
@@ -28,10 +28,9 @@
 #include "quote.h"
 #include "bulk_quote.h"
 
-double print_total (std::ostream& os, const Quote& item, size_t n);
+double print_total(std::ostream &os, const Quote &item, size_t n);
 
-int main()
-{
+int main() {
     // ex15.6
     Quote q("textbook", 10.60);
     Bulk_quote bq("textbook", 10.60, 10, 0.3);
@@ -42,8 +41,7 @@ int main()
     return 0;
 }
 
-double print_total(std::ostream &os, const Quote &item, size_t n)
-{
+double print_total(std::ostream &os, const Quote &item, size_t n) {
     double ret = item.net_price(n);
 
     os << "ISBN:" << item.isbn()

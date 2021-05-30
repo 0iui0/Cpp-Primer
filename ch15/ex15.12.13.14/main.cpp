@@ -31,39 +31,42 @@
 #include "limit_quote.h"
 
 
-class base
-{
+class base {
 public:
-   std::string name() { return basename; }
-   virtual void print(std::ostream &os) { os << basename; }
-   //     ~~~~~^^^^^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   //  The print here just output the basename of the base.
+    std::string name() { return basename; }
+
+    virtual void print(std::ostream &os) { os << basename; }
+    //     ~~~~~^^^^^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    //  The print here just output the basename of the base.
 private:
-   std::string basename = "base\n";
+    std::string basename = "base\n";
 };
 
-class derived : public base
-{
+class derived : public base {
 public:
-   void print(std::ostream &os) override { base::print(os); os << " derived\n " << i; }
-   //   ^^^^^                   ^^^^^^^^   ^^^^^^    --  added to fix this problem
-   //  this print wanted to call the print from the base class.
-   //  however, the class scope base:: was omitted.As a result
-   //  it will cause an infinit recursion.
-   //  btw, we can add a keyword `override` to show this function
-   //  overrides a virtual function from the base class, although
-   //  it is not neccessary, but for security, the more, the better.
+    void print(std::ostream &os) override {
+        base::print(os);
+        os << " derived\n " << i;
+    }
+    //   ^^^^^                   ^^^^^^^^   ^^^^^^    --  added to fix this problem
+    //  this print wanted to call the print from the base class.
+    //  however, the class scope base:: was omitted.As a result
+    //  it will cause an infinit recursion.
+    //  btw, we can add a keyword `override` to show this function
+    //  overrides a virtual function from the base class, although
+    //  it is not neccessary, but for security, the more, the better.
 
 
 private:
-   int i;
+    int i;
 };
 
 
-void print_debug(const Quote& q);
-double print_total (std::ostream& os, const Quote& item, size_t n);
-int main()
-{
+void print_debug(const Quote &q);
+
+double print_total(std::ostream &os, const Quote &item, size_t n);
+
+int main() {
     // ex15.14
     base bobj;
     base *bp1 = &bobj;
@@ -96,8 +99,7 @@ int main()
     return 0;
 }
 
-double print_total(std::ostream &os, const Quote &item, size_t n)
-{
+double print_total(std::ostream &os, const Quote &item, size_t n) {
     double ret = item.net_price(n);
 
     os << "ISBN:" << item.isbn()
@@ -107,7 +109,6 @@ double print_total(std::ostream &os, const Quote &item, size_t n)
 }
 
 
-void print_debug(const Quote &q)
-{
+void print_debug(const Quote &q) {
     q.debug();
 }

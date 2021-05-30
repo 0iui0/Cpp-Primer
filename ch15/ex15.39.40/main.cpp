@@ -32,13 +32,12 @@
 #include "textquery.h"
 #include "query.h"
 
-int main()
-{
+int main() {
     std::ifstream file("test.txt");
 
     TextQuery tQuery(file);
 
-    Query q = Query("fieryzzz")  | Query("wind");
+    Query q = Query("fieryzzz") | Query("wind");
 
     std::cout << q.eval(tQuery);
 

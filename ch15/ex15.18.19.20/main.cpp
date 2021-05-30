@@ -60,8 +60,7 @@
 #include "limit_quote.h"
 #include "disc_quote.h"
 
-class Base
-{
+class Base {
 public:
     void pub_mem();   // public member
 protected:
@@ -70,34 +69,31 @@ private:
     char priv_mem;    // private member
 };
 
-struct Pub_Derv     : public    Base
-{
-    void memfcn(Base &b) { b = *this; }
-};
-struct Priv_Derv    : private   Base
-{
-    void memfcn(Base &b) { b = *this; }
-};
-struct Prot_Derv    : protected Base
-{
+struct Pub_Derv : public Base {
     void memfcn(Base &b) { b = *this; }
 };
 
-struct Derived_from_Public      : public Pub_Derv
-{
+struct Priv_Derv : private Base {
     void memfcn(Base &b) { b = *this; }
 };
-struct Derived_from_Private     : public Priv_Derv
-{
+
+struct Prot_Derv : protected Base {
+    void memfcn(Base &b) { b = *this; }
+};
+
+struct Derived_from_Public : public Pub_Derv {
+    void memfcn(Base &b) { b = *this; }
+};
+
+struct Derived_from_Private : public Priv_Derv {
     //void memfcn(Base &b) { b = *this; }
 };
-struct Derived_from_Protected   : public Prot_Derv
-{
+
+struct Derived_from_Protected : public Prot_Derv {
     void memfcn(Base &b) { b = *this; }
 };
 
-int main()
-{
+int main() {
     Pub_Derv d1;
     Base *p = &d1;
 

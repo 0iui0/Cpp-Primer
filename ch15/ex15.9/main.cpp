@@ -18,8 +18,7 @@
 #include "bulk_quote.h"
 #include "limit_quote.h"
 
-int main()
-{
+int main() {
     Bulk_quote bulk_quote("bulk_quote_1", 10.10, 10, 0.5);
 
     // The pointer is of static type Quote, but it's dynamic type is Bulk Quote

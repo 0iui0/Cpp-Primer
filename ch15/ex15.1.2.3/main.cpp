@@ -27,18 +27,16 @@
 
 #include "quote.h"
 
-double print_total (std::ostream& os, const Quote& item, size_t n);
+double print_total(std::ostream &os, const Quote &item, size_t n);
 
-int main()
-{
+int main() {
 
 
     return 0;
 }
 
 
-double print_total(std::ostream &os, const Quote &item, size_t n)
-{
+double print_total(std::ostream &os, const Quote &item, size_t n) {
     double ret = item.net_price(n);
 
     os << "ISBN:" << item.isbn()

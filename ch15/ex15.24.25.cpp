@@ -30,4 +30,4 @@
 //  the derived classes can call it when executing its default constructor.
 //
 
-int main(){ return 0; }
+int main() { return 0; }

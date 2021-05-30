@@ -25,8 +25,7 @@
 #include "basket.h"
 
 
-int main()
-{
+int main() {
     Basket basket;
 
     for (unsigned i = 0; i != 10; ++i)
@@ -38,7 +37,7 @@ int main()
     for (unsigned i = 0; i != 10; ++i)
         basket.add_item(Quote("CLRS", 40.1));
 
-    std::ofstream log("log.txt", std::ios_base::app|std::ios_base::out);
+    std::ofstream log("log.txt", std::ios_base::app | std::ios_base::out);
 
     basket.total_receipt(log);
     return 0;

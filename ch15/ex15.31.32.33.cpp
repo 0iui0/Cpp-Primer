@@ -62,19 +62,18 @@
 
 
 // this class is a simulation for class Query used to answer ex15.32
-class Foo
-{
+class Foo {
 public:
-    Foo(const std::vector<std::string>& t) :
-        text(new std::vector<std::string>(t)) { }
+    Foo(const std::vector<std::string> &t) :
+            text(new std::vector<std::string>(t)) {}
 
 private:
     std::shared_ptr<std::vector<std::string>> text;
 
 };
-int main()
-{
-    std::vector<std::string> v = { "alan","alan","alan","alan","alan" };
+
+int main() {
+    std::vector<std::string> v = {"alan", "alan", "alan", "alan", "alan"};
 
     Foo foo(v);
 

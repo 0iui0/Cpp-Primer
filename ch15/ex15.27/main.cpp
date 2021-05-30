@@ -24,8 +24,7 @@
 #include "disc_quote.h"
 
 
-int main()
-{
+int main() {
     Bulk_quote bq("sss", 20.0, 2, 0.3);
     return 0;
 }

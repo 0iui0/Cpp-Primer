@@ -18,10 +18,11 @@
 #include "bulk_quote.h"
 #include "limit_quote.h"
 
-void print_debug(const Quote& q);
-double print_total (std::ostream& os, const Quote& item, size_t n);
-int main()
-{
+void print_debug(const Quote &q);
+
+double print_total(std::ostream &os, const Quote &item, size_t n);
+
+int main() {
     Quote q("aaa", 10.60);
     Bulk_quote bq("bbb", 111, 10, 0.3);
     Limit_quote lq("ccc", 222, 10, 0.3);
@@ -31,15 +32,15 @@ int main()
      *  r refering to at compile time. As a result, the virtual function debug of
      *  the subobject is called.
      */
-    Quote& r = q;
+    Quote &r = q;
     r.debug();
-	std::cout << "\n";
+    std::cout << "\n";
     r = bq;
     r.debug();
-	std::cout << "\n";
+    std::cout << "\n";
     r = lq;
     r.debug();
-	std::cout << "\n";
+    std::cout << "\n";
 
 
     std::cout << "====================\n";
@@ -57,17 +58,16 @@ int main()
      *
      */
     print_debug(q);
-	std::cout << "\n";
+    std::cout << "\n";
     print_debug(lq);
-	std::cout << "\n";
+    std::cout << "\n";
     print_debug(bq);
-	std::cout << "\n";
+    std::cout << "\n";
 
     return 0;
 }
 
-double print_total(std::ostream &os, const Quote &item, size_t n)
-{
+double print_total(std::ostream &os, const Quote &item, size_t n) {
     double ret = item.net_price(n);
 
     os << "ISBN:" << item.isbn()
@@ -77,7 +77,6 @@ double print_total(std::ostream &os, const Quote &item, size_t n)
 }
 
 
-void print_debug(const Quote &q)
-{
+void print_debug(const Quote &q) {
     q.debug();
 }

@@ -1,5 +1,6 @@
 #ifndef NOTQUERY_H
 #define NOTQUERY_H
+
 #include "query_base.h"
 #include "query.h"
 
@@ -10,17 +11,15 @@
  *The ~ operator generates a NotQuery, which holds a Query,
  *which it negates.
  */
-class NotQuery : public Query_base
-{
-    friend Query operator~(const Query& operand);
-    NotQuery(const Query& q): query(q)
-    {
+class NotQuery : public Query_base {
+    friend Query operator~(const Query &operand);
+
+    NotQuery(const Query &q) : query(q) {
         std::cout << "NotQuery::NotQuery()\n";
     }
 
     // virtuals:
-    std::string rep() const override
-    {
+    std::string rep() const override {
         std::cout << "NotQuery::rep()\n";
         return "~(" + query.rep() + ")";
     }
@@ -30,8 +29,7 @@ class NotQuery : public Query_base
     Query query;
 };
 
-inline Query operator~(const Query& operand)
-{
+inline Query operator~(const Query &operand) {
     return std::shared_ptr<Query_base>(new NotQuery(operand));
     //    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     // note : There is an imlplicit conversion here.
