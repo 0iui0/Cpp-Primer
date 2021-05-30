@@ -14,7 +14,6 @@
 //          depending on how compiler implemented.
 //  @Discuss    https://github.com/Mooophy/Cpp-Primer/issues/125
 
-int main()
-{
+int main() {
     return 0;
 }

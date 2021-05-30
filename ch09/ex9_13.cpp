@@ -12,8 +12,7 @@
 
 using std::list; using std::vector; using std::cout; using std::endl;
 
-int main()
-{
+int main() {
     list<int> ilst(5, 4);
     vector<int> ivc(5, 5);
 
