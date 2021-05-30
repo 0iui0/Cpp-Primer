@@ -17,6 +17,7 @@
 #include <initializer_list>
 #include <memory>
 #include <stdexcept>
+
 using std::vector; using std::string;
 
 class StrBlobPtr;
@@ -24,38 +25,44 @@ class StrBlobPtr;
 class StrBlob {
 public:
     using size_type = vector<string>::size_type;
+
     friend class StrBlobPtr;
 
     StrBlobPtr begin();
+
     StrBlobPtr end();
 
-    StrBlob():data(std::make_shared<vector<string>>()) { }
-    StrBlob(std::initializer_list<string> il):data(std::make_shared<vector<string>>(il)) { }
+    StrBlob() : data(std::make_shared<vector<string>>()) {}
+
+    StrBlob(std::initializer_list<string> il) : data(std::make_shared<vector<string>>(il)) {}
 
     size_type size() const { return data->size(); }
+
     bool empty() const { return data->empty(); }
 
     void push_back(const string &t) { data->push_back(t); }
+
     void pop_back() {
         check(0, "pop_back on empty StrBlob");
         data->pop_back();
     }
 
-    std::string& front() {
+    std::string &front() {
         check(0, "front on empty StrBlob");
         return data->front();
     }
 
-    std::string& back() {
+    std::string &back() {
         check(0, "back on empty StrBlob");
         return data->back();
     }
 
-    const std::string& front() const {
+    const std::string &front() const {
         check(0, "front on empty StrBlob");
         return data->front();
     }
-    const std::string& back() const {
+
+    const std::string &back() const {
         check(0, "back on empty StrBlob");
         return data->back();
     }
@@ -71,14 +78,18 @@ private:
 
 class StrBlobPtr {
 public:
-    StrBlobPtr():curr(0) { }
-    StrBlobPtr(StrBlob &a, size_t sz = 0):wptr(a.data), curr(sz) { }
-    bool operator!=(const StrBlobPtr& p) { return p.curr != curr; }
-    string& deref() const {
+    StrBlobPtr() : curr(0) {}
+
+    StrBlobPtr(StrBlob &a, size_t sz = 0) : wptr(a.data), curr(sz) {}
+
+    bool operator!=(const StrBlobPtr &p) { return p.curr != curr; }
+
+    string &deref() const {
         auto p = check(curr, "dereference past end");
         return (*p)[curr];
     }
-    StrBlobPtr& incr() {
+
+    StrBlobPtr &incr() {
         check(curr, "increment past end of StrBlobPtr");
         ++curr;
         return *this;
@@ -91,6 +102,7 @@ private:
         if (i >= ret->size()) throw std::out_of_range(msg);
         return ret;
     }
+
     std::weak_ptr<vector<string>> wptr;
     size_t curr;
 };

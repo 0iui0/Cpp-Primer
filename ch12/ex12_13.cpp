@@ -8,8 +8,7 @@
 #include <iostream>
 #include <memory>
 
-int main()
-{
+int main() {
     {
         auto sp = std::make_shared<int>();
         auto p = sp.get();

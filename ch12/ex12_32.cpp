@@ -11,9 +11,8 @@
 #include <sstream>
 #include <algorithm>
 
-TextQuery::TextQuery(std::ifstream &ifs)
-{
-    StrBlob::size_type lineNo{ 0 };
+TextQuery::TextQuery(std::ifstream &ifs) {
+    StrBlob::size_type lineNo{0};
     for (string line; std::getline(ifs, line); ++lineNo) {
         file.push_back(line);
         std::istringstream line_stream(line);
@@ -28,8 +27,7 @@ TextQuery::TextQuery(std::ifstream &ifs)
     }
 }
 
-QueryResult TextQuery::query(const string& str) const
-{
+QueryResult TextQuery::query(const string &str) const {
     // use static just allocate once.
     static shared_ptr<std::set<StrBlob::size_type>> nodate(new std::set<StrBlob::size_type>);
     auto found = result.find(str);
@@ -37,12 +35,11 @@ QueryResult TextQuery::query(const string& str) const
     else return QueryResult(str, found->second, file);
 }
 
-std::ostream& print(std::ostream &out, const QueryResult& qr)
-{
+std::ostream &print(std::ostream &out, const QueryResult &qr) {
     out << qr.word << " occurs " << qr.nos->size() << (qr.nos->size() > 1 ? " times" : " time") << std::endl;
     for (auto i : *qr.nos) {
         ConstStrBlobPtr p(qr.file, i);
-        out << "\t(line " << i+1 << ") " << p.deref() << std::endl;
+        out << "\t(line " << i + 1 << ") " << p.deref() << std::endl;
     }
     return out;
 }

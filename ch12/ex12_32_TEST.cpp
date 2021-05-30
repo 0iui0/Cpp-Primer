@@ -10,8 +10,7 @@
 #include "ex12_32.h"
 #include <iostream>
 
-void runQueries(std::ifstream &infile)
-{
+void runQueries(std::ifstream &infile) {
     TextQuery tq(infile);
     while (true) {
         std::cout << "enter word to look for, or q to quit: ";
@@ -21,8 +20,7 @@ void runQueries(std::ifstream &infile)
     }
 }
 
-int main()
-{
+int main() {
     std::ifstream file("../data/storyDataFile.txt");
     runQueries(file);
 }

@@ -19,13 +19,11 @@
 #include <memory>
 
 
-void process(std::shared_ptr<int> ptr)
-{
+void process(std::shared_ptr<int> ptr) {
     std::cout << "inside the process function:" << ptr.use_count() << "\n";
 }
 
-int main()
-{
+int main() {
     auto p = new int();
     auto sp = std::make_shared<int>();
 
