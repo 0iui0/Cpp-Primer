@@ -7,27 +7,23 @@
 //
 //===========================================================================
 
-std::ostream& operator<<(std::ostream &os, const String &lhs)
-{
+std::ostream &operator<<(std::ostream &os, const String &lhs) {
     os << lhs.c_str();
     return os;
 }
 
-std::istream& operator>>(std::istream &is, String &rhs)
-{
+std::istream &operator>>(std::istream &is, String &rhs) {
     for (char c; (c = is.get()) != '\n';) {
         rhs.push_back(c);
     }
     return is;
 }
 
-bool operator==(const String &lhs, const String &rhs)
-{
+bool operator==(const String &lhs, const String &rhs) {
     return (lhs.size() == rhs.size() && std::equal(lhs.begin(), lhs.end(), rhs.begin()));
 }
 
-bool operator!=(const String &lhs, const String &rhs)
-{
+bool operator!=(const String &lhs, const String &rhs) {
     return !(lhs == rhs);
 }
 
@@ -37,9 +33,8 @@ bool operator!=(const String &lhs, const String &rhs)
 //
 //===========================================================================
 
-String::String(const char *s)
-{
-    char *sl = const_cast<char*>(s);
+String::String(const char *s) {
+    char *sl = const_cast<char *>(s);
     while (*sl)
         ++sl;
     range_initializer(s, ++sl);
@@ -51,13 +46,11 @@ String::String(const char *s)
 //
 //===========================================================================
 
-String::String(const String& rhs)
-{
+String::String(const String &rhs) {
     range_initializer(rhs.elements, rhs.first_free);
 }
 
-String& String::operator = (const String &rhs)
-{
+String &String::operator=(const String &rhs) {
     auto newstr = alloc_n_copy(rhs.elements, rhs.first_free);
     free();
     elements = newstr.first;
@@ -66,13 +59,12 @@ String& String::operator = (const String &rhs)
     return *this;
 }
 
-String::String(String &&s) NOEXCEPT : elements(s.elements), last_elem(s.last_elem), first_free(s.first_free), cap(s.cap)
-{
+String::String(String &&s) NOEXCEPT: elements(s.elements), last_elem(s.last_elem), first_free(s.first_free),
+                                     cap(s.cap) {
     s.elements = s.last_elem = s.first_free = s.cap = nullptr;
 }
 
-String& String::operator = (String &&rhs) NOEXCEPT
-{
+String &String::operator=(String &&rhs) NOEXCEPT {
     if (this != &rhs) {
         free();
         elements = rhs.elements;
@@ -84,8 +76,7 @@ String& String::operator = (String &&rhs) NOEXCEPT
     return *this;
 }
 
-String::~String()
-{
+String::~String() {
     free();
 }
 
@@ -95,16 +86,14 @@ String::~String()
 //
 //===========================================================================
 
-void String::push_back(const char c)
-{
+void String::push_back(const char c) {
     chk_n_alloc();
     *last_elem = c;
     last_elem = first_free;
     alloc.construct(first_free++, '\0');
 }
 
-void String::reallocate()
-{
+void String::reallocate() {
     //	\0    |    -
     //  ^          ^
     // elements    first_free
@@ -114,8 +103,7 @@ void String::reallocate()
     alloc_n_move(newcapacity);
 }
 
-void String::alloc_n_move(size_t new_cap)
-{
+void String::alloc_n_move(size_t new_cap) {
     auto newdata = alloc.allocate(new_cap);
     auto dest = newdata;
     auto elem = elements;
@@ -128,37 +116,32 @@ void String::alloc_n_move(size_t new_cap)
     cap = elements + new_cap;
 }
 
-void String::free()
-{
+void String::free() {
     if (elements) {
-        std::for_each(elements, first_free, [this](char &c){ alloc.destroy(&c); });
+        std::for_each(elements, first_free, [this](char &c) { alloc.destroy(&c); });
         alloc.deallocate(elements, cap - elements);
     }
 }
 
-std::pair<char*, char*>
-String::alloc_n_copy(const char *b, const char *e)
-{
+std::pair<char *, char *>
+String::alloc_n_copy(const char *b, const char *e) {
     auto str = alloc.allocate(e - b);
-    return{ str, std::uninitialized_copy(b, e, str) };
+    return {str, std::uninitialized_copy(b, e, str)};
 }
 
-void String::range_initializer(const char *first, const char *last)
-{
+void String::range_initializer(const char *first, const char *last) {
     auto newstr = alloc_n_copy(first, last);
     elements = newstr.first;
     first_free = cap = newstr.second;
     last_elem = first_free - 1;
 }
 
-void String::reserve(size_t new_cap)
-{
+void String::reserve(size_t new_cap) {
     if (new_cap <= capacity()) return;
     alloc_n_move(new_cap);
 }
 
-void String::resize(size_t count, char c)
-{
+void String::resize(size_t count, char c) {
     if (count > size()) {
         if (count > capacity()) reserve(count * 2);
         for (size_t i = size(); i != count; ++i) {
@@ -166,8 +149,7 @@ void String::resize(size_t count, char c)
             alloc.construct(first_free++, '\0');
         }
 
-    }
-    else if (count < size()) {
+    } else if (count < size()) {
         while (last_elem != elements + count) {
             --last_elem;
             alloc.destroy(--first_free);
@@ -176,7 +158,6 @@ void String::resize(size_t count, char c)
     }
 }
 
-void String::resize(size_t count)
-{
+void String::resize(size_t count) {
     resize(count, ' ');
 }

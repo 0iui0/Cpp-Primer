@@ -2,8 +2,7 @@
 #include <iostream>
 #include <vector>
 
-int main()
-{
+int main() {
     StrVec vec;
     vec.reserve(6);
     std::cout << "capacity(reserve to 6): " << vec.capacity() << std::endl;
@@ -26,7 +25,7 @@ int main()
         std::cout << *i << std::endl;
     std::cout << "-EOF-" << std::endl;
 
-    StrVec vec_list{ "hello", "world", "pezy" };
+    StrVec vec_list{"hello", "world", "pezy"};
 
     for (auto i = vec_list.begin(); i != vec_list.end(); ++i)
         std::cout << *i << " ";
@@ -34,13 +33,13 @@ int main()
 
     // Test operator==
 
-    const StrVec const_vec_list = { "hello", "world", "pezy" };
+    const StrVec const_vec_list = {"hello", "world", "pezy"};
     if (vec_list == const_vec_list)
         for (const auto &str : const_vec_list)
             std::cout << str << " ";
     std::cout << std::endl;
 
     // Test operator<
-    const StrVec const_vec_list_small = { "hello", "pezy", "ok" };
+    const StrVec const_vec_list_small = {"hello", "pezy", "ok"};
     std::cout << (const_vec_list_small < const_vec_list) << std::endl;
 }

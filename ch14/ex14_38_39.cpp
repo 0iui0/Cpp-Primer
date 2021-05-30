@@ -15,39 +15,34 @@
 #include <vector>
 #include <map>
 
-struct IsInRange
-{
+struct IsInRange {
     IsInRange(std::size_t lower, std::size_t upper)
-        :_lower(lower), _upper(upper)
-    { }
+            : _lower(lower), _upper(upper) {}
 
-    bool operator()(std::string const& str) const
-    {
+    bool operator()(std::string const &str) const {
         return str.size() >= _lower && str.size() <= _upper;
     }
 
-    std::size_t lower_limit() const
-    {
+    std::size_t lower_limit() const {
         return _lower;
     }
 
-    std::size_t upper_limit() const
-    {
+    std::size_t upper_limit() const {
         return _upper;
     }
+
 private:
     std::size_t _lower;
     std::size_t _upper;
 };
 
-int main()
-{
+int main() {
     //create predicates with various upper limits.
     std::size_t lower = 1;
-    auto uppers = { 3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u };
+    auto uppers = {3u, 4u, 5u, 6u, 7u, 8u, 9u, 10u, 11u, 12u, 13u, 14u};
     std::vector<IsInRange> predicates;
     for (auto upper : uppers)
-        predicates.push_back(IsInRange{ lower, upper });
+        predicates.push_back(IsInRange{lower, upper});
 
     //create count_table to store counts 
     std::map<std::size_t, std::size_t> count_table;

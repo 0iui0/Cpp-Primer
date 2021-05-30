@@ -5,24 +5,20 @@
 #include <iterator>
 #include <string>
 
-void foo(String x)
-{
+void foo(String x) {
     std::cout << x << std::endl;
 }
 
-void bar(const String& x)
-{
+void bar(const String &x) {
     std::cout << x.c_str() << std::endl;
 }
 
-String baz()
-{
+String baz() {
     String ret("world");
     return ret;
 }
 
-int main()
-{
+int main() {
     char text[] = "world";
 
     String s0;

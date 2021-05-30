@@ -1,9 +1,8 @@
 #include "ex14_27_28_StrBlob.h"
 #include <iostream>
 
-int main()
-{
-    StrBlob sb1{ "a", "b", "c" };
+int main() {
+    StrBlob sb1{"a", "b", "c"};
     StrBlob sb2 = sb1;
 
     sb2[2] = "b";
