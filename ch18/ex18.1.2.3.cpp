@@ -39,19 +39,19 @@ void exercise(int *b, int *e)
 #include <memory>
 #include <vector>
 #include <fstream>
+
 /**
  * @brief The intArray class manage a dynamicly allocated int array.
  * @note  for ex18.3 approach 1.
  */
-struct intArray
-{
-    intArray() : p(nullptr) { }
-    explicit    intArray(std::size_t s):
-        p(new int[s])       { }
+struct intArray {
+    intArray() : p(nullptr) {}
+
+    explicit intArray(std::size_t s) :
+            p(new int[s]) {}
 
 
-    ~intArray()
-    {
+    ~intArray() {
         delete[] p;
     }
 
@@ -59,8 +59,7 @@ struct intArray
     int *p;
 };
 
-void exercise(int *b, int *e)
-{
+void exercise(int *b, int *e) {
     std::vector<int> v(b, e);            // the object v will be destroyed by its destructor.
 
     // @oldcode:
@@ -71,14 +70,13 @@ void exercise(int *b, int *e)
 
     // approach 2:
     //std::shared_ptr<int> p(new int[v.size()], [](int *p) { delete[] p; });
-                                                // delete array using lambda
+    // delete array using lambda
 
     std::ifstream in("ints");            // the object in will be destroyed.
     // exception occurs here
 }
 
-int main()
-{
+int main() {
     // for ex18.1
     /*
     std::range_error r("error");

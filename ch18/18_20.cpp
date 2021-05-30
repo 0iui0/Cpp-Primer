@@ -14,22 +14,22 @@
 
 namespace primerLib {
     void compute();  //Error, does not work. Too many argument in the call to match.
-	void compute(const void *) { }; //Works! Converts argument to a constant void pointer.
+    void compute(const void *) {}; //Works! Converts argument to a constant void pointer.
 }
 
-void compute(int) { std::cout << "compute(int)" << std::endl; };//Works! Most closely matches the argument parameters so it is selected first.
-void compute(double, double =3.4);//Works! Converts argument to double.
-void compute(char* x,char* =0);//Works! converts to a character pointer.
+void compute(int) {
+    std::cout << "compute(int)" << std::endl;
+};//Works! Most closely matches the argument parameters so it is selected first.
+void compute(double, double = 3.4);//Works! Converts argument to double.
+void compute(char *x, char * = 0);//Works! converts to a character pointer.
 
-void f()
-{
-	using primerLib::compute;
+void f() {
+    using primerLib::compute;
     compute(0);
 }
 
-int main()
-{
-	f();
+int main() {
+    f();
     return 0;
 }
 
