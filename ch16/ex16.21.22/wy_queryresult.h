@@ -15,10 +15,10 @@
 
 #ifndef WY_QUERYRESULT_H
 #define WY_QUERYRESULT_H
+
 #include <wy_textquery.h>
 
-class wy_queryResult
-{
+class wy_queryResult {
 public:
     // default constructor
     wy_queryResult() = default;

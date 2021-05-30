@@ -10,13 +10,10 @@
 
 #pragma once
 
-namespace cp5
-{
-    struct Delete
-    {
+namespace cp5 {
+    struct Delete {
         template<typename T>
-        auto operator() (T* p) const
-        {
+        auto operator()(T *p) const {
             delete p;
         }
     };

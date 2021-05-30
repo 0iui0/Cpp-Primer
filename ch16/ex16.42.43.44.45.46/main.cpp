@@ -78,14 +78,12 @@
 #include <vector>
 #include <string>
 
-template <typename T>
-void g(T&& val)
-{
+template<typename T>
+void g(T &&val) {
     std::vector<T> v;
 }
 
-int main()
-{
+int main() {
     std::allocator a;
     a.construct
 }

@@ -24,8 +24,7 @@
 #include "Blob.h"
 #include "blobptr.h"
 
-int main()
-{
+int main() {
 
     return 0;
 }

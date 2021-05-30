@@ -62,7 +62,6 @@
 //             (f) f2(p1, cp1);    // f2<int*, int const*>(int*, int const*)
 //
 
-int main()
-{
+int main() {
     return 0;
 }

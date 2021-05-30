@@ -19,28 +19,28 @@
 #include <memory>
 #include <sstream>
 
-template <typename T> void f(T)
-{
+template<typename T>
+void f(T) {
     std::cout << "f(T)\n";
 }
 
-template <typename T> void f(const T*)
-{
+template<typename T>
+void f(const T *) {
     std::cout << "f(const T*)\n";
 }
-template <typename T> void g(T)
-{
+
+template<typename T>
+void g(T) {
     std::cout << "template <typename T> void g(T)\n";
 }
-template <typename T> void g(T*)
-{
+
+template<typename T>
+void g(T *) {
     std::cout << "template <typename T> void g(T*)\n";
 }
 
 
-
-int main()
-{
+int main() {
     int i = 42, *p = &i;
     const int ci = 0, *p2 = &ci;
 

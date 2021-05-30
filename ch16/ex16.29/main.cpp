@@ -21,8 +21,7 @@
 #include "unique_pointer.h"
 #include "Blob.h"
 
-int main()
-{
+int main() {
     Blob<std::string> b;
     b.push_back("sss");
 

@@ -24,14 +24,12 @@
 #include <string>
 
 template<typename T, unsigned size>
-constexpr unsigned getSize(const T(&)[size])
-{
+constexpr unsigned getSize(const T(&)[size]) {
     return size;
 }
 
-int main()
-{
-    std::string s[] = { "sss" };
+int main() {
+    std::string s[] = {"sss"};
     std::cout << getSize(s) << std::endl;
 
     char c[] = "s";

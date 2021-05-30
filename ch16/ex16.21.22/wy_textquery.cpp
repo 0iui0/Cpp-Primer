@@ -23,19 +23,18 @@
  *  read each line into the dynamicly allocated vector.
  */
 wy_textQuery::wy_textQuery(std::ifstream &fin) :
-    // @oldcode
-    // custom deleter may not use with std::make_shared, as it has an internal
-    // deleter which may not be replaced. As a result, keyword new is the only
-    // option to use with DebugDelete.
-    /*
-    sp_fileData(std::make_shared<std::vector<std::string>>() ),
-    sp_queryMap(std::make_shared<std::map<std::string, std::set<int>>>() )
-    */
-    sp_fileData(new std::vector<std::string>(), DebugDelete() ),
-    sp_queryMap(new std::map<std::string, std::set<int>>(), DebugDelete())
-{
+// @oldcode
+// custom deleter may not use with std::make_shared, as it has an internal
+// deleter which may not be replaced. As a result, keyword new is the only
+// option to use with DebugDelete.
+/*
+sp_fileData(std::make_shared<std::vector<std::string>>() ),
+sp_queryMap(std::make_shared<std::map<std::string, std::set<int>>>() )
+*/
+        sp_fileData(new std::vector<std::string>(), DebugDelete()),
+        sp_queryMap(new std::map<std::string, std::set<int>>(), DebugDelete()) {
     std::string line;
-    while(std::getline(fin, line))
+    while (std::getline(fin, line))
         sp_fileData->push_back(line);
 
 }
@@ -45,21 +44,17 @@ wy_textQuery::wy_textQuery(std::ifstream &fin) :
  * @param qWord
  */
 wy_queryResult
-wy_textQuery::query(const std::string &qWord) const
-{
+wy_textQuery::query(const std::string &qWord) const {
     // storing the amount of occurrence
     std::size_t counter = 0;
 
     // loop through each line
-    for(std::size_t i=0; i != sp_fileData->size(); ++i)
-    {
+    for (std::size_t i = 0; i != sp_fileData->size(); ++i) {
         // break into each word
         std::stringstream lineStream((*sp_fileData)[i]);
         std::string word;
-        while(lineStream >> word)
-        {
-            if(!word.compare(qWord))
-            {
+        while (lineStream >> word) {
+            if (!word.compare(qWord)) {
                 ++counter;
 
                 // add the index of the line into the result map

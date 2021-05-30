@@ -24,21 +24,19 @@
 
 namespace ch16 //to differ from std::make_shared
 {
-    template <typename T, typename ... Args>
-    auto make_shared(Args&&... args) -> std::shared_ptr<T>
-    {
+    template<typename T, typename ... Args>
+    auto make_shared(Args &&... args) -> std::shared_ptr<T> {
         return std::shared_ptr<T>(new T(std::forward<Args>(args)...));
     }
 }
 
-struct Foo
-{
-    explicit Foo(int b) : bar(b){ }
+struct Foo {
+    explicit Foo(int b) : bar(b) {}
+
     int bar;
 };
 
-int main()
-{
+int main() {
     auto num = ch16::make_shared<int>(42);
     std::cout << *num << std::endl;
 
@@ -47,6 +45,6 @@ int main()
 
     auto foo = ch16::make_shared<Foo>(99);
     std::cout << foo->bar << std::endl;
-    
+
     return 0;
 }
