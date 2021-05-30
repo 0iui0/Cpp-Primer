@@ -6,21 +6,24 @@
 #include "array"
 
 using namespace std;
+
 //fix size | | | | | | | | | | | |
 int compareLongs(const void *a, const void *b) {
     return (*(long *) a - *(long *) b);
 }
+
 const long asize = 50L;
+
 int main() {
     array<long, asize> arr;
     for (int i = 0; i < asize; ++i) {
         arr[i] = rand();
-        cout<<arr[i]<<" ";
+        cout << arr[i] << " ";
     }
-    cout<<endl;
+    cout << endl;
     ::qsort(arr.data(), asize, sizeof(long), compareLongs);
-    for(auto &j:arr){
-        cout<<j<<" ";
+    for (auto &j:arr) {
+        cout << j << " ";
     }
 
 }
