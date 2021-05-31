@@ -101,7 +101,7 @@ Ex11.15
 * key_type : int
 * value_type : std::pair<const int,vector >
 
-Ex11.16
+## [ex11.16](ex11_16.cpp)
 
 > 使用一个map迭代器编写一个表达式，将一个值赋予一个元素。
 
