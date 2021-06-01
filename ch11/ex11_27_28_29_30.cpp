@@ -43,6 +43,7 @@ int main() {
                                               {"John", {1, 5, 6, 7, 8}}};
     // ex11.28
     std::map<std::string, std::vector<int>>::iterator it = m.find("Alan");
+    std::cout<<it->first<<" "<<it->second.at(m["Alan"].size()-1)<<std::endl;
     // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
     return 0;

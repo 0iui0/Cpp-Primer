@@ -6,38 +6,38 @@
 //
 //  Write a program that defines a multimap of authors and their works.
 //  Use **find** to find **an element** in the multimap and erase that element.
-//  Be sure your program works correctly if the element you look for is not in the map.
+//  Be sure your program works correctly if the element you look for is not in
+//  the map.
 
+#include <iostream>
 #include <map>
 #include <string>
-#include <iostream>
 
+using std::cout;
+using std::endl;
 using std::string;
 
 int main() {
-    std::multimap<string, string> authors{
-            {"alan", "DMA"},
-            {"pezy", "LeetCode"},
-            {"alan", "CLRS"},
-            {"wang", "FTP"},
-            {"pezy", "CP5"},
-            {"wang", "CPP-Concurrency"}
-    };
-    // want to delete an element that author is [Alan], work is [112].
-    string author = "pezy";
-    string work = "CP5";
+  std::multimap<string, string> authors{
+      {"alan", "DMA"}, {"pezy", "LeetCode"}, {"alan", "CLRS"},
+      {"wang", "FTP"}, {"pezy", "CP5"},      {"wang", "CPP-Concurrency"}};
+  // want to delete an element that author is [Alan], work is [112].
+  string author = "wang";
+  string work = "FTP";
 
-    auto found = authors.find(author);
-    auto count = authors.count(author);
-    while (count) {
-        if (found->second == work) {
-            authors.erase(found);
-            break;
-        }
-        ++found;
-        --count;
+  auto found = authors.find(author);
+  auto count = authors.count(author);
+  cout << "found:" << count << endl;
+  //  authors.erase(++found);
+  while (count) {
+    cout << found->second << endl;
+    if (found->second == work) {
+      authors.erase(found);
+      break;
     }
-
-    for (const auto &author : authors)
-        std::cout << author.first << " " << author.second << std::endl;
+    --count;
+    ++found;
+  }
+  for (const auto &author : authors)
+    std::cout << author.first << " " << author.second << std::endl;
 }
